@@ -158,8 +158,7 @@ class generate():
         Returns an unordered integer array of n length containing the numbers 0 to 6
 
         '''
-        if(data is None):
-            return -1
+        if(data is None): return -1
         newInts = []
         for i in range(len(data) - 1):
             # Convert floats to ints
@@ -175,13 +174,13 @@ class generate():
 
     # Maps letters to index numbers
     def mapLettersToNumbers(self, letters):
-        if(letters is None):
-            return -1
+        if(letters is None): return -1
         numbers = []
         # Pick a letter
         for i in range(len(letters) - 1):
             # Search alphabet for this letter
             for j in range(len(self.alphabet) - 1)
+                # Check for a match
                 if(letters[i] == self.alphabet[j]):
                     # Appends the current index number
                     numbers.append(i)
@@ -193,8 +192,7 @@ class generate():
     '''This will tell us how many notes to generate. The largest number will
        be the ending index number'''
     def findLargest(self, aList):
-        if(aList is None):
-            return -1
+        if(aList is None): return -1
         return max(aList)
 
     #--------------------------------------------------------------------------------#
@@ -219,19 +217,34 @@ class generate():
     #-------------------------------------------------------------------------------#
 
     # Converts a given integer to a pitch class in a specified octave (ex C#6)
-    def newNote(self, num, octave):
+    def newNote(self, num, scale, octave):
         '''
         Converts a given integer to a pitch class in a specified octave (ex C#6).
         Requires an integer, and the current octave. 
         Returns a single string.
+
         '''
-        if(num > len(self.noteNames) - 1):
+        if(num > len(scale) - 1):
             return -1
         if(octave < 1 or octave > 8):
             return -1
-        newNote = self.noteNames[num]
+        newNote = scale[num]
         newNote = "{}{}".format(newNote, octave)
         return newNote
+
+   #Generate a new scale with pitch classes.
+    def newScale(self, data):
+        '''
+        Generate a new scale based off given data. 
+
+        This randomly picks the key and the starting octave. 
+        '''
+        if(data is None):
+            return -1
+        # How many notes do we need?
+        total = len(data) - 1
+        # Convert raw data to unsorted integer array who's values are between 0 - 6
+        newData = self.convertNums(data)
 
 
     #-----------------------------------------------------------------------------------#
@@ -376,42 +389,6 @@ class generate():
             print("...Unable to generate pattern!")
             return -1
         return dynamics
-
-
-    #-----------------------------------------------------------------------------------#
-    #-------------------------------------Scales----------------------------------------#
-    #-----------------------------------------------------------------------------------#
-
-
-    #Generate a new scale with pitch classes.
-    def newScale(self, data):
-        '''
-        Generate a new scale with pitch classes with enharmonic spellings
-        in the middle octave (4)
-        '''
-        if(data is None):
-            return -1
-        # How many notes do we need?
-        total = len(data) - 1
-        # What key are we in?
-        pc = self.scales(randint(1, 12))
-
-        # i = 0
-        # scale = []
-        # octave = 4
-        # pcScale = self.newScale()
-        # print("\nGenerating scale with pitch classes...")
-        # while(len(scale) < len(pcScale)):
-        #     note = self.chromaticScaleSharps[pcScale[i]]
-        #     note = "{}{}".format(note, octave)
-        #     scale.append(note)
-        #     i += 1
-        # #Test output
-        # if(not scale):
-        #     print("...Unable to generate scale!")
-        #     return -1
-        # print("New scale:", scale)
-        # return scale
 
 
 
