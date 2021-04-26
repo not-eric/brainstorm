@@ -268,11 +268,10 @@ class generate():
         scale = self.pickKey()    
 
    #Generate a new scale with pitch classes.
-    def newScale(self, data):
+    def newNotes(self, data):
         '''
-        Generate a new scale based off given data. 
-
-        This randomly picks the key and the starting octave. 
+        Generate a series of notes based on inputted data (an array of integers)
+        This randomly picks the key and the starting octave! 
         '''
         if(data is None):
             return -1
@@ -281,6 +280,9 @@ class generate():
         # Convert raw data to unsorted integer array who's values are between 0 - 6
         newData = self.convertNums(data)
 
+    def newNotesFromName(self, name):
+        if(name is None):
+            return -1
 
     #-----------------------------------------------------------------------------------#
     #--------------------------------------Rhythm---------------------------------------#
@@ -453,12 +455,13 @@ class generate():
         #How many chords?
         chords = []
         total = randint(3, 10)
+        # total = randint(3, len(scale) - 1)
         print("\nGenerating", total, "chords...")
         #Pick notes
         while(len(chords) < total):
             chord = []
             #How many notes in this chord?
-            totalNotes = randint(2, 9)
+            totalNotes = randint(2, 7)
             while(len(chord) < totalNotes):
                 note = scale[randint(0, len(scale) - 1)]
                 if(note not in chord):
@@ -488,7 +491,9 @@ class generate():
         dynamics are picked randomly; the total for both is determined by the number of 
         notes generated.
 
-        Appends to pretty_midi object and returns new MIDI object. Also exports a MIDI file.
+        Appends to pretty_midi object and returns new MIDI object and exports a MIDI file.
+
+        Returns a newMelody() object.
         '''
 
         # Melody container object
@@ -496,22 +501,20 @@ class generate():
 
         print("\nGenerating melody...")
 
-        #---------------------Initial choices---------------------#
+        #---------------------Pick everything---------------------#
 
         # Pick tempo
+        print("Picking tempo...")
         newMelody.tempo = self.newTempo()
+        # Pick notes
+        print("Generating notes...")
+        newMelody.notes = self.newNotes(data)
         # Pick rhythms
+        print("Generating rhythms...")
         newMelody.rhythms = self.newRhythms(len(data) - 1)
         # Pick dynamics
+        print("Generating dynamics...")
         newMelody.dynamics = self.newDynamics(len(data) - 1)
-            
-        #----------------------Generate--------------------------#
-
-        #Pick the notes
-        # print("\nPicking notes...")
-        # while(len(newMelody.notes) < total):
-
-
 
         #Add data to MIDI object and write out file.
         if(mid.saveMelody(self, newMelody) == -1):
@@ -527,4 +530,4 @@ class generate():
         print("\nTotal dynamics:", len(newMelody.dynamics))
         print("Dynamics:", newMelody.dynamics)
 
-        return 0
+        return newMelody
