@@ -141,25 +141,31 @@ class generate():
     #-----------------------------Misc. Utility Functions----------------------------#
     #--------------------------------------------------------------------------------#
 
+    # Convert data to integers?
 
     # Convert base rhythms to values in a specified tempo
-    def convert(self, newMelody):
+    def convertNums(self, data):
         '''
-        A rhythm converter function to translate durations in self.rhythms
-        to actual value in seconds for that rhythm in a specified tempo. 
-        
-        ex: [base] q = 60, quarterNote = 1 sec, [new tempo] q = 72, quarterNote = 0.8333(...) sec
+        This function converts given data into an integer array of n length. 
+        Integers are kept within a range of 0 to 6 so as to not exceed
 
-        60/72 = .83 - The result becomes the converter value to multiply all supplied
-        durations against to get the new tempo-accurate durations.
+        Returns an unordered integer array of n length containing the numbers 0 to 6
 
         '''
-        if(not newMelody):
+        if(data is None):
             return -1
-        diff = 60/newMelody.tempo
-        for i in range(len(newMelody.rhythms) - 1):
-            newMelody.rhythms[i] *= diff
-        return newMelody
+        newInts = []
+        for i in range(len(data) - 1):
+            # Convert floats to ints
+            data[i] = math.floor(data[i])
+            # Get value to 6 or less
+            while(data[i] > 6):
+                data[i] -= 6
+            # Append to new array
+            newInts.append(data[i])
+        if(newInts is None):
+            return -1
+        return newInts
 
 
     #--------------------------------------------------------------------------------#
@@ -383,140 +389,13 @@ class generate():
     #--------------------------------------------------------------------------------#
 
 
-    #Generate a pitch class triad set
-    def newPCTriad(self):
-        '''
-        Generate a pitch class triad set in prime form.
-        '''
-        print("\nGenerating new PC triad...")
-        triad = []
-        while(len(triad) < 3):
-            note = randint(0, 11)
-            if(note not in triad):
-                triad.append(note)
-        triad.sort()
-        if(not triad):
-            print("...No PC triad generated!")
-            return -1
-        print("New PC triad:", triad)
-        return triad
-
-    #Generates a series of pitch class sets
-    def newPCChords(self):
-        '''
-        Generates a series of pitch class sets
-    
-        Note:
-            Select from structures class - decide on what chord to use. 
-            add ability to select chord, and when translating the integers to
-            note names, randomly assign octChoice to each note name. Adds possibility
-            of unusual voicings.
-        '''
-        print("\nGenerating chord progression...")
-        i = 0
-        newChords = []
-        #3-10 chords
-        totalChords = randint(3, 10)
-        if(not totalChords):
-            print("...No amount decided!")
-        print("Total new PC chords:", totalChords)
-        #Are we generating tertian(1), symmetrical(2), or mixed chord3?
-        chordChoice = randint(1, 3)
-        if(not chordChoice):
-            print("...No chord type decision!")
-        #If we're using triads
-        if(chordChoice == 1):
-            while(i < totalChords):
-                newChords.append(self.triads[randint(1, 4)])
-                i += 1
-        #If we're using symmetrical chords
-        elif(chordChoice == 2):
-            while(i < totalChords):
-                newChords.append(self.symChords[randint(1, 4)])
-                i += 1
-        #If we're using both
-        elif(chordChoice == 3):
-            thisChoice = 0
-            while(i < totalChords):
-                thisChoice = randint(1, 2)
-                if(thisChoice == 1):
-                    newChords.append(self.triads[randint(1, 4)])
-                newChords.append(self.symChords[randint(1, 4)])
-                i += 1
-        if(not newChords):
-            print("...No progression generated!")
-            return -1
-        print("New progression:", newChords)
-        return newChords      
-
-    #Generate 3 random pitches in random octaves to form a triad
-    def newPitchTriad(self):
-        '''
-        Generate 3 random pitches in random octaves to form a triad (i.e. C3, Ab7, Db2, etc.)
-        '''
-        print("\nGenerating new pitch triad...")
-        triad = []
-        while(len(triad) < 3):
-            note = self.note()
-            if(note not in triad):
-                triad.append(note)
-        if(not triad):
-            print("...Unable to generate pitch triad!")
-            return -1
-        print("New pitch triad:", triad)
-        return triad
-
-
     #Generates a chromatic chord with 2-9 notes in random octaves
     def newChord(self):
         '''
         Generates a chromatic chord with 2-9 notes in 
         random octaves. Returns -1 if new chord is None/null.
         '''
-        chord = []
-        totalNotes = randint(2, 9)
-        while(len(chord) < totalNotes):
-            note = self.note()
-            if(note not in chord):
-                chord.append(note)
-        if(not chord):
-            return -1
-        return chord
 
-    '''
-    Note:
-        Create function that generates chords and repeats each one individually
-        n number of times.
-
-        ALGORITHM: 
-            1. Generate chord.
-            2. Repeat this chord?
-                2.1. If so, how many times in a row?
-                2.2. If not, go back to 1. 
-    '''
-
-    #Generates a series of random chromatic chords 
-    def newChords(self):
-        '''
-        Generates 3-10 non-repeating chromatic chords in
-        various octaves and spellings. Returns -1 if newChords
-        is None/null.
-        '''
-        print("\nGenerating random chord progression...")
-        chord = []
-        newChords = []
-        #3-10 chords
-        totalChords = randint(3, 10)
-        while(len(newChords) < totalChords): 
-            chord = self.newChord()
-            if(chord not in newChords):
-                newChords.append(chord)
-        if(not newChords):
-            print("...No progression generated!")
-            return -1
-        print("Total chords:", totalChords)
-        print("New progression:", newChords)
-        return newChords
 
     #Generates a progression from the notes of a given scale
     def newChordsFromScale(self, scale):
@@ -550,8 +429,6 @@ class generate():
         print("\nTotal chords:", len(chords))
         print("Chords:", chords)
         return chords
-
-
 
 
 
@@ -589,46 +466,7 @@ class generate():
         print("\nPicking notes...")
         while(len(newMelody.notes) < len(newMelody.rhythms)):
 
-            #Using single octave
-            if(choices[3] == 1):
-                note = self.aNote(choices[4])
-            #Using limited range of octaves
-            elif(choices[3] == 2):
-                note = self.aNote(octaves[randint(0, len(octaves) - 1)])
-            #Use random alteration between fixed range/random octaves
-            elif(choices[3] == 3):
-                #Random octave(1) or select from fixed range (2)?
-                if(randint(1, 2) == 1):
-                    note = self.note()
-                else:
-                    note = self.aNote(octaves[randint(0, len(octaves) - 1)])
-            #Use random octaves
-            elif(choices[3] == 4):
-                note = self.note()
 
-            #Repeat this note (1) or not (2)?
-            repeat = randint(1, 2)
-
-            #Repeat
-            if(repeat == 1):
-                #Repeat this note r times(reps)
-                r = 0
-                reps = 0
-                #If 1 < notes < 5, repeat between 1 and 3 times 
-                if(len(newMelody.notes) < 6 and len(newMelody.notes) > 0):
-                    reps = randint(1, 3)
-                #Otherwise scale repetitions
-                else:
-                    reps = choice.howManyRepetitions(self, newMelody.notes)
-                while(r < reps):
-                    newMelody.notes.append(note)
-                    r += 1
-                    if(len(newMelody.notes) == choices[0]):
-                        break
-            #Dont repeat
-            elif(repeat == 2):
-                if(note not in newMelody.notes):
-                    newMelody.notes.append(note)
 
         #Add data to MIDI object and write out file.
         if(mid.saveMelody(self, newMelody) == -1):
