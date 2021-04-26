@@ -18,7 +18,7 @@ print("\nconvert floats to ints test")
 data = [1.575, 23.3, 9.6, 5.543454554, 13.2222]
 print("inputted data:", data)
 print("expected result: [1, 23, 9, 5, 13]")
-result = create.convertNums(data)
+result = create.floatToInt(data)
 if(result != -1):
     print("result:", result)
 else:
@@ -41,7 +41,7 @@ key = create.pickKey()
 print("result:", key)
 
 # Convert to minor test
-print("\nconvert to minor test")
+print("\nconvert to natural minor test")
 key = create.pickKey()
 print("major key:", key)
 minor = create.convertToMinor(key)
