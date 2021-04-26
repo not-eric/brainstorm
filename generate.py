@@ -143,9 +143,9 @@ class generate():
 
 
 
-    #--------------------------------------------------------------------------------#
-    #-----------------------------Misc. Utility Functions----------------------------#
-    #--------------------------------------------------------------------------------#
+    #-----------------------------------------------------------------------------------------#
+    #-----------------------------Conversion and Utility Functions----------------------------#
+    #-----------------------------------------------------------------------------------------#
 
     # Converts an array of floats to an array of ints
     def floatToInt(self, data):
@@ -158,6 +158,20 @@ class generate():
         if(result is None):
             return -1
         return result
+
+    # Convert array of integers to be within the len-1 of another array. 
+    # For example, if the given array is [0, 55, 2, 71, 5] and the len
+    # of the control array is 25, then the result should be [0, 5, 2, 21, 5]
+    '''
+    This repeatedly subtracts an integer that is larger than the control array 
+    by the len(controlArray) - 1. This will keep the newly created array within the bounds
+    of the control array and will function as a collection of index numbers to randomly
+    select from from the controlArray.
+
+    while(i > len(controlArray) - 1):
+        array[i] -= len(controlArray) - 1
+    
+    '''
 
     # Converts given array of numbers to an unordered array of integers between 0 - 6
     def convertNums(self, data):
@@ -196,6 +210,7 @@ class generate():
             # Search alphabet
             for j in range(len(self.alphabet) - 1):
                 # If we get a match, store that index number
+                '''NOTE: Find a way to account for capitalization! '''
                 if(letters[i] == self.alphabet[j]):
                     numbers.append(i)
         if(numbers is None):
@@ -209,15 +224,7 @@ class generate():
         if(aList is None): return -1
         return max(aList)
 
-    # Picks which key to be in. 
-    def pickKey(self):
-        '''
-        Picks which key to be in. 
-        For minor scales, feed the output of this into convertToMinor()
-        '''
-        scale = []
-        scale = self.scales[randint(1, 12)]
-        return scale
+
     
     #Converts a major scale to its natural minor
     def convertToMinor(self, scale):
@@ -239,6 +246,7 @@ class generate():
     #-------------------------------------Tempo--------------------------------------#
     #--------------------------------------------------------------------------------#
 
+
     # Picks the tempo
     def newTempo(self):
         '''
@@ -255,6 +263,19 @@ class generate():
     #-------------------------------------------------------------------------------#
     #-------------------------------------Pitch-------------------------------------#
     #-------------------------------------------------------------------------------#
+
+
+    # Picks which key (scale) to use. 
+    def pickKey(self):
+        '''
+        Picks which key (scale) to use. 
+        Returns a list of pitch classes without specified octaves.
+
+        For minor scales, feed the output of this into convertToMinor()
+        '''
+        scale = []
+        scale = self.scales[randint(1, 12)]
+        return scale
 
     # Converts a given integer to a pitch in a specified octave (ex C#6)
     def newNote(self, num, scale, octave):
@@ -282,7 +303,7 @@ class generate():
             return -1
         # How many notes do we need?
         total = len(data) - 1
-        # Convert raw data to unsorted integer array who's values are between 0 - 6
+        # Convert raw data to unsorted integer array
         intData = self.floatToInt(data)
 
     # Generate a series of notes based off an array of letters
@@ -299,9 +320,11 @@ class generate():
 
         # else:
 
+
     #-----------------------------------------------------------------------------------#
     #--------------------------------------Rhythm---------------------------------------#
     #-----------------------------------------------------------------------------------#
+
 
     #Pick a rhythm
     def newRhythm(self):
@@ -439,6 +462,7 @@ class generate():
     #--------------------------------------Chords------------------------------------#
     #--------------------------------------------------------------------------------#
 
+
     #Generates a progression from the notes of a given scale
     def newChordsFromScale(self, scale):
         '''
@@ -501,9 +525,18 @@ class generate():
         # Melody container object
         newMelody = melody()
 
-        print("\nGenerating melody...")
+        #------------------Process incoming data-----------------#
+       
+        print("\nProcessing incoming data...")
+
+        '''
+        Is this a character array, integer array, or array of floats?
+        '''
+
 
         #-----------------------Generate!------------------------#
+        
+        print("\nGenerating melody...")
 
         # Pick tempo
         print("Picking tempo...")
@@ -519,6 +552,8 @@ class generate():
         newMelody.dynamics = self.newDynamics(len(data) - 1)
 
         #-----------Check data and export to MIDI file------------#
+
+        print("\nChecking results...")
 
         # Make sure all data was inputted
         if(newMelody.hasData() == False):
