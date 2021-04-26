@@ -49,7 +49,8 @@ class generate():
 
         #--------Notes and Scales--------#
 
-        # Enharmonically spelled note names starting on A. Indicies: 0-16. 
+        # Enharmonically spelled note names starting on A. Indicies: 0-16.
+        # NOTE THE STARTING NOTE! 
         self.notes = ["A", "A#", "Bb", "B", 
                       "C", "C#", "Db", "D", 
                       "D#", "Eb", "E", "F", 
@@ -65,7 +66,7 @@ class generate():
             then I'll just add a function to generate some minor chords based
             off the scale chosen from the dicitonary below.
         '''
-        # Use indicies 0 - 11
+        # Use indicies 1 - 12
         self.scales = {1: ['C', 'D', 'E', 'F', 'G', 'A', 'B'], 
                        2: ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C'],
                        3: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#' ],
@@ -114,11 +115,11 @@ class generate():
         #------------Tempo-------------#
 
         # Tempos (indices: 0-38)
-        self.tempo = [40.0, 42.0, 44.0, 46.0, 50.0, 52.0, 54.0, 56.0, 58.0, #1-9 (0-8)
-                      60.0, 63.0, 66.0, 69.0, 72.0, 76.0, 80.0, 84.0, 88.0, #10-18 (9-17)
-                      92.0, 96.0, 100.0, 104.0, 108.0, 112.0, 116.0, 120.0, # 19-27 (18-26)
-                      126.0, 132.0, 128.0, 144.0, 152.0, 160.0, 168.0, 176.0, #28-36 (27-35)
-                      184.0, 200.0, 208.0] #37-39 (36-38)
+        self.tempos = [40.0, 42.0, 44.0, 46.0, 50.0, 52.0, 54.0, 56.0, 58.0, #1-9 (0-8)
+                       60.0, 63.0, 66.0, 69.0, 72.0, 76.0, 80.0, 84.0, 88.0, #10-18 (9-17)
+                       92.0, 96.0, 100.0, 104.0, 108.0, 112.0, 116.0, 120.0, # 19-27 (18-26)
+                       126.0, 132.0, 128.0, 144.0, 152.0, 160.0, 168.0, 176.0, #28-36 (27-35)
+                       184.0, 200.0, 208.0] #37-39 (36-38)
 
 
         #-----------Dynamics------------#
@@ -245,7 +246,7 @@ class generate():
         Returns a float upon success, 60.0 if fail.
         '''
         tempo = 0.0
-        tempo = self.tempo[randint(0, len(self.tempo) - 1)]
+        tempo = self.tempos[randint(0, len(self.tempo) - 1)]
         if (not tempo):
             return 60.0
         return tempo
@@ -255,10 +256,10 @@ class generate():
     #-------------------------------------Pitch-------------------------------------#
     #-------------------------------------------------------------------------------#
 
-    # Converts a given integer to a pitch class in a specified octave (ex C#6)
+    # Converts a given integer to a pitch in a specified octave (ex C#6)
     def newNote(self, num, scale, octave):
         '''
-        Converts a given integer to a pitch class in a specified octave (ex C#6).
+        Converts a given integer to a pitch in a specified octave (ex C#6).
         Requires an integer, a given scale, and the required octave. 
         Returns a single string.
         '''
@@ -272,7 +273,7 @@ class generate():
   
 
    #Generate a series of notes based off an inputted array of integers
-    def newNotes(self, data):
+    def newNotes(self, data, minor):
         '''
         Generate a series of notes based on inputted data (an array of integers)
         This randomly picks the key and the starting octave! 
@@ -282,7 +283,7 @@ class generate():
         # How many notes do we need?
         total = len(data) - 1
         # Convert raw data to unsorted integer array who's values are between 0 - 6
-        newData = self.convertNums(data)
+        intData = self.floatToInt(data)
 
     # Generate a series of notes based off an array of letters
     def newNotesFromLetters(self, name, minor):
@@ -331,28 +332,20 @@ class generate():
         '''
         Generate lists of 2-20 rhythms to be used as a 
         melody/ostinato/riff/whatever. Uses infrequent repetition.
-
-        Algorithm:
-            1. Pick pattern length (l) 
-            2. Pick duration.
-            3. Repeat duration or pick another?
-                3.1. If repeat, how many times (r < l)?
-                3.2. If not, repeat steps 2-3 while duration total < l.
         '''
         rhythms = []
         print("\nGenerating", total, "rhythms...")
         while(len(rhythms) < total):
-            #Pick rhythm + add to list    
+            #Pick rhythm and add to list    
             rhythm = self.rhythms[randint(0, len(self.rhythms) - 1)]
             #Repeat this rhythm or not? 1 = yes, 2 = no
-            repChoice = randint(1, 2) 
-            if(repChoice == 1):
+            if(randint(1, 2) == 1):
                 #Limit reps to no more than 1/3 of the total no. of rhythms
                 limit = math.floor(len(rhythms)/3)
                 '''Note: This limit will increase rep levels w/longer list lengths
                          May need to scale for larger lists'''
                 if(limit == 0):
-                    limit += 1
+                    limit += 2
                 reps = randint(1, limit) 
                 for i in range(reps):
                     rhythms.append(rhythm)
@@ -420,14 +413,13 @@ class generate():
             #Pick dynamic    
             dynamic = self.dynamics[randint(0, 9)]
             #Repeat this dynamic or not? 1 = yes, 2 = no
-            repChoice = randint(1, 2) 
-            if(repChoice == 1):
+            if(randint(1, 2) == 1):
                 #Limit reps to no more than 1/3 of the supplied total
                 limit = math.floor(total/3)
                 '''Note: This limit will increase rep levels w/longer totals
                          May need to scale for larger lists'''
                 if(limit == 0):
-                    limit += 1
+                    limit += 2
                 reps = randint(1, limit) 
                 for i in range(reps):
                     dynamics.append(dynamic)
@@ -447,23 +439,19 @@ class generate():
     #--------------------------------------Chords------------------------------------#
     #--------------------------------------------------------------------------------#
 
-
-    #Generates a chromatic chord with 2-9 notes in random octaves
-    def newChord(self):
-        '''
-        Generates a chromatic chord with 2-9 notes in 
-        random octaves. Returns -1 if new chord is None/null.
-        '''
-
-
     #Generates a progression from the notes of a given scale
     def newChordsFromScale(self, scale):
         '''
         Generates a progression from the notes of a given scale.
-        Returns 0 if recieving bad input, and -1 if generation was unsuccessfull. 
+        Returns -1 if recieving bad input, and -2 if generation was unsuccessfull
+        
+        NOTE: Chords will be derived from the given scale ONLY! Could possibly
+              add more randomly inserted chromatic tones to give progressions more
+              variance and color.
+. 
         '''
         if(scale is None):
-            return 0
+            return -1
         print("\nGenerating chords from a given scale...")
         print("Given scale:", scale)
         #How many chords?
@@ -477,7 +465,9 @@ class generate():
             #How many notes in this chord?
             totalNotes = randint(2, 7)
             while(len(chord) < totalNotes):
+                # Pick note
                 note = scale[randint(0, len(scale) - 1)]
+                # Add if not already in list
                 if(note not in chord):
                     chord.append(note)
                 elif(note in chord and len(chord) > 2):
@@ -485,7 +475,7 @@ class generate():
             chords.append(chord)
         if(not chords):
             print("...Unable to generate chords!")
-            return -1
+            return -2
         print("\nTotal chords:", len(chords))
         print("Chords:", chords)
         return chords
