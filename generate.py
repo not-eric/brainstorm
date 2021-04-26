@@ -34,14 +34,28 @@ class generate():
         #--------------------------Resource data------------------------------#
         #---------------------------------------------------------------------#
 
+
+        # ----------Letters--------------#  
+        '''Used to search against and return an integer representing an 
+           Array index. The array will be used to generate a scale from
+           whos total is the len(alphabet) - 1
+           
+           NOTE: Account for capitalization!'''
+
+
+        self.alphabet = ['a', 'b','c','d', 'e', 'f', 'g',
+                         'h','i', 'j', 'k', 'l', 'm', 'n',
+                         'o', 'p', 'q', 'r', 's', 't', 'u',
+                         'v', 'w', 'x', 'y,' 'z']
+
         #--------Notes and Scales--------#
 
         # Enharmonically spelled note names starting on A. Indicies: 0-16. 
-        self.noteNames = ["A", "A#", "Bb", "B", 
-                          "C", "C#", "Db", "D", 
-                          "D#", "Eb", "E", "F", 
-                          "F#", "Gb", "G", "G#",
-                          "Ab"]
+        self.notes = ["A", "A#", "Bb", "B", 
+                      "C", "C#", "Db", "D", 
+                      "D#", "Eb", "E", "F", 
+                      "F#", "Gb", "G", "G#",
+                      "Ab"]
 
         # Major Scales
         '''
@@ -69,8 +83,7 @@ class generate():
      
         #-------------Rhythm--------------#
         '''
-        Notes:
-
+        NOTE:
             Durations in seconds (1 = quarter note (60bpm))
             Whole note to 32nd note
             
@@ -98,13 +111,6 @@ class generate():
         self.rhythmsSlow = [8.0, 12.0, 18.0, 27.0, 
                             40.5, 60.75, 91.125, 136.6875]
         
-
-        #------------Chords-------------#
-
-        # Major, minor, augmented, and diminished triads
-        self.triads = {1: [0,4,7], 2: [0,3,7], 
-                       3: [0,4,8], 4: [0,3,6]}
-        
   
         #------------Tempo-------------#
 
@@ -118,7 +124,7 @@ class generate():
 
         #-----------Dynamics------------#
         '''
-        Note: MIDI velocity/dynamics range: 0 - 127
+        NOTE: MIDI velocity/dynamics range: 0 - 127
         '''
 
         # Dynamics (0-26)
@@ -143,7 +149,7 @@ class generate():
 
     # Convert data to integers?
 
-    # Convert base rhythms to values in a specified tempo
+    # Converts given array of numbers to an unordered array of integers between 0 - 6
     def convertNums(self, data):
         '''
         This function converts given data into an integer array of n length. 
@@ -167,6 +173,29 @@ class generate():
             return -1
         return newInts
 
+    # Maps letters to index numbers
+    def mapLettersToNumbers(self, letters):
+        if(letters is None):
+            return -1
+        numbers = []
+        # Pick a letter
+        for i in range(len(letters) - 1):
+            # Search alphabet for this letter
+            for j in range(len(self.alphabet) - 1)
+                if(letters[i] == self.alphabet[j]):
+                    # Appends the current index number
+                    numbers.append(i)
+        if(numbers is None):
+            return -1
+        return numbers
+
+    # Find largest integer in an array of integers
+    '''This will tell us how many notes to generate. The largest number will
+       be the ending index number'''
+    def findLargest(self, aList):
+        if(aList is None):
+            return -1
+        return max(aList)
 
     #--------------------------------------------------------------------------------#
     #-------------------------------------Tempo--------------------------------------#
@@ -192,7 +221,9 @@ class generate():
     # Converts a given integer to a pitch class in a specified octave (ex C#6)
     def newNote(self, num, octave):
         '''
-        Converts a given integer to a pitch class in a specified octave (ex C#6)
+        Converts a given integer to a pitch class in a specified octave (ex C#6).
+        Requires an integer, and the current octave. 
+        Returns a single string.
         '''
         if(num > len(self.noteNames) - 1):
             return -1
