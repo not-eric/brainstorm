@@ -447,8 +447,7 @@ class generate():
         
         NOTE: Chords will be derived from the given scale ONLY! Could possibly
               add more randomly inserted chromatic tones to give progressions more
-              variance and color.
-. 
+              variance and color. 
         '''
         if(scale is None):
             return -1
@@ -481,7 +480,6 @@ class generate():
         return chords
 
 
-
     #---------------------------------------------------------------------------------#
     #-------------------------------MELODIC GENERATION--------------------------------#
     #---------------------------------------------------------------------------------#
@@ -505,20 +503,22 @@ class generate():
 
         print("\nGenerating melody...")
 
-        #---------------------Pick everything---------------------#
+        #-----------------------Generate!------------------------#
 
         # Pick tempo
         print("Picking tempo...")
         newMelody.tempo = self.newTempo()
         # Pick notes
         print("Generating notes...")
-        newMelody.notes = self.newNotes(data)
+        newMelody.notes = self.newNotes(data, minor)
         # Pick rhythms
         print("Generating rhythms...")
         newMelody.rhythms = self.newRhythms(len(data) - 1)
         # Pick dynamics
         print("Generating dynamics...")
         newMelody.dynamics = self.newDynamics(len(data) - 1)
+
+        #-----------Check data and export to MIDI file------------#
 
         # Make sure all data was inputted
         if(newMelody.hasData() == False):
@@ -528,7 +528,8 @@ class generate():
         if(mid.saveMelody(self, newMelody) == -1):
             return -1
 
-        #Display results
+        #--------------------Display results----------------------#
+
         print("\nRESULTS:")
         print("\nTempo:", newMelody.tempo, "bpm")
         print("\nTotal Notes:", len(newMelody.notes))
