@@ -5,28 +5,7 @@
 '''
 ----------------------------------------------------NOTES-------------------------------------------------------
 
-    This module contains the decide() class which handles decisions for generative and variation functions. 
-
-    Class hierarchy:
-        
-        decide():
-            generate():
-                note()
-                rhythms()
-                ect..
-                
-                Comp Modes:
-                    random()
-                    minimalist()
-                    tonal()
-                    atonal()
-                    serialist()
-                ect...
-
-            variate()
-                mainDecision():
-                howManyNotes():
-                ect..
+    This module contains the decide() class which handles decisions for generative 
 
 ----------------------------------------------------------------------------------------------------------------
 '''

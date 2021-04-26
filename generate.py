@@ -4,53 +4,9 @@
 
 '''
 ----------------------------------------------------NOTES-------------------------------------------------------
-
-    ***SEE NOTES.DOCX for complete notes and ideas!!!!!****
-
-    TODO: Add a rhythm converter function to translate durations in self.rhythms
-          to actual value in seconds for that rhythm in a specified tempo. 
-          ex: q = 60, quarter = 1 sec, q = 72, quarter = 0.83 seconds.
-
-          diff = inputtedTempo/60
-          newRhythms.append(inputtedRhythms[i] * diff)
-
-    TODO: Modify functions to allow for a variable number of possible arguments!!! 
-          For example, in newChord(), modify it to generate 2-9 notes in 
-          random octaves *only if a specified octave isn't supplied by the user*. 
-
-          ex new syntax: newChord(self, *argv). Only pick random octave if none is supplied. 
-          
-          ***This will allow for the consolidation of many methods!!!!*** 
-          
-          If I can modify one to allow for a variety of parameters. 
-          All tertian/ quartal/quintal chord generation methods could be consolidated 
-          provided one can use a singlevariable for the constant interval used to build the chords.
-
-          ex: if(not *argv):
-                  note = self.note()
-              note = self.aNote(octave)
-
-
-    TODO: Add error return codes to ALL functions for testing purposes. Write test program in testing.py to run in main 
-          during development.
-
-    TODO: Additional 'decisions' to add:
-
-        Pick x number of "note structures" utilizing this root
-            How many lists of notes/scales/chords?
-            Of a a given set of scales, pick which scale to be a "primary" scale 
-            to base note/chord structures off of
-
-        Generate "central" scale (non-repeating list of integers in ascending order between 0 - 11, starting with 0.)
-            Generate n number of pc prime forms ("chords") from "central" scale.
-        
-        Of a given scale, pick x number of sub-structures (sub-sets) of n - len(super-set) - 1.
-
-        Of a given scale, pick which note of that scale to be the "tonal center"
-
-        Pick x number of notes in a given list to form a "block"
-            Pick x number of times to repeat this block
-            Must be smaller set for minimalist mode
+    This class handles all generative functions. It contains a set of resource data
+    that is accessed by a variety of generative algorithms ranging from pure "random"
+    selections (see PRNG info), to more strict instructions. 
 
 ----------------------------------------------------------------------------------------------------------------
 '''

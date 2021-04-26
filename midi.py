@@ -74,7 +74,8 @@ class midiStuff():
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         '''
         Randomly choose an instrument? 
-        instrument = pm.instrument_name_to_program(inst.INSTRUMENT_MAP[randint(0, 110))'''
+        instrument = pm.instrument_name_to_program(inst.INSTRUMENT_MAP[randint(0, 110))
+        '''
         melody = pm.Instrument(program = instrument)
 
         # Attach notes, rhythms, and dynamics to melody instrument/MIDI object
