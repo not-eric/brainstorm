@@ -174,7 +174,6 @@ class generate():
 
         len(scale) - 1 acts as a way to do some modulo arithmatic whose base is
         a dynamically determined value. 
-
         '''
         if(data is None or len(data) == 0): 
             return -1
@@ -206,7 +205,7 @@ class generate():
             return -1
         return numbers
     
-    #Converts a major scale to its natural minor
+    #Converts a major scale to its relative minor
     def convertToMinor(self, scale):
         if(scale is None):
             return -1
@@ -271,7 +270,6 @@ class generate():
         newNote = scale[num]
         newNote = "{}{}".format(newNote, octave)
         return newNote
-  
 
    #Generate a series of notes based off an inputted array of integers
     def newNotes(self, data, minor):
@@ -282,16 +280,27 @@ class generate():
         if(data is None):
             return -1
         notes = []
-        # Convert raw data to unsorted integer array
-        intData = self.floatToInt(data)
         # How many notes do we need?
         total = len(data) - 1
-        # Pick key
-        key = self.scales[randint(0, len(self.scales) - 1)]
         # Pick starting octave (2 or 3)
-        octStart = randint(2, 3)
+        octave = randint(2, 3)
+        # Pick key
+        scale = self.scales[randint(0, len(self.scales) - 1)]
+        # Will this be a minor scale?
+        if(minor == True):
+            scale = self.convertToMinor(scale)
         # Generate notes
         for i in range(total):
+            note = scale[data[i]]
+            note = "".format(note, octave)
+            notes.append(note)
+            # If we've reached the end of the scale,
+            # increment the octave (until octave 8)
+            if(i % 6 == 0):
+                octave += 1
+                if(octave > 8):
+                    break
+        return notes
 
 
     # Generate a series of notes based off an array of letters
