@@ -176,9 +176,11 @@ class generate():
         a dynamically determined value. 
 
         '''
-        if(data is None): return -1
-        for i in range(len(scale)):
-            data[i] -= len(scale) - 1
+        if(data is None or len(data) == 0): 
+            return -1
+        for i in range(len(data)):
+            while(data[i] > len(scale) - 1):
+                data[i] -= len(scale) - 1
         return data
 
 
