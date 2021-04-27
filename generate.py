@@ -4,6 +4,7 @@
 
 '''
 ----------------------------------------------------NOTES-------------------------------------------------------
+    
     This class handles all generative functions. It contains a set of resource data
     that is accessed by a variety of generative algorithms ranging from pure "random"
     selections (see PRNG info), to more strict instructions. 
@@ -38,15 +39,19 @@ class generate():
 
         '''Used to search against and return an integer representing an 
            Array index. The array will be used to generate a scale from
-           whos total is the len(alphabet) - 1
-           
-           NOTE: Account for capitalization!'''
+           whos total is the len(alphabet) - 1'''
 
 
         self.alphabet = ['a', 'b','c','d', 'e', 'f', 'g',
                          'h','i', 'j', 'k', 'l', 'm', 'n',
                          'o', 'p', 'q', 'r', 's', 't', 'u',
                          'v', 'w', 'x', 'y,' 'z']
+
+        self.alphabetCap = ['A', 'B', 'C', 'D', 'E', 'F',
+                            'G', 'H', 'I', 'J', 'K', 'L',
+                            'M', 'N', 'O', 'P', 'Q', 'R',
+                            'S', 'T', 'U', 'V', 'W', 'X',
+                            'Y', 'Z']
 
         #--------Notes and Scales--------#
 
@@ -150,6 +155,7 @@ class generate():
     #-----------------------------Conversion and Utility Functions----------------------------#
     #-----------------------------------------------------------------------------------------#
 
+
     # Converts an array of floats to an array of ints
     def floatToInt(self, data):
         '''Converts an array of floats to an array of ints'''
@@ -194,11 +200,16 @@ class generate():
         numbers = []
         # Pick a letter
         for i in range(len(letters)):
-            # Search alphabet
+            # Search lower-case alphabet
             for j in range(len(self.alphabet)):
                 # If we get a match, store that index number
                 '''NOTE: Find a way to account for capitalization! '''
                 if(letters[i] == self.alphabet[j]):
+                    numbers.append(i)
+            # Search upper-case alphabet
+            for k in range(len(self.alphabetCap)):
+                # If we get a match, store that index number!
+                if(letters[i] == self.alphabetCap[k]):
                     numbers.append(i)
         if(numbers is None):
             return -1
@@ -486,7 +497,6 @@ class generate():
         return dynamics
 
 
-
     #--------------------------------------------------------------------------------#
     #--------------------------------------Chords------------------------------------#
     #--------------------------------------------------------------------------------#
@@ -550,6 +560,8 @@ class generate():
 
         Returns a newMelody() object.
         '''
+        # Some booleans to determine which note generator to use
+        isFloats = False
         isLetters = False
         # Melody container object
         newMelody = melody()
@@ -573,11 +585,19 @@ class generate():
         # Pick tempo
         newMelody.tempo = self.newTempo()
         # Pick notes
-        newMelody.notes = self.newNotes(data, isMinor)
+        if(isLetters == False):
+            # Notes from integers
+            newMelody.notes = self.newNotes(data, isMinor)
+        else:
+            # Notes from letters
+            newMelody.notes = self.newNotesFromLetters(data, isMinor)
+        '''NOTE: using length of notes in case there's something
+                 glitchy when generating off a data set. This will ensure that
+                 the proper number of rhythms and dynamics are created'''
         # Pick rhythms
-        newMelody.rhythms = self.newRhythms(len(data) - 1)
+        newMelody.rhythms = self.newRhythms(len(newMelody.notes) - 1)
         # Pick dynamics
-        newMelody.dynamics = self.newDynamics(len(data) - 1)
+        newMelody.dynamics = self.newDynamics(len(newMelody.notes) - 1)
 
         #-----------Check data and export to MIDI file------------#
 
