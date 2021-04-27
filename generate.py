@@ -35,6 +35,7 @@ class generate():
 
 
         # ----------Letters--------------#  
+
         '''Used to search against and return an integer representing an 
            Array index. The array will be used to generate a scale from
            whos total is the len(alphabet) - 1
@@ -82,6 +83,7 @@ class generate():
 
      
         #-------------Rhythm--------------#
+
         '''
         NOTE:
             Durations in seconds (1 = quarter note (60bpm))
@@ -123,6 +125,7 @@ class generate():
 
 
         #-----------Dynamics------------#
+        
         '''
         NOTE: MIDI velocity/dynamics range: 0 - 127
         '''
@@ -155,60 +158,44 @@ class generate():
         result = []
         for i in range(len(data)):
             result.append(int(data[i]))
-        if(result is None):
-            return -1
         return result
 
     # Convert array of integers to be within the len-1 of another array. 
-    # For example, if the given array is [0, 55, 2, 71, 5] and the len
-    # of the control array is 25, then the result should be [0, 5, 2, 21, 5]
-    '''
-    This repeatedly subtracts an integer that is larger than the control array 
-    by the len(controlArray) - 1. This will keep the newly created array within the bounds
-    of the control array and will function as a collection of index numbers to randomly
-    select from from the controlArray.
-
-    while(i > len(controlArray) - 1):
-        array[i] -= len(controlArray) - 1
-    
-    '''
-
-    # Converts given array of numbers to an unordered array of integers between 0 - 6
-    def convertNums(self, data):
+    def scaleTheScale(self, data, scale):
         '''
-        This function converts given data into an integer array of n length. 
-        Integers are kept within a range of 0 to 6 so as to not exceed
+        This repeatedly subtracts the value of len(scale) - 1 from each integer in the 
+        data array. This will keep the newly inputted array's values within the bounds 
+        of the scale array. These values function as a collection of index numbers 
+        to randomly chose from in order to pick note strings from the scale array.
 
-        Returns an unordered integer array of n length containing the numbers 0 to 6
+        For example, if the given data array is [0, 55, 2, 71, 5] and the len
+        of the scale array is 25, then the result should be [0, 5, 2, 21, 5]. 
+        100 = 50 = 25 in this example.
+
+        len(scale) - 1 acts as a way to do some modulo arithmatic whose base is
+        a dynamically determined value. 
 
         '''
-        if(data is None): 
-            return -1
-        newInts = []
-        for i in range(len(data) - 1):
-            # Convert floats to ints
-            data[i] = int(data[i])
-            # Get value to 6 or less
-            while(data[i] > 6):
-                data[i] -= 6
-            # Append to new array
-            newInts.append(data[i])
-        if(newInts is None):
-            return -1
-        return newInts
+        if(data is None): return -1
+        for i in range(len(scale)):
+            data[i] -= len(scale) - 1
+        return data
+
 
     # Maps letters to index numbers
     def mapLettersToNumbers(self, letters):
         '''
-        Maps letters to notes.
+        Maps letters to index numbers, which
+        will then be translated into notes (strings).
+
         NOTE: Need to account for capitalization!!
         '''
         if(letters is None): return -1
         numbers = []
         # Pick a letter
-        for i in range(len(letters) - 1):
+        for i in range(len(letters)):
             # Search alphabet
-            for j in range(len(self.alphabet) - 1):
+            for j in range(len(self.alphabet)):
                 # If we get a match, store that index number
                 '''NOTE: Find a way to account for capitalization! '''
                 if(letters[i] == self.alphabet[j]):
@@ -216,15 +203,6 @@ class generate():
         if(numbers is None):
             return -1
         return numbers
-
-    # Find largest integer in an array of integers
-    '''This will tell us how many notes to generate. The largest number will
-       be the ending index number'''
-    def findLargest(self, aList):
-        if(aList is None): return -1
-        return max(aList)
-
-
     
     #Converts a major scale to its natural minor
     def convertToMinor(self, scale):
@@ -301,10 +279,18 @@ class generate():
         '''
         if(data is None):
             return -1
-        # How many notes do we need?
-        total = len(data) - 1
+        notes = []
         # Convert raw data to unsorted integer array
         intData = self.floatToInt(data)
+        # How many notes do we need?
+        total = len(data) - 1
+        # Pick key
+        key = self.scales[randint(0, len(self.scales) - 1)]
+        # Pick starting octave (2 or 3)
+        octStart = randint(2, 3)
+        # Generate notes
+        for i in range(total):
+
 
     # Generate a series of notes based off an array of letters
     def newNotesFromLetters(self, name, minor):
