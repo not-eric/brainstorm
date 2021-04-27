@@ -194,24 +194,24 @@ class generate():
         Maps letters to index numbers, which
         will then be translated into notes (strings).
 
-        NOTE: Need to account for capitalization!!
+        NOTE: Not ready yet.
         '''
         if(letters is None): return -1
         numbers = []
         # Pick a letter
         for i in range(len(letters)):
             # Search lower-case alphabet
-            for j in range(len(self.alphabet)):
+            for j in range(len(self.alphabet) - 1):
                 # If we get a match, store that index number
                 '''NOTE: Find a way to account for capitalization! '''
                 if(letters[i] == self.alphabet[j]):
                     numbers.append(i)
             # Search upper-case alphabet
-            for k in range(len(self.alphabetCap)):
+            for k in range(len(self.alphabetCap) - 1):
                 # If we get a match, store that index number!
                 if(letters[i] == self.alphabetCap[k]):
                     numbers.append(i)
-        if(numbers is None):
+        if(len(numbers) == 0):
             return -1
         return numbers
     
@@ -226,7 +226,7 @@ class generate():
             k += 1
             if(k > len(scale) - 1):
                 k = 0
-        if(minorScale is None):
+        if(len(minorScale) == 0):
             return -1
         return minorScale
 
@@ -245,7 +245,7 @@ class generate():
         print("\nPicking tempo...")
         tempo = 0.0
         tempo = self.tempos[randint(0, len(self.tempo) - 1)]
-        if (not tempo):
+        if (tempo == 0.0):
             return 60.0
         return tempo
 
@@ -343,6 +343,9 @@ class generate():
                         print("Key-change! Now using", scale[0], "minor")
                     else:
                         print("Key-change! Now using", scale[0], "major")
+        if(len(notes) == 0):
+            print("ERROR: Unable to generate notes!")
+            return -1
         return notes
 
 
@@ -417,11 +420,8 @@ class generate():
             else:
                 if(rhythm not in rhythms):
                     rhythms.append(rhythm)
-
-            print("Total:", len(rhythms))
-
-        if(not rhythms):
-            print("...Unable to generate pattern!")
+        if(len(rhythms) == 0):
+            print("ERROR: Unable to generate pattern!")
             return -1
         return rhythms
 
@@ -491,8 +491,8 @@ class generate():
             else:
                 if(dynamic not in dynamics):
                     dynamics.append(dynamic)
-        if(not dynamics):
-            print("...Unable to generate pattern!")
+        if(len(dynamics) == 0):
+            print("ERROR: Unable to generate pattern!")
             return -1
         return dynamics
 
@@ -535,11 +535,9 @@ class generate():
                 elif(note in chord and len(chord) > 2):
                     break
             chords.append(chord)
-        if(not chords):
-            print("...Unable to generate chords!")
-            return -2
-        print("\nTotal chords:", len(chords))
-        print("Chords:", chords)
+        if(len(chords) == 0):
+            print("ERROR: Unable to generate chords!")
+            return -1
         return chords
 
 

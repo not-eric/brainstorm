@@ -28,10 +28,12 @@ data = ['J', 'a', 'y']
 print("inputted data:", data)
 print("expected result: [9, 0, 24]")
 result = create.mapLettersToNumbers(data)
-if(result != -1):
-    print("result:", result)
+if(result == -1):
+    print("failed! function failed")
+elif(data != result):
+    print("failed! output is not expected result")
 else:
-    print("failed!")
+    print("result:", result)
 
 
 # Pick key test
@@ -40,9 +42,9 @@ key = create.pickKey()
 print("result: key of", key[0], "major. scale:", key)
 
 
-# Scale the scale test
-print("\nData scaling test")
-key = create.pickKey()
+# # Scale the scale test
+# print("\nData scaling test")
+# key = create.pickKey()
 
 
 # Convert to minor test
@@ -53,11 +55,11 @@ minor = create.convertToMinor(key)
 print("minor key:", minor)
 
 
-# New notes test
-print("\nnote generation test")
-data = []
-if(randint(1, 2) == 1):
-    isMinor = True
-else:
-    isMinor = False
-notes = create.newNotes()
+# # New notes test
+# print("\nnote generation test")
+# data = []
+# if(randint(1, 2) == 1):
+#     isMinor = True
+# else:
+#     isMinor = False
+# notes = create.newNotes()
