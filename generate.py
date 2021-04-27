@@ -272,34 +272,64 @@ class generate():
         return newNote
 
    #Generate a series of notes based off an inputted array of integers
-    def newNotes(self, data, minor):
+    def newNotes(self, data, isMinor):
         '''
         Generate a series of notes based on inputted data (an array of integers)
         This randomly picks the key and the starting octave! 
+
+        NOTE:
+            Long data sets will have the same note associated with different 
+            values elsewhere in the array. 
+            
+            If we ascend through the available octaves we can pick a new 
+            key/scale and cycle through the octaves again. This will allow for 
+            some cool chromaticism to emerge rather "organiclly" while minimizing
+            the amount of repeated notes associated with different elements in 
+            the data array (unless we get the same scale chosen again, or there's
+            a lot of common tones between the scales that are picked).  
         '''
         if(data is None):
             return -1
+
         notes = []
-        # How many notes do we need?
-        total = len(data) - 1
+
         # Pick starting octave (2 or 3)
         octave = randint(2, 3)
+        octStart = octave
+
         # Pick key
-        scale = self.scales[randint(0, len(self.scales) - 1)]
+        scale = self.scales[randint(1, 12)]
+
         # Will this be a minor scale?
-        if(minor == True):
+        if(isMinor == True):
             scale = self.convertToMinor(scale)
+
+        #Display choices
+        if(isMinor == True):
+            print("\nGenerating", len(data), "notes starting in the key of", scale[0], "minor")
+        else:
+            print("\nGenerating", len(data), "notes starting in the key of", scale[0], "major")
+
         # Generate notes
-        for i in range(total):
+        for i in range(len(data)):
             note = scale[data[i]]
             note = "".format(note, octave)
             notes.append(note)
             # If we've reached the end of the scale,
             # increment the octave (until octave 8)
-            if(i % 6 == 0):
+            # Ideally trigger this condition every
+            # 7 iterations. 
+            if(i % 7 == 0):
                 octave += 1
+                # If we reach highest octave, reset
+                # to original starting point and pick
+                # a new scale to chose from
                 if(octave > 8):
-                    break
+                    octave = octStart
+                    scale = self.scales[randint(1, 12)]
+                    if(isMinor == True):
+                        scale = self.scaleTheScale(scale)
+                        
         return notes
 
 
