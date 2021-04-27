@@ -10,8 +10,10 @@ NOTE:
 '''
 
 # Import and new object
+from random import randint
 from generate import generate 
 create = generate()
+
 
 # Test converting raw data to integers
 print("\nconvert floats to ints test")
@@ -24,6 +26,7 @@ if(result != -1):
 else:
     print("failed!")
 
+
 # Map letters to numbers test
 print("\nletter to number map test")
 data = ['J', 'a', 'y']
@@ -35,16 +38,31 @@ if(result != -1):
 else:
     print("failed!")
 
+
 # Pick key test
 print("\npick key test")
 key = create.pickKey()
-print("result:", key)
+print("result: key of", key[0], "major. scale:", key)
+
+
+# Scale the scale test
+print("\nData scaling test")
+key = create.pickKey()
+
 
 # Convert to minor test
-print("\nconvert to natural minor test")
+print("\nconvert to relative minor test")
 key = create.pickKey()
 print("major key:", key)
 minor = create.convertToMinor(key)
 print("minor key:", minor)
 
 
+# New notes test
+print("\nnote generation test")
+data = []
+if(randint(1, 2) == 1):
+    isMinor = True
+else:
+    isMinor = False
+notes = create.newNotes()

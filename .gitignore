@@ -1,4 +1,5 @@
 .env
-.vscode
+.vscode/
 images/
 test
+__pycache__/
