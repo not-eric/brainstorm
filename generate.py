@@ -217,7 +217,7 @@ class generate():
             return -1
         return numbers
     
-    #Converts a major scale to its relative minor
+    # Converts a major scale to its relative minor
     def convertToMinor(self, scale):
         if(len(scale) == 0):
             print("ERROR: no scale inputted!")
@@ -233,6 +233,15 @@ class generate():
             print("ERROR: unable to generate minor scale!")
             return -1
         return minorScale
+    
+    # Convert a hex number representing a color to an array of integers
+    '''
+    Algorithm:
+        1. Convert to integer
+        2. Break single integer into array of individual integers (ex 108 to [1, 0, 8])
+ 
+    '''
+    # def convertHexToArrayOfInts(self, hex):
 
 
     #--------------------------------------------------------------------------------#
@@ -596,6 +605,7 @@ class generate():
         Returns a newMelody() object.
         '''
         # Some booleans to determine which mapping technique to use
+        isHex = False
         isFloats = False
         isLetters = False
         # Melody container object
@@ -606,15 +616,16 @@ class generate():
         print("\nProcessing incoming data...")
 
         '''
-        Is this a character array, integer array, or array of floats?
+        Is this a character array, integer array, array of floats, or a hexnumber (for color)?
 
-        If floats, convert to ints, then scale,
+        If floats then convert to ints, then scale...
+
         if(isFloats == True):
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
         
-        otherwise match letters to their corresponding index number to match against a generated
-        scale.
+        Otherwise match letters to their corresponding index number to 
+        match against a generated scale.
 
         if(isLetters == True):
             data = self.mapLettersToNumbers(data)
