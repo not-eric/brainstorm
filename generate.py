@@ -225,13 +225,23 @@ class generate():
         return minorScale
     
     # Convert a hex number representing a color to an array of integers
-    '''
-    Algorithm:
-        1. Convert to integer
-        2. Break single integer into array of individual integers (ex 108 to [1, 0, 8])
- 
-    '''
-    # def hexToIntArray(self, hex):
+    def hexToIntArray(self, hex):
+        '''
+        Converts a prefixed hex number to an array of integers.
+
+        Algorithm:
+            1. Convert to integer
+            2. Break single integer into array of individual integers (ex 108 to [1, 0, 8])
+               using list comprehension
+        '''
+        if(hex == 0 or hex == None):
+            print("ERROR: Invalid input!")
+            return -1
+        # Convert to int
+        hex = int(hex, 0)
+        # Convert to array of ints (ie. 132 -> [1, 3, 2])
+        numArr = [int(x) for x in str(hex)]
+        return numArr
 
 
     #--------------------------------------------------------------------------------#
