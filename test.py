@@ -23,25 +23,26 @@ def newInts():
 #--------------------------------------------------------------#
 
 # Scaling test
-print("\nscaling test")
+print("\n***scaling test***")
 nums = newInts()
 print("\nnew array:", nums)
-print("\ntotal elements:", len(nums) - 1)
-print("\nexpected result: an array who's element values don't exceed", len(nums) - 2)
+print("total elements:", len(nums) - 1)
+print("expected result: an array who's element values don't exceed", len(nums) - 2)
 result = create.scaleTheScale(nums)
 # Check result
 for i in range(len(result) - 1):
     if(result[i] > len(nums) - 2):
         print("failed! i = ", i)
         break
-print("\nresult:", result)
+print("\ntotal elements:", len(result))
+print("result:", result)
 
 
 # Map integers to notes test
-print("\nintegers to notes test")
+print("\n***integers to notes test***")
 nums = newInts()
 print("\ntotal new numbers:", len(nums))
-print("\nnew numbers:", nums)
+print("new numbers:", nums)
 if(randint(1, 2) == 1):
     isMinor = True
     print("using a minor key!")
@@ -54,7 +55,7 @@ print("new notes:", newNotes)
 
 
 # Map letters to numbers test
-print("\nletter to number map test")
+print("\n***letter to number map test***")
 data = ['J', 'a', 'y']
 print("inputted data:", data)
 print("expected result: [9, 0, 24]")

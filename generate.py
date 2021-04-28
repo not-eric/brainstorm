@@ -589,7 +589,7 @@ class generate():
 
         Returns a newMelody() object.
         '''
-        # Some booleans to determine which note generator to use
+        # Some booleans to determine which mapping technique to use
         isFloats = False
         isLetters = False
         # Melody container object
