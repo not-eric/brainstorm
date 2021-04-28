@@ -204,7 +204,7 @@ class generate():
 
         NOTE: Not ready yet.
         '''
-        if(letters is None): return -1
+        if(len(letters) == 0): return -1
         # Make all uppercase characters lowercase
         for i in range(len(letters) - 1):
             letters[i].lower()
@@ -214,7 +214,6 @@ class generate():
             # Search lower-case alphabet
             for j in range(len(self.alphabet) - 1):
                 # If we get a match, store that index number
-                '''NOTE: Find a way to account for capitalization! '''
                 if(letters[i] == self.alphabet[j]):
                     numbers.append(i)
         if(len(numbers) == 0):
@@ -223,8 +222,7 @@ class generate():
     
     #Converts a major scale to its relative minor
     def convertToMinor(self, scale):
-        if(scale is None):
-            return -1
+        if(len(scale) == 0): return -1
         k = 5
         minorScale = []
         for i in range(len(scale)):
@@ -280,10 +278,8 @@ class generate():
         Requires an integer, a given scale, and the required octave. 
         Returns a single string.
         '''
-        if(num > len(scale) - 1):
-            return -1
-        if(octave < 1 or octave > 8):
-            return -1
+        if(num > len(scale) - 1): return -1
+        if(octave < 1 or octave > 8): return -1
         newNote = scale[num]
         newNote = "{}{}".format(newNote, octave)
         return newNote     
@@ -305,7 +301,8 @@ class generate():
             the data array (unless we get the same scale chosen again, or there's
             a lot of common tones between the scales that are picked) .  
         '''
-        if(data is None):
+        if(len(data) == 0):
+            print("ERROR: no data inputted!")
             return -1
 
         # Pick starting octave (2 or 3)
@@ -552,7 +549,8 @@ class generate():
               add more randomly inserted chromatic tones to give progressions more
               variance and color. 
         '''
-        if(scale is None):
+        if(len(scale) == 0):
+            print("ERROR: no scale inputted!")
             return -1
         # How many chords?
         chords = []
@@ -589,10 +587,10 @@ class generate():
         '''
         Picks a tempo, notes, rythms, and dynamics. Rhythms and dynamics are picked randomly (total
         for each is len(data), notes come from user. Should (ideally) handle either a character
-        array for a person's name (or any random set of characters), or an array of integers
-        of n length.
+        array for a person's name (or any random set of characters), or an array of 
+        either floats or integers of n length.
 
-        Appends to pretty_midi object and returns new MIDI object and exports a MIDI file.
+        Appends to pretty_midi object and exports a MIDI file.
 
         Returns a newMelody() object.
         '''
@@ -608,12 +606,10 @@ class generate():
 
         '''
         Is this a character array, integer array, or array of floats?
-        Need a boolean to remember whether we're using a character array
-        or an integer array.
 
-        If floats, convert to ints, then scale
-        # Scale integers to i = (i % len(data) == 0)
-        data = self.scaleTheScale(data)
+        If floats, convert to ints, then scale, otherwise match letters
+        to their corresponding index number to match against a generated
+        scale.
         '''
 
         #-----------------------Generate!------------------------#
