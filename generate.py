@@ -213,6 +213,7 @@ class generate():
                 if(letters[i] == self.alphabet[j]):
                     numbers.append(j)
         if(len(numbers) == 0):
+            print("ERROR: no index numbers found!")
             return -1
         return numbers
     
@@ -229,6 +230,7 @@ class generate():
             if(k > len(scale) - 1):
                 k = 0
         if(len(minorScale) == 0):
+            print("ERROR: unable to generate minor scale!")
             return -1
         return minorScale
 
@@ -247,7 +249,7 @@ class generate():
         print("\nPicking tempo...")
         tempo = 0.0
         tempo = self.tempos[randint(0, len(self.tempo) - 1)]
-        if (tempo == 0.0):
+        if(tempo == 0.0):
             return 60.0
         return tempo
 
@@ -354,7 +356,7 @@ class generate():
             # 6 iterations. 
             if(i % 6 == 0):
                 octave += 1
-                # If we reach highest octave, reset
+                # If we reach highest octave (8), reset
                 # to original starting point/octave 
                 # and pick a new scale to chose from
                 if(octave > 8):
@@ -363,7 +365,7 @@ class generate():
                     # Re-decide if we're using minor (1) or major (2) again
                     if(randint(1, 2) == 1):
                         isMinor = True
-                        print("Switching to a major scale!")
+                        print("Switching to a major key!")
                     else:
                         isMinor = False
                         print("Staying in a minor key!")
@@ -377,7 +379,8 @@ class generate():
         # Pick notes according to integers in data array
         for i in range(len(data) - 1):
             notes.append(scale[data[i]])
-
+            
+        # Check results
         if(len(notes) == 0):
             print("ERROR: Unable to generate notes!")
             return -1

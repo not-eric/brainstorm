@@ -19,6 +19,18 @@ def newInts():
         nums.append(randint(0, 200))
     return nums
 
+# Generate a list of 10 - 50 random upper/lower-case characters
+def newChars():
+    chars = []
+    total = randint(10, 50)
+    for i in range(total):
+        # Pick letter
+        char = create.alphabet[randint(0, 25)]
+        # Captitalize? 1 = yes, 2 = no
+        if(randint(1, 2) == 1):
+            char = char.upper()
+        chars.append(char)
+    return chars    
 
 #--------------------------------------------------------------#
 
