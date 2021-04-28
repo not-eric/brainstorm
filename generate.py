@@ -35,7 +35,7 @@ class generate():
         #---------------------------------------------------------------------#
 
 
-        # ----------Letters--------------#  
+        # ----------------------------Letters---------------------------------#  
 
         '''Used to search against and return an integer representing an 
            Array index. The array will be used to generate a scale from
@@ -53,10 +53,9 @@ class generate():
                             'S', 'T', 'U', 'V', 'W', 'X',
                             'Y', 'Z']
 
-        #--------Notes and Scales--------#
+        #-----------------------Notes and Scales------------------------------#
 
         # Enharmonically spelled note names starting on A. Indicies: 0-16.
-        # NOTE THE STARTING NOTE! 
         self.notes = ["A", "A#", "Bb", "B", 
                       "C", "C#", "Db", "D", 
                       "D#", "Eb", "E", "F", 
@@ -87,7 +86,7 @@ class generate():
                        12:['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#']}
 
      
-        #-------------Rhythm--------------#
+        #---------------------------Rhythm-----------------------------------#
 
         '''
         NOTE:
@@ -119,7 +118,7 @@ class generate():
                             40.5, 60.75, 91.125, 136.6875]
         
   
-        #------------Tempo-------------#
+        #----------------------------Tempo-----------------------------------#
 
         # Tempos (indices: 0-38)
         self.tempos = [40.0, 42.0, 44.0, 46.0, 50.0, 52.0, 54.0, 56.0, 58.0, #1-9 (0-8)
@@ -129,7 +128,7 @@ class generate():
                        184.0, 200.0, 208.0] #37-39 (36-38)
 
 
-        #-----------Dynamics------------#
+        #--------------------------Dynamics---------------------------------#
         
         '''
         NOTE: MIDI velocity/dynamics range: 0 - 127
@@ -166,6 +165,12 @@ class generate():
             result.append(int(data[i]))
         return result
 
+    # Scales an individual note
+    def scaleTheNote(self, data, scale):
+        while(data > scale):
+            data -= scale
+        return data
+
     # Convert array of integers to be within the len-1 of another array. 
     def scaleTheScale(self, data, scale):
         '''
@@ -188,6 +193,7 @@ class generate():
                 data[i] -= len(scale) - 1
         return data
 
+
     # Maps letters to index numbers
     def mapLettersToNumbers(self, letters):
         '''
@@ -197,6 +203,9 @@ class generate():
         NOTE: Not ready yet.
         '''
         if(letters is None): return -1
+        # Make all uppercase characters lowercase
+        for i in range(len(letters) - 1):
+            letters[i].lower()
         numbers = []
         # Pick a letter
         for i in range(len(letters)):
@@ -205,11 +214,6 @@ class generate():
                 # If we get a match, store that index number
                 '''NOTE: Find a way to account for capitalization! '''
                 if(letters[i] == self.alphabet[j]):
-                    numbers.append(i)
-            # Search upper-case alphabet
-            for k in range(len(self.alphabetCap) - 1):
-                # If we get a match, store that index number!
-                if(letters[i] == self.alphabetCap[k]):
                     numbers.append(i)
         if(len(numbers) == 0):
             return -1
@@ -280,7 +284,7 @@ class generate():
             return -1
         newNote = scale[num]
         newNote = "{}{}".format(newNote, octave)
-        return newNote
+        return newNote     
 
    #Generate a series of notes based off an inputted array of integers
     def newNotes(self, data, isMinor):
@@ -309,23 +313,22 @@ class generate():
         octStart = octave
 
         # Pick key/scale
-        scale = self.scales[randint(1, 12)]
+        scale = []
+        root = self.scales[randint(1, 12)]
 
         # Will this be a minor scale?
         if(isMinor == True):
-            scale = self.convertToMinor(scale)
+            root = self.convertToMinor(root)
 
         #Display choices
         if(isMinor == True):
-            print("\nGenerating", len(data), "notes starting in the key of", scale[0], "minor")
+            print("\nGenerating", len(data), "notes starting in the key of", root[0], "minor")
         else:
-            print("\nGenerating", len(data), "notes starting in the key of", scale[0], "major")
+            print("\nGenerating", len(data), "notes starting in the key of", root[0], "major")
 
-        # Generate notes
+        # Generate notes to pick from
         for i in range(len(data)):
-            note = scale[data[i]]
-            note = "".format(note, octave)
-            notes.append(note)
+            scale.append(root[i])
             # If we've reached the end of the scale,
             # increment the octave (until octave 8)
             # Ideally trigger this condition every
@@ -343,6 +346,15 @@ class generate():
                         print("Key-change! Now using", scale[0], "minor")
                     else:
                         print("Key-change! Now using", scale[0], "major")
+
+        # Pick notes according to integers in data array
+        for i in range(len(data) - 1):
+            # Pick note. 
+            choice = self.scaleTheNote(data[i], len(scale) - 1)
+            note = scale[choice]
+            note = "".format(note, octave)
+            notes.append(note)
+
         if(len(notes) == 0):
             print("ERROR: Unable to generate notes!")
             return -1
@@ -514,17 +526,15 @@ class generate():
         '''
         if(scale is None):
             return -1
-        print("\nGenerating chords from a given scale...")
-        print("Given scale:", scale)
-        #How many chords?
+        # How many chords?
         chords = []
-        total = randint(3, 10)
-        # total = randint(3, len(scale) - 1)
+        # Create between 3 and however many notes there are in the scale
+        total = randint(3, len(scale) - 1)
         print("\nGenerating", total, "chords...")
-        #Pick notes
+        # Pick notes
         while(len(chords) < total):
             chord = []
-            #How many notes in this chord?
+            # How many notes in this chord?
             totalNotes = randint(2, 7)
             while(len(chord) < totalNotes):
                 # Pick note
@@ -606,7 +616,7 @@ class generate():
             print("ERROR: missing melody data!")
             return -1
 
-        #Add data to MIDI object and write out file.
+        # Add data to MIDI object and write out file.
         if(mid.saveMelody(self, newMelody) == -1):
             print("ERROR: unable to export melody!")
             return -1
