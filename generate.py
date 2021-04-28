@@ -379,7 +379,7 @@ class generate():
         # Pick notes according to integers in data array
         for i in range(len(data) - 1):
             notes.append(scale[data[i]])
-            
+
         # Check results
         if(len(notes) == 0):
             print("ERROR: Unable to generate notes!")
@@ -608,9 +608,16 @@ class generate():
         '''
         Is this a character array, integer array, or array of floats?
 
-        If floats, convert to ints, then scale, otherwise match letters
-        to their corresponding index number to match against a generated
+        If floats, convert to ints, then scale,
+        if(isFloats == True):
+            data = self.floatToInt(data)
+            data = self.scaleTheScale(data)
+        
+        otherwise match letters to their corresponding index number to match against a generated
         scale.
+
+        if(isLetters == True):
+            data = self.mapLettersToNumbers(data)
         '''
 
         #-----------------------Generate!------------------------#
