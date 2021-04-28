@@ -396,21 +396,6 @@ class generate():
         return notes
 
 
-    # Generate a series of notes based off an array of letters
-    def newNotesFromLetters(self, name, minor):
-        '''
-        Generate a scale based on the letters from a name (or any random array of letters)
-        '''
-        if(name is None):
-            return -1
-        # Pick key, then generate 25 note scale (multiple octaves) from this root. 
-        # Account for Whether this is a major or minor scale!
-
-        # if(minor == True):
-
-        # else:
-
-
     #-----------------------------------------------------------------------------------#
     #--------------------------------------Rhythm---------------------------------------#
     #-----------------------------------------------------------------------------------#

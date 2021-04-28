@@ -12,7 +12,7 @@ create = generate()
 
 #---------------------test functions---------------------------#
 
-# Generate a list of 10-50 random numbers between 0-200
+# Generate a list of 10 - 50 random numbers between 0-200
 def newInts():
     nums = []
     total = randint(10, 50)
