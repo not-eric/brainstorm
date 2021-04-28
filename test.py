@@ -39,6 +39,7 @@ print("\nresult:", result)
 # Map integers to notes test
 print("\nintegers to notes test")
 nums = newInts()
+print("\ntotal new numbers:", len(nums))
 print("\nnew numbers:", nums)
 if(randint(1, 2) == 1):
     isMinor = True

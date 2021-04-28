@@ -365,6 +365,13 @@ class generate():
                 if(octave > 8):
                     octave = octStart
                     root = self.scales[randint(1, 12)]
+                    # Re-decide if we're using minor (1) or major (2) again
+                    if(randint(1, 2) == 1):
+                        isMinor = True
+                        print("Switching to a major scale!")
+                    else:
+                        isMinor = False
+                        print("Staying in a minor key!")
                     if(isMinor == True):
                         root = self.convertToMinor(root)
                         print("Key-change! Now using", root[0], "minor")
