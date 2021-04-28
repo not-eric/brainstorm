@@ -180,7 +180,8 @@ class generate():
         len(scale) - 1 acts as a way to do some modulo arithmatic whose base is
         a dynamically determined value. 
         '''
-        if(len(data) == 0): 
+        if(len(data) == 0):
+            print("ERROR: no data inputted") 
             return -1
         newData = []
         for i in range(len(data) - 1):
@@ -217,7 +218,9 @@ class generate():
     
     #Converts a major scale to its relative minor
     def convertToMinor(self, scale):
-        if(len(scale) == 0): return -1
+        if(len(scale) == 0):
+            print("ERROR: no scale inputted!")
+            return -1
         k = 5
         minorScale = []
         for i in range(len(scale)):
