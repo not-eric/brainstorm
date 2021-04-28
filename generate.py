@@ -637,15 +637,18 @@ class generate():
 
         # Pick tempo
         newMelody.tempo = self.newTempo()
+
         # Pick notes
         if(isLetters == False):
             # Notes from integers
             newMelody.notes = self.newNotes(data, isMinor)
+        #elif(isHex == True):
+            
         else:
             # Notes from letters
             data = self.mapLettersToNumbers(data)
             newMelody.notes = self.newNotes(data, isMinor)
-        '''NOTE: using length of notes in case there's something
+        '''NOTE: Using length of notes as the limit in case there's something
                  glitchy when generating off a data set. This will ensure that
                  the proper number of rhythms and dynamics are created'''
         # Pick rhythms
