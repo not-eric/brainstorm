@@ -6,8 +6,7 @@
 ----------------------------------------------------NOTES-------------------------------------------------------
     
     This class handles all generative functions. It contains a set of resource data
-    that is accessed by a variety of generative algorithms ranging from pure "random"
-    selections (see PRNG info), to more strict instructions. 
+    that is accessed by a variety of generative algorithms and mapping functions.  
 
 ----------------------------------------------------------------------------------------------------------------
 '''
@@ -22,8 +21,7 @@ from containers.melody import melody
 class generate():
     '''
     This class handles all generative functions. It contains a set of resource data
-    that is accessed by a variety of generative algorithms ranging from pure "random"
-    selections (see PRNG info), to more strict instructions.  
+    that is accessed by a variety of generative algorithms and mapping functions.  
     '''
 
     # Constructor
@@ -37,10 +35,12 @@ class generate():
 
         # ----------------------------Letters---------------------------------#  
 
-        '''Used to search against and return an integer representing an 
-           Array index. The array will be used to generate a scale from
-           whos total is the len(alphabet) - 1'''
-
+        '''
+        NOTE:
+            Used to search against and return an integer representing an 
+            Array index. The array will be used to generate a scale from
+            whos total is the len(alphabet) - 1
+        '''
 
         self.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
                          'h', 'i', 'j', 'k', 'l', 'm', 'n',
@@ -65,7 +65,6 @@ class generate():
             then I'll just add a function to generate some minor chords based
             off the scale chosen from the dicitonary below.
         '''
-        # Use indicies 1 - 12
         self.scales = {1: ['C', 'D', 'E', 'F', 'G', 'A', 'B'], 
                        2: ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C'],
                        3: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#' ],
@@ -163,16 +162,12 @@ class generate():
     # Convert array of integers to be within the len-1 of another array. 
     def scaleTheScale(self, data):
         '''
-        This repeatedly subtracts the value of len(scale) - 1 from each integer in the 
-        data array. This will keep the newly inputted array's values within the bounds 
+        This repeatedly subtracts the value of len(data) - 1 from each integer in the 
+        data array. This will keep the newly inputted data array's values within the bounds 
         of the scale array. These values function as a collection of index numbers 
         to randomly chose from in order to pick note strings from the scale array.
 
-        For example, if the given data array is [0, 55, 2, 71, 5] and the len
-        of the scale array is 25, then the result should be [0, 5, 2, 21, 5]. 
-        100 = 50 = 25 in this example.
-
-        len(scale) - 1 acts as a way to do some modulo arithmatic whose base is
+        len(data) - 1 acts as a way to do some modulo arithmatic whose base is
         a dynamically determined value. 
         '''
         if(len(data) == 0):
@@ -188,8 +183,8 @@ class generate():
     # Maps letters to index numbers
     def mapLettersToNumbers(self, letters):
         '''
-        Maps letters to index numbers, which
-        will then be translated into notes (strings).
+        Maps letters to index numbers, which will then be 
+        translated into notes (strings).
         '''
         print("\nMapping letters to index numbers...")
         if(len(letters) == 0): 
@@ -236,7 +231,7 @@ class generate():
         2. Break single integer into array of individual integers (ex 108 to [1, 0, 8])
  
     '''
-    # def convertHexToArrayOfInts(self, hex):
+    # def hexToIntArray(self, hex):
 
 
     #--------------------------------------------------------------------------------#
@@ -598,17 +593,20 @@ class generate():
         '''
         Is this a character array, integer array, array of floats, or a hexnumber (for color)?
 
-        If floats then convert to ints, then scale...
 
+        # If floats then convert to ints and scale
         if(isFloats == True):
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
         
-        Otherwise match letters to their corresponding index number to 
-        match against a generated scale.
-
+        # If letters/chars then match letters to their corresponding index numbers.
         if(isLetters == True):
             data = self.mapLettersToNumbers(data)
+
+        # If hex convert to array of ints and scale
+        if(isHex == True):
+            data = self.hexToIntArray(data)
+            data = self.scaleTheScale(data)
         '''
 
         #-----------------------Generate!------------------------#
@@ -619,15 +617,7 @@ class generate():
         newMelody.tempo = self.newTempo()
 
         # Pick notes
-        if(isLetters == False):
-            # Notes from integers
-            newMelody.notes = self.newNotes(data, isMinor)
-        #elif(isHex == True):
-            
-        else:
-            # Notes from letters
-            data = self.mapLettersToNumbers(data)
-            newMelody.notes = self.newNotes(data, isMinor)
+        newMelody.notes = self.newNotes(data, isMinor)
         '''NOTE: Using length of notes as the limit in case there's something
                  glitchy when generating off a data set. This will ensure that
                  the proper number of rhythms and dynamics are created'''
