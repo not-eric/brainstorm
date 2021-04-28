@@ -25,16 +25,16 @@ def newInts():
 # Scaling test
 print("\nscaling test")
 nums = newInts()
-print("new array:", nums)
-limit = len(nums) - 1
-print("expected result: an array who's element values don't exceed", limit)
+print("\nnew array:", nums)
+print("\ntotal elements:", len(nums) - 1)
+print("\nexpected result: an array who's element values don't exceed", len(nums) - 2)
 result = create.scaleTheScale(nums)
 # Check result
 for i in range(len(result) - 1):
-    if(result[i] > limit):
+    if(result[i] > len(nums) - 2):
         print("failed! i = ", i)
         break
-print("result:", result)
+print("\nresult:", result)
 
 # # Map integers to notes test
 # print("\nintegers to notes test")

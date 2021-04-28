@@ -190,8 +190,8 @@ class generate():
             return -1
         newData = []
         for i in range(len(data) - 1):
-            while(data[i] > len(data) - 1):
-                data[i] -= len(data) - 1
+            while(data[i] > len(data) - 2):
+                data[i] -= len(data) - 2
             newData.append(data[i])
         return newData
 
