@@ -152,7 +152,8 @@ class generate():
     # Converts an array of floats to an array of ints
     def floatToInt(self, data):
         '''Converts an array of floats to an array of ints'''
-        if(data is None):
+        if(len(data) == 0):
+            print("ERROR: no data inputted!")
             return -1
         result = []
         for i in range(len(data)):
