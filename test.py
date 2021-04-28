@@ -36,6 +36,7 @@ for i in range(len(result) - 1):
         break
 print("\nresult:", result)
 
+
 # Map integers to notes test
 print("\nintegers to notes test")
 nums = newInts()
@@ -52,10 +53,10 @@ print("\ntotal notes:", len(newNotes))
 print("new notes:", newNotes)
 
 
-# # Map letters to numbers test
-# print("\nletter to number map test")
-# data = ['J', 'a', 'y']
-# print("inputted data:", data)
-# print("expected result: [9, 0, 24]")
-# print(create.mapLettersToNumbers(data))
-
+# Map letters to numbers test
+print("\nletter to number map test")
+data = ['J', 'a', 'y']
+print("inputted data:", data)
+print("expected result: [9, 0, 25]")
+result = create.mapLettersToNumbers(data)
+print("result", result)

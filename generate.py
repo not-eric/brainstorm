@@ -42,16 +42,10 @@ class generate():
            whos total is the len(alphabet) - 1'''
 
 
-        self.alphabet = ['a', 'b','c','d', 'e', 'f', 'g',
-                         'h','i', 'j', 'k', 'l', 'm', 'n',
+        self.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
+                         'h', 'i', 'j', 'k', 'l', 'm', 'n',
                          'o', 'p', 'q', 'r', 's', 't', 'u',
-                         'v', 'w', 'x', 'y,' 'z']
-
-        self.alphabetCap = ['A', 'B', 'C', 'D', 'E', 'F',
-                            'G', 'H', 'I', 'J', 'K', 'L',
-                            'M', 'N', 'O', 'P', 'Q', 'R',
-                            'S', 'T', 'U', 'V', 'W', 'X',
-                            'Y', 'Z']
+                         'v', 'w', 'x', 'y', 'z']
 
         #-----------------------Notes and Scales------------------------------#
 
@@ -195,27 +189,28 @@ class generate():
             newData.append(data[i])
         return newData
 
-
     # Maps letters to index numbers
     def mapLettersToNumbers(self, letters):
         '''
         Maps letters to index numbers, which
         will then be translated into notes (strings).
-
-        NOTE: Not ready yet.
         '''
-        if(len(letters) == 0): return -1
+        print("\nMapping letters to index numbers...")
+        if(len(letters) == 0): 
+            print("ERROR: no data inputted!")
+            return -1
         # Make all uppercase characters lowercase
         for i in range(len(letters) - 1):
-            letters[i].lower()
+            if(letters[i].isupper() == True):
+                letters[i] = letters[i].lower()
         numbers = []
         # Pick a letter
         for i in range(len(letters)):
-            # Search lower-case alphabet
+            # Search alphabet letter by letter
             for j in range(len(self.alphabet) - 1):
                 # If we get a match, store that index number
                 if(letters[i] == self.alphabet[j]):
-                    numbers.append(i)
+                    numbers.append(j)
         if(len(numbers) == 0):
             return -1
         return numbers
