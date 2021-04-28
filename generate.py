@@ -160,12 +160,6 @@ class generate():
             result.append(int(data[i]))
         return result
 
-    # Scales an individual note
-    def scaleTheNote(self, data, scale):
-        while(data > scale):
-            data -= scale
-        return data
-
     # Convert array of integers to be within the len-1 of another array. 
     def scaleTheScale(self, data):
         '''
