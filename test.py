@@ -22,25 +22,38 @@ def newInts():
 
 #--------------------------------------------------------------#
 
-
-# Map integers to notes test
-print("\nintegers to notes test")
+# Scaling test
+print("\nscaling test")
 nums = newInts()
-print("new numbers:", nums)
-if(randint(1, 2) == 1):
-    isMinor = True
-    print("using a minor key!")
-else:
-    isMinor = False
-    print("using a major key!")
-newNotes = create.newNotes(nums, isMinor)
-print("new notes:", newNotes)
+print("new array:", nums)
+limit = len(nums) - 1
+print("expected result: an array who's element values don't exceed", limit)
+result = create.scaleTheScale(nums)
+# Check result
+for i in range(len(result) - 1):
+    if(result[i] > limit):
+        print("failed! i = ", i)
+        break
+print("result:", result)
+
+# # Map integers to notes test
+# print("\nintegers to notes test")
+# nums = newInts()
+# print("new numbers:", nums)
+# if(randint(1, 2) == 1):
+#     isMinor = True
+#     print("using a minor key!")
+# else:
+#     isMinor = False
+#     print("using a major key!")
+# newNotes = create.newNotes(nums, isMinor)
+# print("new notes:", newNotes)
 
 
-# Map letters to numbers test
-print("\nletter to number map test")
-data = ['J', 'a', 'y']
-print("inputted data:", data)
-print("expected result: [9, 0, 24]")
-print(create.mapLettersToNumbers(data))
+# # Map letters to numbers test
+# print("\nletter to number map test")
+# data = ['J', 'a', 'y']
+# print("inputted data:", data)
+# print("expected result: [9, 0, 24]")
+# print(create.mapLettersToNumbers(data))
 

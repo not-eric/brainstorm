@@ -288,7 +288,7 @@ class generate():
         newNote = "{}{}".format(newNote, octave)
         return newNote     
 
-   #Generate a series of notes based off an inputted array of integers
+    # Generate a series of notes based off an inputted array of integers
     def newNotes(self, data, isMinor):
         '''
         Generate a series of notes based on inputted data (an array of integers)
@@ -366,7 +366,7 @@ class generate():
                     octave = octStart
                     root = self.scales[randint(1, 12)]
                     if(isMinor == True):
-                        root = self.scaleTheScale(root)
+                        root = self.convertToMinor(root)
                         print("Key-change! Now using", root[0], "minor")
                     else:
                         print("Key-change! Now using", root[0], "major")
