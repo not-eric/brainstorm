@@ -188,12 +188,12 @@ class generate():
         '''
         if(len(data) == 0): 
             return -1
-        newscale = []
+        newData = []
         for i in range(len(data) - 1):
             while(data[i] > len(data) - 1):
                 data[i] -= len(data) - 1
-            newscale.append(data[i])
-        return newscale
+            newData.append(data[i])
+        return newData
 
 
     # Maps letters to index numbers
@@ -308,14 +308,11 @@ class generate():
         if(data is None):
             return -1
 
-        notes = []
-
         # Pick starting octave (2 or 3)
         octave = randint(2, 3)
         octStart = octave
 
-        # Pick key/scale
-        scale = []
+        # Pick initial root/starting scale
         root = self.scales[randint(1, 12)]
 
         # Will this be a minor scale?
@@ -330,10 +327,11 @@ class generate():
 
         # Scale individual data set integers to i = (i % len(dataSet) == 0)
         '''This ensures that the integers are available indices in array of
-           availabe notes'''
+           availabe notes. This will eventually be moved to newMelody() so that
+           incoming data will already be scaled by the time it reaches newNotes()'''
         data = self.scaleTheScale(data)
         '''
-        Note generation algorithm
+        Note generation algorithm:
 
             1. Total notes is equivalent to number of notes in data set.
                 1b. Maybe if data-sets exceed a certain length, we can 
@@ -349,9 +347,10 @@ class generate():
         '''    
         # Generate notes to pick from
         n = 0
+        notes = []
+        scale = []
         for i in range(len(data)):
-            # NOTE: this is just appending empty chars?? ('')
-            note = "".format(root[n], octave)
+            note = "{}{}".format(root[n], octave)
             scale.append(note)
             n += 1
             # If we've reached the end of the root scale,
@@ -375,7 +374,6 @@ class generate():
 
         # Pick notes according to integers in data array
         for i in range(len(data) - 1):
-            # Pick note. 
             notes.append(scale[data[i]])
 
         if(len(notes) == 0):
@@ -607,6 +605,8 @@ class generate():
         or an integer array.
 
         If floats, convert to ints, then scale
+        # Scale integers to i = (i % len(data) == 0)
+        data = self.scaleTheScale(data)
         '''
 
         #-----------------------Generate!------------------------#
