@@ -188,10 +188,12 @@ class generate():
         '''
         if(len(data) == 0): 
             return -1
+        newscale = []
         for i in range(len(data) - 1):
             while(data[i] > len(data) - 1):
                 data[i] -= len(data) - 1
-        return data
+            newscale.append(data[i])
+        return newscale
 
 
     # Maps letters to index numbers
@@ -297,11 +299,11 @@ class generate():
             values elsewhere in the array. 
             
             If we ascend through the available octaves we can pick a new 
-            key/scale and cycle through the octaves again. This will allow for 
+            key/scale and cycle through the octaves again.This will allow for 
             some cool chromaticism to emerge rather "organiclly" while minimizing
             the amount of repeated notes associated with different elements in 
             the data array (unless we get the same scale chosen again, or there's
-            a lot of common tones between the scales that are picked).  
+            a lot of common tones between the scales that are picked) .  
         '''
         if(data is None):
             return -1
@@ -326,7 +328,9 @@ class generate():
         else:
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "major")
 
-        # Scale individual data set integers to i % len(dataSet) == 0
+        # Scale individual data set integers to i = (i % len(dataSet) == 0)
+        '''This ensures that the integers are available indices in array of
+           availabe notes'''
         data = self.scaleTheScale(data)
         '''
         Note generation algorithm
@@ -346,6 +350,7 @@ class generate():
         # Generate notes to pick from
         n = 0
         for i in range(len(data)):
+            # NOTE: this is just appending empty chars?? ('')
             note = "".format(root[n], octave)
             scale.append(note)
             n += 1
@@ -371,10 +376,7 @@ class generate():
         # Pick notes according to integers in data array
         for i in range(len(data) - 1):
             # Pick note. 
-            choice = scale[data[i]]
-            note = scale[choice]
-            note = "".format(note, octave)
-            notes.append(note)
+            notes.append(scale[data[i]])
 
         if(len(notes) == 0):
             print("ERROR: Unable to generate notes!")
