@@ -57,6 +57,6 @@ print("new notes:", newNotes)
 print("\nletter to number map test")
 data = ['J', 'a', 'y']
 print("inputted data:", data)
-print("expected result: [9, 0, 25]")
+print("expected result: [9, 0, 24]")
 result = create.mapLettersToNumbers(data)
 print("result", result)

@@ -619,7 +619,8 @@ class generate():
             newMelody.notes = self.newNotes(data, isMinor)
         else:
             # Notes from letters
-            newMelody.notes = self.newNotesFromLetters(data, isMinor)
+            data = self.mapLettersToNumbers(data)
+            newMelody.notes = self.newNotes(data, isMinor)
         '''NOTE: using length of notes in case there's something
                  glitchy when generating off a data set. This will ensure that
                  the proper number of rhythms and dynamics are created'''
