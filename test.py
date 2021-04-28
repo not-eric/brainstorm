@@ -5,6 +5,7 @@
 '''
 
 # Import and new object
+from random import uniform
 from random import randint
 from generate import generate 
 create = generate()
@@ -18,6 +19,14 @@ def newInts():
     for i in range(total):
         nums.append(randint(0, 200))
     return nums
+
+# Generate a list of 10 - 50 floating point numbers between 0 - 200
+def newFloats():
+    floats = []
+    total = randint(10, 50)
+    for i in range(total):
+        floats.append(uniform(0.001, 200.001))
+    return floats
 
 # Generate a list of 10 - 50 random upper/lower-case characters
 def newChars():
