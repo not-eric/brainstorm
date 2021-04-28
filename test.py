@@ -36,18 +36,19 @@ for i in range(len(result) - 1):
         break
 print("\nresult:", result)
 
-# # Map integers to notes test
-# print("\nintegers to notes test")
-# nums = newInts()
-# print("new numbers:", nums)
-# if(randint(1, 2) == 1):
-#     isMinor = True
-#     print("using a minor key!")
-# else:
-#     isMinor = False
-#     print("using a major key!")
-# newNotes = create.newNotes(nums, isMinor)
-# print("new notes:", newNotes)
+# Map integers to notes test
+print("\nintegers to notes test")
+nums = newInts()
+print("\nnew numbers:", nums)
+if(randint(1, 2) == 1):
+    isMinor = True
+    print("using a minor key!")
+else:
+    isMinor = False
+    print("using a major key!")
+newNotes = create.newNotes(nums, isMinor)
+print("\ntotal notes:", len(newNotes))
+print("new notes:", newNotes)
 
 
 # # Map letters to numbers test
