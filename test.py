@@ -62,7 +62,7 @@ result = create.scaleTheScale(nums)
 # Check result
 for i in range(len(result) - 1):
     if(result[i] > len(nums) - 2):
-        print("failed! i = ", i)
+        print("failed! i = ", result[i])
         break
 print("\ntotal elements:", len(result))
 print("result:", result)
@@ -71,10 +71,10 @@ print("result:", result)
 # Floats to ints test
 print("\n***floats to ints test***")
 floats = newFloats()
+print("\ntotal elements:", len(floats))
 print("new array:", floats)
-print("total elements:", len(floats))
 result = create.floatToInt(floats)
-print("result:", result)
+print("\nresult:", result)
 
 
 # Hex to int array test

@@ -300,7 +300,7 @@ class generate():
         newNote = "{}{}".format(newNote, octave)
         return newNote
 
-    # Generate a scale of n length to be picked from
+    # Generate a scale of n length to be picked from in newNotes()
     '''
     NOTE: 
         Make a generation function that builds scales off randomly chosen
@@ -399,11 +399,9 @@ class generate():
                     else:
                         print("Key-change! Now using", root[0], "major")
                 n = 0
-
         # Pick notes according to integers in data array
         for i in range(len(data) - 1):
             notes.append(scale[data[i]])
-
         # Check results
         if(len(notes) == 0):
             print("ERROR: Unable to generate notes!")
