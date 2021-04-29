@@ -547,7 +547,30 @@ class generate():
     #--------------------------------------------------------------------------------#
 
 
-    #Generates a progression from the notes of a given scale
+    # Generates a single chord from a given scale
+    def newChord(self, scale):
+        '''
+        Generates a single new chord from the notes in a given scale.
+        '''
+        if(len(scale) == 0):
+            print("ERROR: no input!")
+            return -1
+        chord = []
+        # How many notes? 2 to however many notes in the scale(!)
+        total = randint(2, len(scale))
+        while(len(chord) < total):
+            # Pick note
+            note = scale[randint(0, len(scale) - 1)]
+            # Append if not already in chord
+            if(note not in chord):
+                chord.append(note)
+        if(len(chord) == 0):
+            print("ERROR: no chord generated!")
+            return -1
+        return chord
+
+
+    # Generates a progression from the notes of a given scale
     def newChordsFromScale(self, scale):
         '''
         Generates a progression from the notes of a given scale.
