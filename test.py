@@ -43,6 +43,7 @@ def newChars():
 
 #--------------------------------------------------------------#
 
+
 # Scaling test
 print("\n***scaling test***")
 nums = newInts()
@@ -59,6 +60,15 @@ print("\ntotal elements:", len(result))
 print("result:", result)
 
 
+# Floats to ints test
+print("\n***floats to ints test***")
+floats = newFloats()
+print("new array:", floats)
+print("total elements:", len(floats))
+result = create.floatToInt(floats)
+print("result:", result)
+
+
 # Map integers to notes test
 print("\n***integers to notes test***")
 nums = newInts()
@@ -66,10 +76,10 @@ print("\ntotal new numbers:", len(nums))
 print("new numbers:", nums)
 if(randint(1, 2) == 1):
     isMinor = True
-    print("using a minor key!")
+    print("\nusing a minor key!")
 else:
     isMinor = False
-    print("using a major key!")
+    print("\nusing a major key!")
 newNotes = create.newNotes(nums, isMinor)
 print("\ntotal notes:", len(newNotes))
 print("new notes:", newNotes)
