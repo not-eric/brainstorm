@@ -25,70 +25,8 @@ class melody():
         If True, all data fields have been used.
         '''
         if(self.tempo != 0.0 
-            and self.notes is not None 
-            and self.rhythms is not None 
-            and self.dynamics is not None):
+            and len(self.notes) > 0
+            and len(self.rhythms) > 0
+            and len(self.dynamics) > 0):
             return True
         return False
-
-    #---------------------------Input all data-----------------------------#
-
-    def inputAll(self, newNotes, newRhythms, newDynamics, newTempo):    
-        if(newNotes and newRhythms and newDynamics and newTempo):
-            self.tempo = newTempo
-            for i in range(len(newRhythms)):
-                self.notes.append(newNotes[i])
-                self.rhythms.append(newRhythms[i])
-                self.dynamics.append(newDynamics[i])
-        if(self.isEmpty() == False):    
-            return 0
-        else:
-            return -1
-                
-                
-    #-------------------------------Getters--------------------------------#
-
-    def getNotes(self):
-        '''
-        Returns list of notes (str)
-        '''
-        if(self.notes is not None):
-            myNotes = []
-            for i in range(len(self.notes)):
-                myNotes.append(self.notes[i])
-        else:
-            return None
-        if(myNotes is not None):
-            return myNotes
-        else:
-            return None
-
-    def getRhythms(self):
-        '''
-        Returns list of rhythms (floats)
-        '''
-        if(self.rhythms is not None):
-            myRhythms = []
-            for i in range(len(self.rhythms)):
-                myRhythms.append(self.rhythms[i])
-        else:
-            return None
-        if(myRhythms is not None):
-            return myRhythms
-        else:
-            return None
-
-    def getDynamics(self):
-        '''
-        Returns list of MIDI velocities (int)
-        '''
-        if(self.dynamics is not None):
-            myDynamics = []
-            for i in range(len(self.dynamics)):
-                myDynamics.append(self.dynamics[i])
-        else:
-            return None
-        if(myDynamics is not None):
-            return myDynamics
-        else:
-            return None            

@@ -159,16 +159,22 @@ class generate():
             result.append(int(data[i]))
         return result
 
-    # Convert array of integers to be within the len-1 of another array. 
+    # Scale individual data set integers such that i = i < len(dataSet) - 1
     def scaleTheScale(self, data):
         '''
-        This repeatedly subtracts the value of len(data) - 1 from each integer in the 
+        This repeatedly subtracts the value of len(data) - 2 from each integer in the 
         data array. This will keep the newly inputted data array's values within the bounds 
         of the scale array. These values function as a collection of index numbers 
         to randomly chose from in order to pick note strings from the scale array.
 
         len(data) - 1 acts as a way to do some modulo arithmatic whose base is
-        a dynamically determined value. 
+        a dynamically determined value.
+
+        NOTE: Alternate version where highest numbers must be divisible by
+        len(data) - 2. Trying to make this function like octave equivalance.
+
+        while(data[i] % len(data) - 2 != 0):
+            data[i] = math.floor(data[i] % len(data) - 2) 
         '''
         if(len(data) == 0):
             print("ERROR: no data inputted") 
@@ -177,13 +183,6 @@ class generate():
         for i in range(len(data) - 1):
             while(data[i] > len(data) - 2):
                 data[i] -= len(data) - 2
-            '''
-            NOTE: Alternate version where highest numbers must be divisible by
-            len(data) - 2. Trying to make this function like octave equivalance.
-
-            while(data[i] % len(data) - 2 != 0):
-                data[i] 
-            '''
             newData.append(data[i])
         return newData
 
@@ -319,7 +318,7 @@ class generate():
             values elsewhere in the array. 
             
             If we ascend through the available octaves we can pick a new 
-            key/scale and cycle through the octaves again.This will allow for 
+            key/scale and cycle through the octaves again. This will allow for 
             some cool chromaticism to emerge rather "organiclly" while minimizing
             the amount of repeated notes associated with different elements in 
             the data array (unless we get the same scale chosen again, or there's
@@ -346,10 +345,11 @@ class generate():
         else:
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "major")
 
-        # Scale individual data set integers to i = (i % len(dataSet) == 0)
-        '''This ensures that the integers are available indices in array of
-           availabe notes. This will eventually be moved to newMelody() so that
-           incoming data will already be scaled by the time it reaches newNotes()'''
+        # Scale individual data set integers such that i = i < len(dataSet) -1
+        '''
+        This will eventually be moved to newMelody() so that
+        incoming data will already be scaled by the time it reaches newNotes()
+        '''
         data = self.scaleTheScale(data)
         '''
         Note generation algorithm:
