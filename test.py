@@ -30,6 +30,7 @@ def newFloats():
 
 # Generates a random hex color number
 def newHex():
+    # 0 to 0xFFFFFF
     num = randint(0, 16777215)
     hexNum = format(num, 'x')
     hexNum = '0x'+ hexNum

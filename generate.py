@@ -298,7 +298,15 @@ class generate():
         if(octave < 1 or octave > 8): return -1
         newNote = scale[num]
         newNote = "{}{}".format(newNote, octave)
-        return newNote     
+        return newNote
+
+    # Generate a scale of n length to be picked from
+    '''
+    NOTE: 
+        Make a generation function that builds scales off randomly chosen
+        intervals, rather than a pre-defined major scale. Each sub-set/sub-scale
+        must span one octave. 
+    '''
 
     # Generate a series of notes based off an inputted array of integers
     def newNotes(self, data, isMinor):
