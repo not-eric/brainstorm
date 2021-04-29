@@ -52,59 +52,70 @@ def newChars():
 #--------------------------------------------------------------#
 
 
-# Scaling test
-print("\n***scaling test***")
-nums = newInts()
-print("\nnew array:", nums)
-print("total elements:", len(nums) - 1)
-print("expected result: an array who's element values don't exceed", len(nums) - 2)
-result = create.scaleTheScale(nums)
-# Check result
-for i in range(len(result) - 1):
-    if(result[i] > len(nums) - 2):
-        print("failed! i = ", result[i])
-        break
-print("\ntotal elements:", len(result))
-print("result:", result)
+# # Scaling test
+# print("\n***scaling test***")
+# nums = newInts()
+# print("\nnew array:", nums)
+# print("total elements:", len(nums) - 1)
+# print("expected result: an array who's element values don't exceed", len(nums) - 2)
+# result = create.scaleTheScale(nums)
+# # Check result
+# for i in range(len(result) - 1):
+#     if(result[i] > len(nums) - 2):
+#         print("failed! i = ", result[i])
+#         break
+# print("\ntotal elements:", len(result))
+# print("result:", result)
 
 
-# Floats to ints test
-print("\n***floats to ints test***")
-floats = newFloats()
-print("\ntotal elements:", len(floats))
-print("new array:", floats)
-result = create.floatToInt(floats)
-print("\nresult:", result)
+# # Floats to ints test
+# print("\n***floats to ints test***")
+# floats = newFloats()
+# print("\ntotal elements:", len(floats))
+# print("new array:", floats)
+# result = create.floatToInt(floats)
+# print("\nresult:", result)
 
 
-# Hex to int array test
-print("\n***hex to int array test***")
-hexNum = newHex()
-print("new hex:", hexNum)
-result = create.hexToIntArray(hexNum)
-print("result:", result)
+# # Hex to int array test
+# print("\n***hex to int array test***")
+# hexNum = newHex()
+# print("new hex:", hexNum)
+# result = create.hexToIntArray(hexNum)
+# print("result:", result)
 
 
-# Map integers to notes test
-print("\n***integers to notes test***")
-nums = newInts()
-print("\ntotal new numbers:", len(nums))
-print("new numbers:", nums)
+# # Map integers to notes test
+# print("\n***integers to notes test***")
+# nums = newInts()
+# print("\ntotal new numbers:", len(nums))
+# print("new numbers:", nums)
+# if(randint(1, 2) == 1):
+#     isMinor = True
+#     print("\nusing a minor key!")
+# else:
+#     isMinor = False
+#     print("\nusing a major key!")
+# newNotes = create.newNotes(nums, isMinor)
+# print("\ntotal notes:", len(newNotes))
+# print("new notes:", newNotes)
+
+
+# # Map letters to numbers test
+# print("\n***letter to number map test***")
+# data = newChars()
+# print("\ntotal letters:", len(data))
+# print("inputted data:", data)
+# result = create.mapLettersToNumbers(data)
+# print("\nresult", result)
+
+# New melody test fron integers
+print("\n***new melody from ints test***")
+ints = newInts()
+print("\ntotal ints:", len(ints))
+print("data inputted:", ints)
 if(randint(1, 2) == 1):
     isMinor = True
-    print("\nusing a minor key!")
 else:
     isMinor = False
-    print("\nusing a major key!")
-newNotes = create.newNotes(nums, isMinor)
-print("\ntotal notes:", len(newNotes))
-print("new notes:", newNotes)
-
-
-# Map letters to numbers test
-print("\n***letter to number map test***")
-data = newChars()
-print("\ntotal letters:", len(data))
-print("inputted data:", data)
-result = create.mapLettersToNumbers(data)
-print("\nresult", result)
+result = create.newMelody(ints, isMinor)

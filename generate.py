@@ -263,7 +263,7 @@ class generate():
         '''
         print("\nPicking tempo...")
         tempo = 0.0
-        tempo = self.tempos[randint(0, len(self.tempo) - 1)]
+        tempo = self.tempos[randint(0, len(self.tempos) - 1)]
         if(tempo == 0.0):
             return 60.0
         return tempo
@@ -441,8 +441,8 @@ class generate():
     #Generate a list containing a rhythmic pattern
     def newRhythms(self, total):
         '''
-        Generate lists of 2-20 rhythms to be used as a 
-        melody/ostinato/riff/whatever. Uses infrequent repetition.
+        Generates a series of rhythms of n length, where n is supplied
+        from elsewhere.
         '''
         rhythms = []
         print("\nGenerating", total, "rhythms...")
@@ -512,11 +512,11 @@ class generate():
     #Generate a list of dynamics. 
     def newDynamics(self, total):
         '''
-        Generates a list of dynamics (MIDI velocites). Total supplied from elsewhere.
-        Uses infrequent repetition. Returns -1 if unable to generate a list.
+        Generates a list of dynamics (MIDI velocites) of n length, 
+        where n is supplied from elsewhere. Uses infrequent repetition.
         '''
         dynamics = []
-        print("\nGenerating", total, "semi-reapeating dynamics...")
+        print("\nGenerating", total, "dynamics...")
         while(len(dynamics) < total):
             #Pick dynamic    
             dynamic = self.dynamics[randint(0, 9)]
@@ -570,7 +570,7 @@ class generate():
         return chord
 
 
-    # Generates a progression from the notes of a given scale
+    # Generates a chord progression from the notes of a given scale
     def newChordsFromScale(self, scale):
         '''
         Generates a progression from the notes of a given scale.
@@ -613,7 +613,7 @@ class generate():
     #---------------------------------------------------------------------------------#
 
 
-    #Generate a melody. 
+    #Generate a melody from an array of integers. 
     def newMelody(self, data, isMinor):
         '''
         Picks a tempo, notes, rythms, and dynamics. Rhythms and dynamics are picked randomly (total
@@ -661,16 +661,15 @@ class generate():
 
         # Pick tempo
         newMelody.tempo = self.newTempo()
-
         # Pick notes
         newMelody.notes = self.newNotes(data, isMinor)
         '''NOTE: Using length of notes as the limit in case there's something
                  glitchy when generating off a data set. This will ensure that
                  the proper number of rhythms and dynamics are created'''
         # Pick rhythms
-        newMelody.rhythms = self.newRhythms(len(newMelody.notes) - 1)
+        newMelody.rhythms = self.newRhythms(len(newMelody.notes))
         # Pick dynamics
-        newMelody.dynamics = self.newDynamics(len(newMelody.notes) - 1)
+        newMelody.dynamics = self.newDynamics(len(newMelody.notes))
 
         #-----------Check data and export to MIDI file------------#
 
