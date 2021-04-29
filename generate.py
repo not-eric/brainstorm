@@ -344,13 +344,6 @@ class generate():
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "minor")
         else:
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "major")
-
-        # Scale individual data set integers such that i = i < len(dataSet) -1
-        '''
-        This will eventually be moved to newMelody() so that
-        incoming data will already be scaled by the time it reaches newNotes()
-        '''
-        data = self.scaleTheScale(data)
         '''
         Note generation algorithm:
 
