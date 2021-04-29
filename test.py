@@ -28,6 +28,13 @@ def newFloats():
         floats.append(uniform(0.001, 200.001))
     return floats
 
+# Generates a hex color number
+def newHex():
+    num = randint(0, 16777215)
+    hexNum = format(num, 'x')
+    hexNum = '0x'+ hexNum
+    return hexNum
+
 # Generate a list of 10 - 50 random upper/lower-case characters
 def newChars():
     chars = []
@@ -66,6 +73,14 @@ floats = newFloats()
 print("new array:", floats)
 print("total elements:", len(floats))
 result = create.floatToInt(floats)
+print("result:", result)
+
+
+# Hex to int array test
+print("\n***hex to int array test***")
+hex = newHex()
+print("new hex:", hex)
+result = create.hexToIntArray(hex)
 print("result:", result)
 
 
