@@ -2,5 +2,4 @@
 .vscode/
 images/
 test
-__pycache__/
 test outputs/

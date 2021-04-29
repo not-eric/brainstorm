@@ -383,7 +383,7 @@ class generate():
                 # If we reach highest octave (8), reset
                 # to original starting point/octave 
                 # and pick a new scale to chose from
-                if(octave > 8):
+                if(octave > 6):
                     octave = octStart
                     root = self.scales[randint(1, 12)]
                     # Re-decide if we're using minor (1) or major (2) again
@@ -654,6 +654,7 @@ class generate():
             data = self.hexToIntArray(data)
             data = self.scaleTheScale(data)
         '''
+        data = self.scaleTheScale(data)
 
         #-----------------------Generate!------------------------#
         
