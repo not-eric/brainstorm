@@ -20,7 +20,7 @@ def newInts():
         nums.append(randint(0, 200))
     return nums
 
-# Generate a list of 10 - 50 floating point numbers between 0 - 200
+# Generate a list of 10 - 50 random floating point numbers between 0 - 200
 def newFloats():
     floats = []
     total = randint(10, 50)
@@ -28,7 +28,7 @@ def newFloats():
         floats.append(uniform(0.001, 200.001))
     return floats
 
-# Generates a hex color number
+# Generates a random hex color number
 def newHex():
     num = randint(0, 16777215)
     hexNum = format(num, 'x')
@@ -78,9 +78,9 @@ print("result:", result)
 
 # Hex to int array test
 print("\n***hex to int array test***")
-hex = newHex()
-print("new hex:", hex)
-result = create.hexToIntArray(hex)
+hexNum = newHex()
+print("new hex:", hexNum)
+result = create.hexToIntArray(hexNum)
 print("result:", result)
 
 
@@ -102,8 +102,8 @@ print("new notes:", newNotes)
 
 # Map letters to numbers test
 print("\n***letter to number map test***")
-data = ['J', 'a', 'y']
-print("\ninputted data:", data)
-print("expected result: [9, 0, 24]")
+data = newChars()
+print("\ntotal letters:", len(data))
+print("inputted data:", data)
 result = create.mapLettersToNumbers(data)
-print("result", result)
+print("\nresult", result)

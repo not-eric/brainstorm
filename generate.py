@@ -177,6 +177,13 @@ class generate():
         for i in range(len(data) - 1):
             while(data[i] > len(data) - 2):
                 data[i] -= len(data) - 2
+            '''
+            NOTE: Alternate version where highest numbers must be divisible by
+            len(data) - 2. Trying to make this function like octave equivalance.
+            
+            while(data[i] % len(data) - 2 != 0):
+                data[i] 
+            '''
             newData.append(data[i])
         return newData
 
