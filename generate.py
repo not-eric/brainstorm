@@ -180,7 +180,7 @@ class generate():
             '''
             NOTE: Alternate version where highest numbers must be divisible by
             len(data) - 2. Trying to make this function like octave equivalance.
-            
+
             while(data[i] % len(data) - 2 != 0):
                 data[i] 
             '''
@@ -245,9 +245,9 @@ class generate():
             print("ERROR: Invalid input!")
             return -1
         # Convert to int
-        hex = int(hex, 0)
+        hexStr = int(hex, 0)
         # Convert to array of ints (ie. 132 -> [1, 3, 2])
-        numArr = [int(x) for x in str(hex)]
+        numArr = [int(x) for x in str(hexStr)]
         return numArr
 
 
