@@ -329,8 +329,7 @@ class generate():
             return -1
 
         # Pick starting octave (2 or 3)
-        octave = randint(2, 3)
-        octStart = octave
+        octave = randint(1, 3)
 
         # Pick initial root/starting scale
         root = self.scales[randint(1, 12)]
@@ -354,30 +353,28 @@ class generate():
             2. Generate a starting key/scale, and a starting octave.
             3. Cycle through this scale appending each note to a list
                of available notes until we reach the last note in the scale
-               in octave 8.
+               in octave 6.
             4. If we reach this note, reset octave to starting point, and 
                pick a new starting scale at random.
             5. Repeat steps 3-4 until we reach the end of the supplied data set.
         '''    
         # Generate notes to pick from
         n = 0
-        notes = []
         scale = []
         for i in range(len(data)):
             note = "{}{}".format(root[n], octave)
             scale.append(note)
             n += 1
             # If we've reached the end of the root scale,
-            # increment the octave (until octave 8)
+            # increment the octave (until octave 6)
             # Ideally trigger this condition every
             # 6 iterations. 
             if(i % 6 == 0):
                 octave += 1
-                # If we reach highest octave (8), reset
-                # to original starting point/octave 
-                # and pick a new scale to chose from
+                # If we reach highest octave (8), chose new
+                # starting octave and root
                 if(octave > 6):
-                    octave = octStart
+                    octave = randint(1, 3)
                     root = self.scales[randint(1, 12)]
                     # Re-decide if we're using minor (1) or major (2) again
                     if(randint(1, 2) == 1):
@@ -393,6 +390,7 @@ class generate():
                         print("Key-change! Now using", root[0], "major")
                 n = 0
         # Pick notes according to integers in data array
+        notes = []
         for i in range(len(data) - 1):
             notes.append(scale[data[i]])
         # Check results
@@ -561,7 +559,6 @@ class generate():
             print("ERROR: no chord generated!")
             return -1
         return chord
-
 
     # Generates a chord progression from the notes of a given scale
     def newChordsFromScale(self, scale):

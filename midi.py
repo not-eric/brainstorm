@@ -57,10 +57,7 @@ class midiStuff():
         representation very messy. 
         '''
         # Check incoming data
-        if(newMelody.notes is None 
-            or newMelody.rhythms is None 
-            or newMelody.dynamics is None 
-            or newMelody.tempo == 0.0):
+        if(newMelody.hasData() == False):
             return -1
 
         # Variables
