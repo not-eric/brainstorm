@@ -61,7 +61,7 @@ class midiStuff():
         return 0
     
     # Outputs a single melody/instrument to a MIDI file
-    def saveMelody(self, newMelody):
+    def saveMelody(self, newMelody, fileName):
         '''
         Outputs a single instrument MIDI file (ideally). Returns 0 on success, -1 on failure. 
         To be used with melody generation.
@@ -109,9 +109,6 @@ class midiStuff():
 
         # Write out file from MIDI object
         mid.instruments.append(melody)
-        # Generate file name and write out
-        name = 'solo melody -'
-        fileName = self.newFileName(name)
         print("saving", fileName, "...")
         mid.write(fileName)
         # mid.write('test-melody.mid')

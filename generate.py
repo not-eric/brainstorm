@@ -248,6 +248,12 @@ class generate():
         numArr = [int(x) for x in str(hexStr)]
         return numArr
 
+
+    #--------------------------------------------------------------------------------#
+    #----------------------------------New File Name---------------------------------#
+    #--------------------------------------------------------------------------------#
+
+
     # Auto generate a file name (date:time)
     def newFileName(self, fileType):
         '''
@@ -261,6 +267,7 @@ class generate():
         # dateStr = date.strftime("%B the %d of %Y is %A at %I:%M %p")
         fileName = "{}{}".format(fileType, dateStr)
         return fileName
+
 
     #--------------------------------------------------------------------------------#
     #-------------------------------------Tempo--------------------------------------#
@@ -684,7 +691,8 @@ class generate():
             return -1
 
         # Add data to MIDI object and write out file.
-        if(mid.saveMelody(self, newMelody) == -1):
+        fileName = self.newFileName('solo melody -')
+        if(mid.saveMelody(self, newMelody, fileName) == -1):
             print("ERROR: unable to export melody!")
             return -1
 
