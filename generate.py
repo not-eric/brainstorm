@@ -14,6 +14,7 @@
 #IMPORTS
 import math
 from random import randint
+from datetime import datetime
 from midi import midiStuff as mid
 from containers.melody import melody
 
@@ -247,6 +248,19 @@ class generate():
         numArr = [int(x) for x in str(hexStr)]
         return numArr
 
+    # Auto generate a file name (date:time)
+    def newFileName(self, fileType):
+        '''
+        Returns a string with the format: <type><date><time>
+        '''
+        # Get date and time.
+        date = datetime.now()
+        # Convert to str d-m-y (hh:mm:ss)
+        dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
+        # Alt format ( "<month> the <date> of <year> is <day> at <time>)
+        # dateStr = date.strftime("%B the %d of %Y is %A at %I:%M %p")
+        fileName = "{}{}".format(fileType, dateStr)
+        return fileName
 
     #--------------------------------------------------------------------------------#
     #-------------------------------------Tempo--------------------------------------#
@@ -627,7 +641,6 @@ class generate():
 
         '''
         Is this a character array, integer array, array of floats, or a hexnumber (for color)?
-
 
         # If floats then convert to ints and scale
         if(isFloats == True):

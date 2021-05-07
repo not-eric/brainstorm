@@ -5,7 +5,7 @@
 '''
     This module is for handling MIDI I/O with generous help from the pretty_midi library.
 '''
-from datetime import datetime
+# from datetime import datetime
 import pretty_midi as pm
 from pretty_midi import constants as inst
 
@@ -17,16 +17,19 @@ class midiStuff():
     def __init__(self):
         super().__init__()
 
-    # Auto generate a file name (date:time)
-    def newFileName(self):
-        # Get date and time.
-        date = datetime.now()
-        dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
-        # Header (NOTE: allow this to be determined by type
-        # of file calling this function (melody, chord, composition, etc))
-        fileName = "melody -"
-        fileName = "{}{}".format(fileName, dateStr)
-        return fileName
+    # # Auto generate a file name (date:time)
+    # def newFileName(self, fileType):
+    #     '''
+    #     Returns a string with the format: <type><date><time>
+    #     '''
+    #     # Get date and time.
+    #     date = datetime.now()
+    #     # Convert to str d-m-y (hh:mm:ss)
+    #     dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
+    #     # Alt format ( "<month> the <date> of <year> is <day> at <time>)
+    #     # dateStr = date.strftime("%B the %d of %Y is %A at %I:%M %p")
+    #     fileName = "{}{}".format(fileType, dateStr)
+    #     return fileName
 
     # Imports a MIDI file
     def load(self, fileName):
@@ -106,8 +109,12 @@ class midiStuff():
 
         # Write out file from MIDI object
         mid.instruments.append(melody)
-        mid.write('test-melody.mid')
-
+        # Generate file name and write out
+        name = 'solo melody -'
+        fileName = self.newFileName(name)
+        print("saving", fileName, "...")
+        mid.write(fileName)
+        # mid.write('test-melody.mid')
         return 0
 
 
@@ -125,7 +132,6 @@ class midiStuff():
         if(not newchord or not dynamics):
             return -1
 
-        i = 0
         strt = 0.0
         end = 2.0
 
@@ -135,15 +141,14 @@ class midiStuff():
         chord = pm.Instrument(program = instrument)
 
         # Add data to pm object
-        while(i < len(newchord)):
+        for i in range(len(newchord) - 1):
             note = pm.note_name_to_number(newchord[i])
             note = pm.Note(velocity= dynamics[i], pitch= note, start= strt, end= end)
             chord.notes.append(note)
-            i += 1
         
         # Write out file from MIDI object
         aNewChord.instruments.append(chord)
-        aNewChord.write('test-chord.mid')
+        aNewChord.write('new-chord.mid')
 
         return 0
 
