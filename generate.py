@@ -21,7 +21,13 @@ from containers.melody import melody
 class generate():
     '''
     This class handles all generative functions. It contains a set of resource data
-    that is accessed by a variety of generative algorithms and mapping functions.  
+    that is accessed by a variety of generative algorithms and mapping functions.
+
+    NOTE:
+    
+    Consolidate newRhythms() and newDynamics() into single generative loop, with an
+    additional 'type' (int) argument. Each type chooses which resource data to draw from.
+
     '''
 
     # Constructor
@@ -57,14 +63,6 @@ class generate():
                       "Ab"]
 
         # Major Scales
-        '''
-        NOTE:
-            We won't need to create extra scales if we want to create 
-            some kind of "mood" feature (happy/sad) since those "moods" 
-            are usually elicited from chord progressions. If we want that, 
-            then I'll just add a function to generate some minor chords based
-            off the scale chosen from the dicitonary below.
-        '''
         self.scales = {1: ['C', 'D', 'E', 'F', 'G', 'A', 'B'], 
                        2: ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C'],
                        3: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#' ],
@@ -338,7 +336,7 @@ class generate():
         if(isMinor == True):
             root = self.convertToMinor(root)
 
-        #Display choices
+        # Display choices
         if(isMinor == True):
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "minor")
         else:
@@ -371,7 +369,7 @@ class generate():
             # 6 iterations. 
             if(i % 6 == 0):
                 octave += 1
-                # If we reach highest octave (8), chose new
+                # If we reach highest octave (6), chose new
                 # starting octave and root
                 if(octave > 6):
                     octave = randint(1, 3)
@@ -379,10 +377,10 @@ class generate():
                     # Re-decide if we're using minor (1) or major (2) again
                     if(randint(1, 2) == 1):
                         isMinor = True
-                        print("Switching to a major key!")
+                        print("Switching to a minor key!")
                     else:
                         isMinor = False
-                        print("Staying in a minor key!")
+                        print("Staying in a major key!")
                     if(isMinor == True):
                         root = self.convertToMinor(root)
                         print("Key-change! Now using", root[0], "minor")
@@ -616,9 +614,10 @@ class generate():
         Returns a newMelody() object.
         '''
         # Some booleans to determine which mapping technique to use
-        isHex = False
-        isFloats = False
-        isLetters = False
+        # isHex = False
+        # isFloats = False
+        # isLetters = False
+
         # Melody container object
         newMelody = melody()
 
