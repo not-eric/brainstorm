@@ -5,6 +5,7 @@
 '''
     This module is for handling MIDI I/O with generous help from the pretty_midi library.
 '''
+from datetime import datetime
 import pretty_midi as pm
 from pretty_midi import constants as inst
 
@@ -15,6 +16,17 @@ class midiStuff():
 
     def __init__(self):
         super().__init__()
+
+    # Auto generate a file name (date:time)
+    def newFileName(self):
+        # Get date and time.
+        date = datetime.now()
+        dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
+        # Header (NOTE: allow this to be determined by type
+        # of file calling this function (melody, chord, composition, etc))
+        fileName = "melody -"
+        fileName = "{}{}".format(fileName, dateStr)
+        return fileName
 
     # Imports a MIDI file
     def load(self, fileName):
