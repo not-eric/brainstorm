@@ -634,10 +634,6 @@ class generate():
 
         Returns a newMelody() object.
         '''
-        # Some booleans to determine which mapping technique to use
-        # isHex = False
-        # isFloats = False
-        # isLetters = False
 
         # Melody container object
         newMelody = melody()
@@ -657,13 +653,12 @@ class generate():
         # If letters/chars then match letters to their corresponding index numbers.
         if(dataType == 3):
             data = self.mapLettersToNumbers(data)
+            data = self.scaleTheScale(data)
 
         # If hex convert to array of ints and scale
         if(dataType == 4):
             data = self.hexToIntArray(data)
             data = self.scaleTheScale(data)
-
-        data = self.scaleTheScale(data)
 
         #-----------------------Generate!------------------------#
         
@@ -692,7 +687,7 @@ class generate():
 
         # Add data to MIDI object and write out file.
         fileName = self.newFileName('solo melody -')
-        if(mid.saveMelody(self, newMelody, fileName) == -1):
+        if(mid.saveMelody(newMelody, fileName) == -1):
             print("ERROR: unable to export melody!")
             return -1
 
