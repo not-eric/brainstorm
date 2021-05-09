@@ -14,6 +14,7 @@
 #IMPORTS
 import math
 from random import randint
+from datetime import datetime
 from midi import midiStuff as mid
 from containers.melody import melody
 
@@ -21,7 +22,13 @@ from containers.melody import melody
 class generate():
     '''
     This class handles all generative functions. It contains a set of resource data
-    that is accessed by a variety of generative algorithms and mapping functions.  
+    that is accessed by a variety of generative algorithms and mapping functions.
+
+    NOTE:
+    
+    Consolidate newRhythms() and newDynamics() into single generative loop, with an
+    additional 'type' (int) argument. Each type chooses which resource data to draw from.
+
     '''
 
     # Constructor
@@ -57,14 +64,6 @@ class generate():
                       "Ab"]
 
         # Major Scales
-        '''
-        NOTE:
-            We won't need to create extra scales if we want to create 
-            some kind of "mood" feature (happy/sad) since those "moods" 
-            are usually elicited from chord progressions. If we want that, 
-            then I'll just add a function to generate some minor chords based
-            off the scale chosen from the dicitonary below.
-        '''
         self.scales = {1: ['C', 'D', 'E', 'F', 'G', 'A', 'B'], 
                        2: ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C'],
                        3: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#' ],
@@ -251,6 +250,26 @@ class generate():
 
 
     #--------------------------------------------------------------------------------#
+    #----------------------------------New File Name---------------------------------#
+    #--------------------------------------------------------------------------------#
+
+
+    # Auto generate a file name (date:time)
+    def newFileName(self, fileType):
+        '''
+        Returns a string with the format: <type><date><time>
+        '''
+        # Get date and time.
+        date = datetime.now()
+        # Convert to str d-m-y (hh:mm:ss)
+        dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
+        # Alt format ( "<month> the <date> of <year> is <day> at <time>)
+        # dateStr = date.strftime("%B the %d of %Y is %A at %I:%M %p")
+        fileName = "{}{}".format(fileType, dateStr)
+        return fileName
+
+
+    #--------------------------------------------------------------------------------#
     #-------------------------------------Tempo--------------------------------------#
     #--------------------------------------------------------------------------------#
 
@@ -338,7 +357,7 @@ class generate():
         if(isMinor == True):
             root = self.convertToMinor(root)
 
-        #Display choices
+        # Display choices
         if(isMinor == True):
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "minor")
         else:
@@ -379,10 +398,10 @@ class generate():
                     # Re-decide if we're using minor (1) or major (2) again
                     if(randint(1, 2) == 1):
                         isMinor = True
-                        print("Switching to a major key!")
+                        print("Switching to a minor key!")
                     else:
                         isMinor = False
-                        print("Staying in a minor key!")
+                        print("Staying in a major key!")
                     if(isMinor == True):
                         root = self.convertToMinor(root)
                         print("Key-change! Now using", root[0], "minor")
@@ -616,9 +635,10 @@ class generate():
         Returns a newMelody() object.
         '''
         # Some booleans to determine which mapping technique to use
-        isHex = False
-        isFloats = False
-        isLetters = False
+        # isHex = False
+        # isFloats = False
+        # isLetters = False
+
         # Melody container object
         newMelody = melody()
 
@@ -671,7 +691,8 @@ class generate():
             return -1
 
         # Add data to MIDI object and write out file.
-        if(mid.saveMelody(self, newMelody) == -1):
+        fileName = self.newFileName('solo melody -')
+        if(mid.saveMelody(self, newMelody, fileName) == -1):
             print("ERROR: unable to export melody!")
             return -1
 
