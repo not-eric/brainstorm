@@ -371,7 +371,7 @@ class generate():
             # 6 iterations. 
             if(i % 6 == 0):
                 octave += 1
-                # If we reach highest octave (8), chose new
+                # If we reach highest octave (6), chose new
                 # starting octave and root
                 if(octave > 6):
                     octave = randint(1, 3)
@@ -604,7 +604,7 @@ class generate():
 
 
     #Generate a melody from an array of integers. 
-    def newMelody(self, data, isMinor):
+    def newMelody(self, data, dataType, isMinor):
         '''
         Picks a tempo, notes, rythms, and dynamics. Rhythms and dynamics are picked randomly (total
         for each is len(data), notes come from user. Should (ideally) handle either a character
@@ -626,24 +626,23 @@ class generate():
        
         print("\nProcessing incoming data...")
 
-        '''
-        Is this a character array, integer array, array of floats, or a hexnumber (for color)?
-
+        # Is this a character array (1), integer array (2), 
+        # array of floats (3), or a hexnumber for color (4)?
 
         # If floats then convert to ints and scale
-        if(isFloats == True):
+        if(dataType == 2):
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
         
         # If letters/chars then match letters to their corresponding index numbers.
-        if(isLetters == True):
+        if(dataType == 3):
             data = self.mapLettersToNumbers(data)
 
         # If hex convert to array of ints and scale
-        if(isHex == True):
+        if(dataType == 4):
             data = self.hexToIntArray(data)
             data = self.scaleTheScale(data)
-        '''
+
         data = self.scaleTheScale(data)
 
         #-----------------------Generate!------------------------#
