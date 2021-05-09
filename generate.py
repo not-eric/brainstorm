@@ -625,14 +625,12 @@ class generate():
     #Generate a melody from an array of integers. 
     def newMelody(self, data, dataType, isMinor):
         '''
-        Picks a tempo, notes, rythms, and dynamics. Rhythms and dynamics are picked randomly (total
+        Picks a tempo, notes, rhythms, and dynamics. Rhythms and dynamics are picked randomly (total
         for each is len(data), notes come from user. Should (ideally) handle either a character
         array for a person's name (or any random set of characters), or an array of 
         either floats or integers of n length.
 
-        Appends to pretty_midi object and exports a MIDI file.
-
-        Returns a newMelody() object.
+        Appends to pretty_midi object and exports a MIDI file. Returns a newMelody() object.
         '''
 
         # Melody container object
@@ -657,7 +655,6 @@ class generate():
         # If letters/chars then match letters to their corresponding index numbers.
         if(dataType == 3):
             data = self.mapLettersToNumbers(data)
-            data = self.scaleTheScale(data)
 
         # If hex convert to array of ints and scale
         if(dataType == 4):
