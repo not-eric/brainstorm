@@ -645,6 +645,10 @@ class generate():
         # Is this a character array (1), integer array (2), 
         # array of floats (3), or a hexnumber for color (4)?
 
+        # Scale inputted ints
+        if(dataType == 1):
+            data = self.scaleTheScale(data)
+
         # If floats then convert to ints and scale
         if(dataType == 2):
             data = self.floatToInt(data)
