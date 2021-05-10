@@ -623,22 +623,15 @@ class generate():
 
 
     #Generate a melody from an array of integers. 
-    def newMelody(self, data, isMinor):
+    def newMelody(self, data, dataType, isMinor):
         '''
         Picks a tempo, notes, rythms, and dynamics. Rhythms and dynamics are picked randomly (total
         for each is len(data), notes come from user. Should (ideally) handle either a character
         array for a person's name (or any random set of characters), or an array of 
         either floats or integers of n length.
 
-        Appends to pretty_midi object and exports a MIDI file.
-
-        Returns a newMelody() object.
+        Appends to pretty_midi object and exports a MIDI file. Returns a newMelody() object.
         '''
-        # Some booleans to determine which mapping technique to use
-        # isHex = False
-        # isFloats = False
-        # isLetters = False
-
         # Melody container object
         newMelody = melody()
 
@@ -646,24 +639,22 @@ class generate():
        
         print("\nProcessing incoming data...")
 
-        '''
-        Is this a character array, integer array, array of floats, or a hexnumber (for color)?
+        # Is this an integer array (1), and array of floats (2), a hexnumber (for color (3)), or a character array (4)?
+        if(dataType == 1):
+            data = self.scaleTheScale(data)
 
         # If floats then convert to ints and scale
-        if(isFloats == True):
+        if(dataType == 2):
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
-        
-        # If letters/chars then match letters to their corresponding index numbers.
-        if(isLetters == True):
-            data = self.mapLettersToNumbers(data)
 
         # If hex convert to array of ints and scale
-        if(isHex == True):
+        if(dataType == True):
             data = self.hexToIntArray(data)
-            data = self.scaleTheScale(data)
-        '''
-        data = self.scaleTheScale(data)
+
+        # If letters/chars then match letters to their corresponding index numbers.
+        if(dataType == True):
+            data = self.mapLettersToNumbers(data)
 
         #-----------------------Generate!------------------------#
         
