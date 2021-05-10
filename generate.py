@@ -625,7 +625,7 @@ class generate():
     #Generate a melody from an array of integers. 
     def newMelody(self, data, dataType, isMinor):
         '''
-        Picks a tempo, notes, rythms, and dynamics. Rhythms and dynamics are picked randomly (total
+        Picks a tempo, notes, rhythms, and dynamics. Rhythms and dynamics are picked randomly (total
         for each is len(data), notes come from user. Should (ideally) handle either a character
         array for a person's name (or any random set of characters), or an array of 
         either floats or integers of n length.
@@ -639,7 +639,7 @@ class generate():
        
         print("\nProcessing incoming data...")
 
-        # Is this an integer array (1), and array of floats (2), a hexnumber (for color (3)), or a character array (4)?
+        # If ints, scale as necessary
         if(dataType == 1):
             data = self.scaleTheScale(data)
 
@@ -648,13 +648,13 @@ class generate():
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
 
-        # If hex convert to array of ints and scale
-        if(dataType == True):
-            data = self.hexToIntArray(data)
-
         # If letters/chars then match letters to their corresponding index numbers.
-        if(dataType == True):
+        if(dataType == 3):
             data = self.mapLettersToNumbers(data)
+
+        # If hex convert to array of ints and scale
+        if(dataType == 4):
+            data = self.hexToIntArray(data)
 
         #-----------------------Generate!------------------------#
         
@@ -683,7 +683,7 @@ class generate():
 
         # Add data to MIDI object and write out file.
         fileName = self.newFileName('solo melody -')
-        if(mid.saveMelody(self, newMelody, fileName) == -1):
+        if(mid.saveMelody(newMelody, fileName) == -1):
             print("ERROR: unable to export melody!")
             return -1
 
