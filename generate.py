@@ -263,8 +263,7 @@ class generate():
         date = datetime.now()
         # Convert to str d-m-y (hh:mm:ss)
         dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
-        # Alt format ( "<month> the <date> of <year> is <day> at <time>)
-        # dateStr = date.strftime("%B the %d of %Y is %A at %I:%M %p")
+        # Merge date and file type
         fileName = "{}{}".format(fileType, dateStr)
         return fileName
 
@@ -655,6 +654,7 @@ class generate():
         # If hex convert to array of ints and scale
         if(dataType == 4):
             data = self.hexToIntArray(data)
+            data = self.scaleTheScale(data)
 
         #-----------------------Generate!------------------------#
         
@@ -682,8 +682,8 @@ class generate():
             return -1
 
         # Add data to MIDI object and write out file.
-        fileName = self.newFileName('solo melody -')
-        if(mid.saveMelody(newMelody, fileName) == -1):
+        fileName = self.newFileName('solo melody ')
+        if(mid.saveMelody(self, newMelody, fileName) == -1):
             print("ERROR: unable to export melody!")
             return -1
 

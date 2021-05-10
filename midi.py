@@ -109,9 +109,9 @@ class midiStuff():
 
         # Write out file from MIDI object
         mid.instruments.append(melody)
-        print("saving", fileName, "...")
-        mid.write(fileName)
-        # mid.write('test-melody.mid')
+        # print("saving", fileName, "...")
+        # mid.write(fileName)
+        mid.write('test-melody.mid')
         return 0
 
 
