@@ -183,7 +183,6 @@ class generate():
         newData = []
         for i in range(len(data) - 1):
             while(data[i] > len(data) - 1):
-                # data[i] -= len(data) - 2
                 data[i] = math.floor(data[i] % len(data) - 1) 
             newData.append(data[i])
         print("new data:", newData)
@@ -669,13 +668,10 @@ class generate():
         newMelody.tempo = self.newTempo()
         # Pick notes
         newMelody.notes = self.newNotes(data, isMinor)
-        '''NOTE: Using length of notes as the limit in case there's something
-                 glitchy when generating off a data set. This will ensure that
-                 the proper number of rhythms and dynamics are created'''
         # Pick rhythms
-        newMelody.rhythms = self.newRhythms(len(newMelody.notes))
+        newMelody.rhythms = self.newRhythms(len(data))
         # Pick dynamics
-        newMelody.dynamics = self.newDynamics(len(newMelody.notes))
+        newMelody.dynamics = self.newDynamics(len(data))
 
         #-----------Check data and export to MIDI file------------#
 
