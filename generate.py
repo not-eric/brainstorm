@@ -146,6 +146,25 @@ class generate():
     #-----------------------------Conversion and Utility Functions----------------------------#
     #-----------------------------------------------------------------------------------------#
 
+    # Display newMelody() object data
+    def display(self, newMelody):
+        '''
+        Display newMelody() object data
+        '''
+        if(newMelody.hasData() == False):
+            print("ERROR: no melody data!")
+            return -1
+
+        print("\nRESULTS:")
+        print("\nTempo:", newMelody.tempo, "bpm")
+        print("\nTotal Notes:", len(newMelody.notes))
+        print("Notes:", newMelody.notes)
+        print("\nTotal rhythms:", len(newMelody.rhythms))
+        print("Rhythms:", newMelody.rhythms)
+        print("\nTotal dynamics:", len(newMelody.dynamics))
+        print("Dynamics:", newMelody.dynamics)
+
+        return 0
 
     # Converts an array of floats to an array of ints
     def floatToInt(self, data):
@@ -162,19 +181,11 @@ class generate():
     # Scale individual data set integers such that i = i < len(dataSet) - 1
     def scaleTheScale(self, data):
         '''
-        This repeatedly subtracts the value of len(data) - 2 from each integer in the 
-        data array. This will keep the newly inputted data array's values within the bounds 
-        of the scale array. These values function as a collection of index numbers 
-        to randomly chose from in order to pick note strings from the scale array.
-
-        len(data) - 1 acts as a way to do some modulo arithmatic whose base is
-        a dynamically determined value.
-
-        NOTE: Alternate version where highest numbers must be divisible by
-        len(data) - 2. Trying to make this function like octave equivalance.
-
-        while(data[i] % len(data) - 2 != 0):
-            data[i] = math.floor(data[i] % len(data) - 2) 
+        Returns no. of times data[i] is divisible by the total number of elements 
+        in the structure it's in. This will keep the newly inputted data array's 
+        values within the bounds of the scale array. These values function as a 
+        collection of index numbers to randomly chose from in order to pick note 
+        strings from the scale array.
         '''
         print("\nScaling input...")
         if(len(data) == 0):
@@ -183,8 +194,6 @@ class generate():
         newData = []
         for i in range(len(data) - 1):
             while(data[i] > len(data) - 1):
-                # Returns no. of times data[i] is divisible
-                # by the total number of elements in the structure it's in
                 data[i] = math.floor(data[i] / len(data) - 1) 
             newData.append(data[i])
         print("new data:", newData)
@@ -675,7 +684,7 @@ class generate():
         # Pick dynamics
         newMelody.dynamics = self.newDynamics(len(newMelody.notes))
 
-        #-----------Check data and export to MIDI file------------#
+        #------------Check data, display, and export-------------#
 
         print("\nChecking results...")
 
@@ -690,15 +699,7 @@ class generate():
             print("ERROR: unable to export melody!")
             return -1
 
-        #--------------------Display results----------------------#
-
-        print("\nRESULTS:")
-        print("\nTempo:", newMelody.tempo, "bpm")
-        print("\nTotal Notes:", len(newMelody.notes))
-        print("Notes:", newMelody.notes)
-        print("\nTotal rhythms:", len(newMelody.rhythms))
-        print("Rhythms:", newMelody.rhythms)
-        print("\nTotal dynamics:", len(newMelody.dynamics))
-        print("Dynamics:", newMelody.dynamics)
+        # Display results
+        self.display(newMelody)
 
         return newMelody
