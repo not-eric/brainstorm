@@ -442,6 +442,7 @@ class generate():
                         print("Key-change! Now using", root[0], "minor")
                     else:
                         print("Key-change! Now using", root[0], "major")
+                # Reset n to stay within len(root)
                 n = 0
         # Pick notes according to integers in data array
         notes = []
@@ -459,11 +460,14 @@ class generate():
         '''
         Returns a randomly generated scale within one octave to be used
         as a 'root'
+
+        NOTE: Might return enharmonically spelled notes, which will just 
+              sound like the same note being played twice to the user.
         '''
         print("\nGenerating new root scale...")
         pcs = []
-        # generate an ascending set of integers ()
-        # note index
+        # generate an ascending set of integers/note array indices
+        # randomly chosen starting note
         n = randint(0, 16)
         while(len(pcs) < 8):
             # add it
@@ -471,7 +475,7 @@ class generate():
             # remove any duplicates
             pcs = list(set(pcs))
             # pick another
-            n += randint(0, 16)
+            n = randint(0, 16)
         # sort in ascending order
         pcs.sort()
         # convert to strings
