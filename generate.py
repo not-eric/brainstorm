@@ -281,6 +281,10 @@ class generate():
         hexStr = int(hex, 0)
         # Convert to array of ints (ie. 132 -> [1, 3, 2])
         numArr = [int(x) for x in str(hexStr)]
+        # Make sure any ints aren't greater than len(numArr) - 1
+        for i in range(len(numArr) - 1):
+            while(numArr[i] > len(numArr) - 1):
+                numArr[i] -= len(numArr) - 1
         return numArr
 
     # Auto generate a file name (date:time)
@@ -342,7 +346,7 @@ class generate():
           inputted? Is there a way to scale integers to a randomly chosen indicie within
           the bounds of a new array of notes that's already been generated? Probably.
     '''
-    def newNotes(self, data, isMinor):
+    def newNotes(self, data, isMinor, isLetters):
         '''
         Generate a series of notes based on inputted data (an array of integers)
         This randomly picks the key and the starting octave! 
@@ -394,37 +398,74 @@ class generate():
             5. Repeat steps 3-4 until we reach the end of the supplied data set.
         '''    
         # Generate notes to pick from
-        n = 0
-        scale = []
-        for i in range(len(data)):
-            note = "{}{}".format(root[n], octave)
-            scale.append(note)
-            n += 1
-            # If we've reached the end of the root scale,
-            # increment the octave (until octave 6)
-            # Ideally trigger this condition every
-            # 6 iterations. 
-            if(i % 6 == 0):
-                octave += 1
-                # If we reach highest octave (6), chose new
-                # starting octave and root
-                if(octave > 6):
-                    octave = randint(1, 3)
-                    root = self.scales[randint(1, 12)]
-                    # Re-decide if we're using minor (1) or major (2) again
-                    if(randint(1, 2) == 1):
-                        isMinor = True
-                        print("Switching to a minor key!")
-                    else:
-                        isMinor = False
-                        print("Staying in a major key!")
-                    if(isMinor == True):
-                        root = self.convertToMinor(root)
-                        print("Key-change! Now using", root[0], "minor")
-                    else:
-                        print("Key-change! Now using", root[0], "major")
-                # Reset n to stay within len(root)
-                n = 0
+        # If recieving letters, use this loop!
+        if(isLetters == True):
+            # Find highest value in int array from letters. This is the limit
+            # for how many notes to generate
+            total = max(data)
+            scale = []
+            for i in range(total):
+                note = "{}{}".format(root[n], octave)
+                scale.append(note)
+                n += 1
+                # If we've reached the end of the root scale,
+                # increment the octave (until octave 6)
+                # Ideally trigger this condition every
+                # 6 iterations. 
+                if(i % 6 == 0):
+                    octave += 1
+                    # If we reach highest octave (6), chose new
+                    # starting octave and root
+                    if(octave > 6):
+                        octave = randint(1, 3)
+                        root = self.scales[randint(1, 12)]
+                        # Re-decide if we're using minor (1) or major (2) again
+                        if(randint(1, 2) == 1):
+                            isMinor = True
+                            print("Switching to a minor key!")
+                        else:
+                            isMinor = False
+                            print("Staying in a major key!")
+                        if(isMinor == True):
+                            root = self.convertToMinor(root)
+                            print("Key-change! Now using", root[0], "minor")
+                        else:
+                            print("Key-change! Now using", root[0], "major")
+                    # Reset n to stay within len(root)
+                    n = 0
+        # Otherwise, this one!
+        else:
+            n = 0
+            scale = []
+            for i in range(len(data)):
+                note = "{}{}".format(root[n], octave)
+                scale.append(note)
+                n += 1
+                # If we've reached the end of the root scale,
+                # increment the octave (until octave 6)
+                # Ideally trigger this condition every
+                # 6 iterations. 
+                if(i % 6 == 0):
+                    octave += 1
+                    # If we reach highest octave (6), chose new
+                    # starting octave and root
+                    if(octave > 6):
+                        octave = randint(1, 3)
+                        root = self.scales[randint(1, 12)]
+                        # Re-decide if we're using minor (1) or major (2) again
+                        if(randint(1, 2) == 1):
+                            isMinor = True
+                            print("Switching to a minor key!")
+                        else:
+                            isMinor = False
+                            print("Staying in a major key!")
+                        if(isMinor == True):
+                            root = self.convertToMinor(root)
+                            print("Key-change! Now using", root[0], "minor")
+                        else:
+                            print("Key-change! Now using", root[0], "major")
+                    # Reset n to stay within len(root)
+                    n = 0
         # Pick notes according to integers in data array
         notes = []
         for i in range(len(data) - 1):
@@ -676,7 +717,6 @@ class generate():
         # If hex convert to array of ints and scale
         if(dataType == 4):
             data = self.hexToIntArray(data)
-            data = self.scaleTheScale(data)
 
         #-----------------------Generate!------------------------#
         
