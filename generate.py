@@ -182,9 +182,11 @@ class generate():
             return -1
         newData = []
         for i in range(len(data) - 1):
-            while(data[i] > len(data) - 2):
-                data[i] -= len(data) - 2
+            while(data[i] > len(data) - 1):
+                # data[i] -= len(data) - 2
+                data[i] = math.floor(data[i] % len(data) - 1) 
             newData.append(data[i])
+        print("new data:", newData)
         return newData
 
     # Maps letters to index numbers
