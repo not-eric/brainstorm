@@ -92,7 +92,7 @@ class midiStuff():
 
         # Attach notes, rhythms, and dynamics to melody instrument/MIDI object
         end += newMelody.rhythms[0]
-        while(i < len(newMelody.rhythms)):
+        while(i < len(newMelody.notes)):
             # Converts note name strings to MIDI note numbers
             note = pm.note_name_to_number(newMelody.notes[i])
             # Attaches MIDI note number, dynamic, and strt/end time to pm.Note container

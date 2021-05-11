@@ -182,9 +182,10 @@ class generate():
             return -1
         newData = []
         for i in range(len(data) - 1):
-            while(data[i] > len(data) - 2):
-                data[i] -= len(data) - 2
-                # data[i] = math.floor(data[i] % len(data) - 1) 
+            while(data[i] > len(data) - 1):
+                # Returns no. of times data[i] is divisible
+                # by the total number of elements in the structure it's in
+                data[i] = math.floor(data[i] / len(data) - 1) 
             newData.append(data[i])
         print("new data:", newData)
         return newData
