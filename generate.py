@@ -57,6 +57,21 @@ class generate():
         #-----------------------Notes and Scales------------------------------#
 
         # Enharmonically spelled note names starting on A. Indicies: 0-16.
+        '''
+        NOTE: 
+            Interval mappings for enhamonicly spelled chromatic scale array starting on A
+                1, 2 = half-step
+                3 = whole-step
+                4 = minor third
+                5, 6 = major third
+                7 = perfect 4th
+                8, 9 = tritone
+                10 = perfect 5th
+                11 = minor 6th
+                12, 13 = major 6th/dim 7th
+                14 = minor 7th
+                15, 16 = major 7th
+        '''
         self.notes = ["A", "A#", "Bb", "B", 
                       "C", "C#", "Db", "D", 
                       "D#", "Eb", "E", "F", 
@@ -155,7 +170,7 @@ class generate():
             print("ERROR: no melody data!")
             return -1
 
-        print("\nRESULTS:")
+        print("\n-----------MELODY Data:------------")
         print("\nTempo:", newMelody.tempo, "bpm")
         print("\nTotal Notes:", len(newMelody.notes))
         print("Notes:", newMelody.notes)
@@ -186,6 +201,10 @@ class generate():
         values within the bounds of the scale array. These values function as a 
         collection of index numbers to randomly chose from in order to pick note 
         strings from the scale array.
+
+        NOTE: Current method introduces a bias towards the notes in the lower indices
+              of the total array (at least the first third). 
+
         '''
         print("\nScaling input...")
         if(len(data) == 0):
@@ -338,6 +357,11 @@ class generate():
     '''
 
     # Generate a series of notes based off an inputted array of integers
+    '''
+    NOTE: Should newNotes()'s total output be contingent on the total data elements
+          inputted? Is there a way to scale integers to a randomly chosen indicie within
+          the bounds of a new array of notes that's already been generated? Probably.
+    '''
     def newNotes(self, data, isMinor):
         '''
         Generate a series of notes based on inputted data (an array of integers)
@@ -428,6 +452,38 @@ class generate():
             print("ERROR: Unable to generate notes!")
             return -1
         return notes
+
+    # Returns a randomly generated scale within one octave to be used
+    # as a 'root'
+    def newScale(self):
+        '''
+        Returns a randomly generated scale within one octave to be used
+        as a 'root'
+        '''
+        print("\nGenerating new root scale...")
+        pcs = []
+        # generate an ascending set of integers ()
+        # note index
+        n = randint(0, 16)
+        while(len(pcs) < 8):
+            # add it
+            pcs.append(n)
+            # remove any duplicates
+            pcs = list(set(pcs))
+            # pick another
+            n += randint(0, 16)
+        # sort in ascending order
+        pcs.sort()
+        # convert to strings
+        scale = []
+        for i in range(len(scale) - 1):
+            note = "{}{}".format(self.notes[pcs[i]], 4)
+            scale.append(note)
+        if(len(scale) == 0):
+            print("ERROR: unable to generate scale!")
+            return -1
+        return scale
+
 
 
     #-----------------------------------------------------------------------------------#
