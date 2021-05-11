@@ -60,6 +60,7 @@ class generate():
         '''
         NOTE: 
             Interval mappings for enhamonicly spelled chromatic scale array starting on A
+                0 = unison
                 1, 2 = half-step
                 3 = whole-step
                 4 = minor third
@@ -456,18 +457,19 @@ class generate():
 
     # Returns a randomly generated scale within one octave to be used
     # as a 'root'
-    def newScale(self):
+    def newScale(self, octave):
         '''
-        Returns a randomly generated scale within one octave to be used
-        as a 'root'
+        Requires a starting octave. Returns a randomly generated scale 
+        within one octave to be used as a 'root'. Returns -1 on failure.
 
         NOTE: Might return enharmonically spelled notes, which will just 
-              sound like the same note being played twice to the user.
+              sound like the same note being played twice to the user. 
+              See the interval/index mapping in the note above the array.
         '''
         print("\nGenerating new root scale...")
         pcs = []
-        # generate an ascending set of integers/note array indices
-        # randomly chosen starting note
+        # generate an ascending set of integers/note array indices starting
+        # with a randomly chosen note.
         n = randint(0, 16)
         while(len(pcs) < 8):
             # add it
@@ -481,7 +483,7 @@ class generate():
         # convert to strings
         scale = []
         for i in range(len(scale) - 1):
-            note = "{}{}".format(self.notes[pcs[i]], 4)
+            note = "{}{}".format(self.notes[pcs[i]], octave)
             scale.append(note)
         if(len(scale) == 0):
             print("ERROR: unable to generate scale!")

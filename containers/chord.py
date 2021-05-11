@@ -18,8 +18,8 @@ class chord():
 
     #Check if there's any data
     def isEmpty(self):
-        if(self.notes is None 
-            or self.rhythm == 0.0
-            or self.dynamics is None):
+        if(len(self.notes) == 0 and
+            self.rhythm == 0.0 and
+            len(self.dynamics) == 0):
             return True
         return False
