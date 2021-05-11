@@ -132,6 +132,8 @@ print("\ntotal elements:", len(data))
 print("data inputted:", data)
 if(randint(1, 2) == 1):
     isMinor = True
+    print("using a minor key!")
 else:
     isMinor = False
+    print("using a major key!")
 result = create.newMelody(data, dataType, isMinor)

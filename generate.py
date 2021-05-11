@@ -150,6 +150,7 @@ class generate():
     # Converts an array of floats to an array of ints
     def floatToInt(self, data):
         '''Converts an array of floats to an array of ints'''
+        print("\nConverting floats to ints...")
         if(len(data) == 0):
             print("ERROR: no data inputted!")
             return -1
@@ -175,6 +176,7 @@ class generate():
         while(data[i] % len(data) - 2 != 0):
             data[i] = math.floor(data[i] % len(data) - 2) 
         '''
+        print("\nScaling input...")
         if(len(data) == 0):
             print("ERROR: no data inputted") 
             return -1
@@ -214,6 +216,7 @@ class generate():
     
     # Converts a major scale to its relative minor
     def convertToMinor(self, scale):
+        print("\nConverting scale to relative minor...")
         if(len(scale) == 0):
             print("ERROR: no scale inputted!")
             return -1
