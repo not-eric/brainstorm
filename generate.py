@@ -263,16 +263,13 @@ class generate():
         numArr = [int(x) for x in str(hexStr)]
         return numArr
 
-
-    #--------------------------------------------------------------------------------#
-    #----------------------------------New File Name---------------------------------#
-    #--------------------------------------------------------------------------------#
-
-
     # Auto generate a file name (date:time)
     def newFileName(self, fileType):
         '''
-        Returns a string with the format: <type><date><time>
+        Takes a string as an argument, returns a string 
+        with the format: name - date:time
+        
+        NOTE: maybe the date module is causing the OS error?
         '''
         # Get date and time.
         date = datetime.now()
@@ -446,22 +443,6 @@ class generate():
         rhythm = self.rhythms[randint(0, len(self.rhythms) - 1)]
         return rhythm
 
-    #Pick a fast duration
-    def newRhythmFast(self):
-        '''
-        Generate a single new fast rhythm
-        '''
-        rhythm = self.rhythmsFast[randint(0, len(self.rhythmsFast) - 1)]
-        return rhythm
-    
-    #Pick a slow duration
-    def newRhythmSlow(self):
-        '''
-        Generate a single new slow rhythm
-        '''
-        rhythm = self.rhythmsSlow[randint(0, len(self.rhythmsSlow) - 1)]
-        return rhythm
-
     #Generate a list containing a rhythmic pattern
     def newRhythms(self, total):
         '''
@@ -507,30 +488,6 @@ class generate():
         Generates a single dynamic/velocity between 20 - 124
         '''
         dynamic = self.dynamics[randint(0, len(self.dynamics) - 1)]
-        return dynamic
-
-    #Generate a soft dynamic
-    def newDynamicSoft(self):
-        '''
-        Generates a single soft dynamic
-        '''
-        dynamic = self.dynamicsSoft[randint(0, len(self.dynamicsSoft) - 1)]
-        return dynamic
-
-    #Generate a medium dynamic
-    def newDynamicMed(self):
-        '''
-        Generates a single medium dynamic
-        '''
-        dynamic = self.dynamicsMed[randint(0, len(self.dynamicsMed) - 1)]
-        return dynamic
-
-    #Generate a loud dynamic.
-    def newDynamicLoud(self):
-        '''
-        Generates a single loud dynamic
-        '''
-        dynamic = self.dynamicsLoud[randint(0, len(self.dynamicsLoud) - 1)]
         return dynamic
 
     #Generate a list of dynamics. 
@@ -694,6 +651,7 @@ class generate():
             return -1
 
         # Add data to MIDI object and write out file.
+        '''NOTE: fileName is returning an OS error??'''
         fileName = self.newFileName('solo melody ')
         if(mid.saveMelody(self, newMelody, fileName) == -1):
             print("ERROR: unable to export melody!")
