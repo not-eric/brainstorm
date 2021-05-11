@@ -323,19 +323,6 @@ class generate():
     #-------------------------------------Pitch-------------------------------------#
     #-------------------------------------------------------------------------------#
 
-
-    # Picks which key (scale) to use. 
-    def pickKey(self):
-        '''
-        Picks which key (scale) to use. 
-        Returns a list of pitch classes without specified octaves.
-
-        For minor scales, feed the output of this into convertToMinor()
-        '''
-        scale = []
-        scale = self.scales[randint(1, 12)]
-        return scale
-
     # Converts a given integer to a pitch in a specified octave (ex C#6)
     def newNote(self, num, scale, octave):
         '''
@@ -348,14 +335,6 @@ class generate():
         newNote = scale[num]
         newNote = "{}{}".format(newNote, octave)
         return newNote
-
-    # Generate a scale of n length to be picked from in newNotes()
-    '''
-    NOTE: 
-        Make a generation function that builds scales off randomly chosen
-        intervals, rather than a pre-defined major scale. Each sub-set/sub-scale
-        must span one octave. 
-    '''
 
     # Generate a series of notes based off an inputted array of integers
     '''
@@ -387,6 +366,7 @@ class generate():
         octave = randint(1, 3)
 
         # Pick initial root/starting scale
+        '''NOTE: Add way to decide whether to use self.scales or a newly generated scale '''
         root = self.scales[randint(1, 12)]
 
         # Will this be a minor scale?
@@ -454,6 +434,14 @@ class generate():
             print("ERROR: Unable to generate notes!")
             return -1
         return notes
+
+    # Generate a scale of n length to be picked from in newNotes()
+    '''
+    NOTE: 
+        Make a generation function that builds scales off randomly chosen
+        intervals, rather than a pre-defined major scale. Each sub-set/sub-scale
+        must span one octave. 
+    '''
 
     # Returns a randomly generated scale within one octave to be used
     # as a 'root'
