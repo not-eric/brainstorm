@@ -163,7 +163,7 @@ class generate():
     #-----------------------------------------------------------------------------------------#
 
     # Display newMelody() object data
-    def display(self, newMelody):
+    def displayMelody(self, newMelody):
         '''
         Display newMelody() object data
         '''
@@ -205,28 +205,24 @@ class generate():
 
         NOTE: Current method introduces a bias towards the notes in the lower indices
               of the total array (at least the first third). 
-
         '''
         print("\nScaling input...")
         if(len(data) == 0):
             print("ERROR: no data inputted") 
             return -1
-        for i in range(len(data) - 1):
+        for i in range(len(data)):
             if(data[i] > len(data) - 1):
                 # Which scaling method should we use?
                 s = randint(1, 3)
                 # Divide data[i] by len(data) - 1
                 if(s == 1):
-                    print("...dividing by len(data) - 1!")
                     data[i] = math.floor(data[i] / len(data) - 1)
                 # Subtract by len(data) - 1    
                 elif(s == 2):
-                    print("...subtracting by len(data) - 1!")
                     while(data[i] > len(data) - 1):
                         data[i] -= len(data) - 1
                 # Subtract by 1                    
                 else:
-                    print("...subtracting by 1!")
                     while(data[i] > len(data) - 1):
                         data[i] -= 1
         print("\nnew data:", data)
@@ -764,6 +760,6 @@ class generate():
             return -1
 
         # Display results
-        self.display(newMelody)
+        self.displayMelody(newMelody)
 
         return newMelody
