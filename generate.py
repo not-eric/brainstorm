@@ -211,7 +211,6 @@ class generate():
         if(len(data) == 0):
             print("ERROR: no data inputted") 
             return -1
-        newData = []
         for i in range(len(data) - 1):
             # If this value is greater than the total
             # number of elements of the array it's in, 
@@ -219,9 +218,8 @@ class generate():
             # into len(data) - 1
             if(data[i] > len(data) - 1):
                 data[i] = math.floor(data[i] / len(data) - 1) 
-            newData.append(data[i])
-        print("new data:", newData)
-        return newData
+        print("new data:", data)
+        return data
 
     # Maps letters to index numbers
     def mapLettersToNumbers(self, letters):
