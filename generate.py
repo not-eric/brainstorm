@@ -262,11 +262,6 @@ class generate():
         hexStr = int(hex, 0)
         # Convert to array of ints (ie. 132 -> [1, 3, 2])
         numArr = [int(x) for x in str(hexStr)]
-        # Make sure any ints aren't greater than len(numArr) - 1
-        for i in range(len(numArr) - 1):
-            if(numArr[i] > len(numArr) - 1):
-                while(numArr[i] > len(numArr) - 1):
-                    numArr[i] -= 1
         return numArr
 
     # Auto generate a file name (date:time)
@@ -328,7 +323,7 @@ class generate():
           inputted? Is there a way to scale integers to a randomly chosen index within
           the bounds of a new array of notes that's already been generated? Probably.
     '''
-    def newNotes(self, data, isLetters):
+    def newNotes(self, data):
         '''
         Generate a series of notes based on inputted data (an array of integers)
         This randomly picks the key and the starting octave! 
@@ -425,8 +420,7 @@ class generate():
             return -1
         return notes
 
-    # Returns a randomly generated scale within one octave to be used
-    # as a 'root'
+    # Generate a new scale to function as a "root"
     def newScale(self, octave):
         '''
         Requires a starting octave. Returns a randomly generated scale 
