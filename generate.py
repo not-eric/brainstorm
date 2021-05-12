@@ -481,23 +481,19 @@ class generate():
         '''
         Requires a starting octave. Returns a randomly generated scale 
         within one octave to be used as a 'root'. Returns -1 on failure.
-
-        NOTE: Might return enharmonically spelled notes, which will just 
-              sound like the same note being played twice to the user. 
-              See the interval/index mapping in the note above the array.
         '''
         print("\nGenerating new root scale...")
         pcs = []
-        # generate an ascending set of integers/note array indices starting
-        # with a randomly chosen note.
-        n = randint(0, 16)
+        # generate an ascending set of integers/note array indices 
         while(len(pcs) < 8):
-            # add it
-            pcs.append(n)
-            # remove any duplicates
-            pcs = list(set(pcs))
-            # pick another
+            # pick note 
             n = randint(0, 16)
+            '''NOTE: resolve enharmonic choices by consulting the interval
+                     mapping above self.notes. If randint() returns a 2 and a 3
+                     in the same scale, pick one of the two and replace the other
+                     with the decided value. '''
+            if(n not in pcs):
+                pcs.append(n)
         # sort in ascending order
         pcs.sort()
         # convert to strings
