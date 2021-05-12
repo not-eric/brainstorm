@@ -213,7 +213,11 @@ class generate():
             return -1
         newData = []
         for i in range(len(data) - 1):
-            while(data[i] > len(data) - 1):
+            # If this value is greater than the total
+            # number of elements of the array it's in, 
+            # replace with number of times this value goes
+            # into len(data) - 1
+            if(data[i] > len(data) - 1):
                 data[i] = math.floor(data[i] / len(data) - 1) 
             newData.append(data[i])
         print("new data:", newData)
@@ -283,8 +287,11 @@ class generate():
         numArr = [int(x) for x in str(hexStr)]
         # Make sure any ints aren't greater than len(numArr) - 1
         for i in range(len(numArr) - 1):
-            while(numArr[i] > len(numArr) - 1):
+            if(numArr[i] > len(numArr) - 1):
                 numArr[i] -= len(numArr) - 1
+                if(numArr[i] < 0):
+                    while(numArr[i] < 0):
+                        numArr[i] += 1
         return numArr
 
     # Auto generate a file name (date:time)
@@ -372,6 +379,7 @@ class generate():
         # Pick initial root/starting scale (major or minor)
         root = self.scales[randint(1, 12)]
         # Will this be a minor scale (0 = no, 1 = yes)?
+        isMinor = False
         if(randint(0, 1) == 1):
             isMinor = True
             root = self.convertToMinor(root)
@@ -438,9 +446,7 @@ class generate():
                 scale.append(note)
                 n += 1
                 # If we've reached the end of the root scale,
-                # increment the octave (until octave 6)
-                # Ideally trigger this condition every
-                # 6 iterations. 
+                # increment the octave (until octave 6) 
                 if(i % 6 == 0):
                     octave += 1
                     # If we reach highest octave (6), chose new
@@ -681,7 +687,7 @@ class generate():
 
 
     #Generate a melody from an array of integers. 
-    def newMelody(self, data, dataType, isMinor):
+    def newMelody(self, data, dataType):
         '''
         Picks a tempo, notes, rhythms, and dynamics. Rhythms and dynamics are picked randomly (total
         for each is len(data), notes come from user. Should (ideally) handle either a character
@@ -707,6 +713,7 @@ class generate():
             data = self.scaleTheScale(data)
 
         # If letters/chars then match letters to their corresponding index numbers.
+        isLetters = False
         if(dataType == 3):
             data = self.mapLettersToNumbers(data)
             isLetters = True
@@ -722,7 +729,7 @@ class generate():
         # Pick tempo
         newMelody.tempo = self.newTempo()
         # Pick notes
-        newMelody.notes = self.newNotes(data, isMinor, isLetters)
+        newMelody.notes = self.newNotes(data, isLetters)
         # Pick rhythms
         newMelody.rhythms = self.newRhythms(len(newMelody.notes))
         # Pick dynamics
