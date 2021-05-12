@@ -395,6 +395,13 @@ class generate():
         '''    
         #-----Generate notes to pick from-----#
 
+        '''NOTE: Alter so we ONLY go off of largest value in the array instead of
+                 number of elements in the data aray? This might be very wasteful
+                 if the supplied array were something like [1, 3, 10003230, 4]. 
+                 
+                 It would also mean we wouldn't have to scale or alter the inputted 
+                 data beyond being only an integer array, though.'''
+
         # If recieving letters, use this loop!
         if(isLetters == True):
             # Find highest value in int array from letters. 
@@ -542,7 +549,7 @@ class generate():
     def newRhythms(self, total):
         '''
         Generates a series of rhythms of n length, where n is supplied
-        from elsewhere.
+        from elsewhere. Uses infrequent repetition.
         '''
         rhythms = []
         print("\nGenerating", total, "rhythms...")
