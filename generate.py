@@ -217,7 +217,12 @@ class generate():
             # replace with number of times this value goes
             # into len(data) - 1
             if(data[i] > len(data) - 1):
-                data[i] = math.floor(data[i] / len(data) - 1) 
+                #Which scaling method should we use?
+                if(randint(1, 2) == 1):
+                    data[i] = math.floor(data[i] / len(data) - 1)
+                else:
+                    while(data[i] > len(data) - 1):
+                        data[i] -= 1
         print("new data:", data)
         return data
 
@@ -715,10 +720,13 @@ class generate():
         if(dataType == 3):
             data = self.mapLettersToNumbers(data)
             isLetters = True
+            print("\nInputted data after processing:", data)
 
         # If hex convert to array of ints and scale
         if(dataType == 4):
             data = self.hexToIntArray(data)
+            print("\nInputted data after processing:", data)
+
 
         #-----------------------Generate!------------------------#
         
