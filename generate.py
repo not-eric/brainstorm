@@ -346,7 +346,7 @@ class generate():
           inputted? Is there a way to scale integers to a randomly chosen indicie within
           the bounds of a new array of notes that's already been generated? Probably.
     '''
-    def newNotes(self, data, isMinor, isLetters):
+    def newNotes(self, data, isLetters):
         '''
         Generate a series of notes based on inputted data (an array of integers)
         This randomly picks the key and the starting octave! 
@@ -366,15 +366,14 @@ class generate():
             print("ERROR: no data inputted!")
             return -1
 
-        # Pick starting octave (2 or 3)
+        # Pick starting octave (1 - 3)
         octave = randint(1, 3)
 
-        # Pick initial root/starting scale
-        '''NOTE: Add way to decide whether to use self.scales or a newly generated scale '''
+        # Pick initial root/starting scale (major or minor)
         root = self.scales[randint(1, 12)]
-
-        # Will this be a minor scale?
-        if(isMinor == True):
+        # Will this be a minor scale (0 = no, 1 = yes)?
+        if(randint(0, 1) == 1):
+            isMinor = True
             root = self.convertToMinor(root)
 
         # Display choices
@@ -397,25 +396,22 @@ class generate():
                pick a new starting scale at random.
             5. Repeat steps 3-4 until we reach the end of the supplied data set.
         '''    
-        # Generate notes to pick from
+        #-----Generate notes to pick from-----#
+
         # If recieving letters, use this loop!
         if(isLetters == True):
-            # Find highest value in int array from letters. This is the limit
-            # for how many notes to generate
+            # Find highest value in int array from letters. 
+            # This is the limit for how many notes to generate. 
             total = max(data)
             scale = []
             for i in range(total):
                 note = "{}{}".format(root[n], octave)
                 scale.append(note)
                 n += 1
-                # If we've reached the end of the root scale,
-                # increment the octave (until octave 6)
-                # Ideally trigger this condition every
-                # 6 iterations. 
+                '''NOTE: At most, the alphabet will map to 4 1/3 octaves.
+                         Still didn't want to exceed octave 6'''
                 if(i % 6 == 0):
                     octave += 1
-                    # If we reach highest octave (6), chose new
-                    # starting octave and root
                     if(octave > 6):
                         octave = randint(1, 3)
                         root = self.scales[randint(1, 12)]
@@ -713,6 +709,7 @@ class generate():
         # If letters/chars then match letters to their corresponding index numbers.
         if(dataType == 3):
             data = self.mapLettersToNumbers(data)
+            isLetters = True
 
         # If hex convert to array of ints and scale
         if(dataType == 4):
@@ -725,7 +722,7 @@ class generate():
         # Pick tempo
         newMelody.tempo = self.newTempo()
         # Pick notes
-        newMelody.notes = self.newNotes(data, isMinor)
+        newMelody.notes = self.newNotes(data, isMinor, isLetters)
         # Pick rhythms
         newMelody.rhythms = self.newRhythms(len(newMelody.notes))
         # Pick dynamics
