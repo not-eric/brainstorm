@@ -162,25 +162,6 @@ class generate():
     #-----------------------------Conversion and Utility Functions----------------------------#
     #-----------------------------------------------------------------------------------------#
 
-    # Display newMelody() object data
-    def displayMelody(self, newMelody):
-        '''
-        Display newMelody() object data
-        '''
-        if(newMelody.hasData() == False):
-            print("ERROR: no melody data!")
-            return -1
-
-        print("\n-----------MELODY Data:------------")
-        print("\nTempo:", newMelody.tempo, "bpm")
-        print("\nTotal Notes:", len(newMelody.notes))
-        print("Notes:", newMelody.notes)
-        print("\nTotal rhythms:", len(newMelody.rhythms))
-        print("Rhythms:", newMelody.rhythms)
-        print("\nTotal dynamics:", len(newMelody.dynamics))
-        print("Dynamics:", newMelody.dynamics)
-
-        return 0
 
     # Converts an array of floats to an array of ints
     def floatToInt(self, data):
@@ -400,11 +381,9 @@ class generate():
 
         # If recieving letters, use this loop!
         if(isLetters == True):
-            # Find highest value in int array from letters. 
-            # This is the limit for how many notes to generate. 
+            n = 0
             scale = []
-            total = max(data)
-            for i in range(total):
+            for i in range(25):
                 note = "{}{}".format(root[n], octave)
                 scale.append(note)
                 n += 1
@@ -690,6 +669,25 @@ class generate():
     #-------------------------------MELODIC GENERATION--------------------------------#
     #---------------------------------------------------------------------------------#
 
+    # Display newMelody() object data
+    def displayMelody(self, newMelody):
+        '''
+        Display newMelody() object data
+        '''
+        if(newMelody.hasData() == False):
+            print("ERROR: no melody data!")
+            return -1
+
+        print("\n-----------MELODY Data:------------")
+        print("\nTempo:", newMelody.tempo, "bpm")
+        print("\nTotal Notes:", len(newMelody.notes))
+        print("Notes:", newMelody.notes)
+        print("\nTotal rhythms:", len(newMelody.rhythms))
+        print("Rhythms:", newMelody.rhythms)
+        print("\nTotal dynamics:", len(newMelody.dynamics))
+        print("Dynamics:", newMelody.dynamics)
+
+        return 0
 
     #Generate a melody from an array of integers. 
     def newMelody(self, data, dataType):
