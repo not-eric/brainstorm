@@ -212,14 +212,17 @@ class generate():
             print("ERROR: no data inputted") 
             return -1
         for i in range(len(data) - 1):
-            # If this value is greater than the total
-            # number of elements of the array it's in, 
-            # replace with number of times this value goes
-            # into len(data) - 1
             if(data[i] > len(data) - 1):
-                #Which scaling method should we use?
-                if(randint(1, 2) == 1):
+                # Which scaling method should we use?
+                s = randint(1, 3)
+                # Divide data[i] by len(data) - 1
+                if(s == 1):
                     data[i] = math.floor(data[i] / len(data) - 1)
+                # Subtract by len(data) - 1    
+                elif(s == 2):
+                    while(data[i] > len(data) - 1):
+                        data[i] -= len(data) - 1
+                # Subtract by 1                    
                 else:
                     while(data[i] > len(data) - 1):
                         data[i] -= 1
