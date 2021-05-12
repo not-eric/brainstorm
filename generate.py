@@ -217,16 +217,19 @@ class generate():
                 s = randint(1, 3)
                 # Divide data[i] by len(data) - 1
                 if(s == 1):
+                    print("...dividing by len(data) - 1!")
                     data[i] = math.floor(data[i] / len(data) - 1)
                 # Subtract by len(data) - 1    
                 elif(s == 2):
+                    print("...subtracting by len(data) - 1!")
                     while(data[i] > len(data) - 1):
                         data[i] -= len(data) - 1
                 # Subtract by 1                    
                 else:
+                    print("...subtracting by 1!")
                     while(data[i] > len(data) - 1):
                         data[i] -= 1
-        print("new data:", data)
+        print("\nnew data:", data)
         return data
 
     # Maps letters to index numbers
@@ -256,24 +259,6 @@ class generate():
             return -1
         return numbers
     
-    # Converts a major scale to its relative minor
-    def convertToMinor(self, scale):
-        print("\nConverting scale to relative minor...")
-        if(len(scale) == 0):
-            print("ERROR: no scale inputted!")
-            return -1
-        k = 5
-        minorScale = []
-        for i in range(len(scale)):
-            minorScale.append(scale[k])
-            k += 1
-            if(k > len(scale) - 1):
-                k = 0
-        if(len(minorScale) == 0):
-            print("ERROR: unable to generate minor scale!")
-            return -1
-        return minorScale
-    
     # Convert a hex number representing a color to an array of integers
     def hexToIntArray(self, hex):
         '''
@@ -294,10 +279,8 @@ class generate():
         # Make sure any ints aren't greater than len(numArr) - 1
         for i in range(len(numArr) - 1):
             if(numArr[i] > len(numArr) - 1):
-                numArr[i] -= len(numArr) - 1
-                if(numArr[i] < 0):
-                    while(numArr[i] < 0):
-                        numArr[i] += 1
+                while(numArr[i] > len(numArr) - 1):
+                    numArr[i] -= 1
         return numArr
 
     # Auto generate a file name (date:time)
@@ -527,6 +510,23 @@ class generate():
             return -1
         return scale
 
+    # Converts a major scale to its relative minor
+    def convertToMinor(self, scale):
+        print("\nConverting scale to relative minor...")
+        if(len(scale) == 0):
+            print("ERROR: no scale inputted!")
+            return -1
+        k = 5
+        minorScale = []
+        for i in range(len(scale)):
+            minorScale.append(scale[k])
+            k += 1
+            if(k > len(scale) - 1):
+                k = 0
+        if(len(minorScale) == 0):
+            print("ERROR: unable to generate minor scale!")
+            return -1
+        return minorScale
 
 
     #-----------------------------------------------------------------------------------#
