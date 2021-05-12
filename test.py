@@ -114,19 +114,19 @@ print("\n***new melody from ints/floats/chars/hex test***")
 dataType = randint(1, 4)
 # Generate ints
 if(dataType == 1):
-    print("inputting ints...")
+    print("\ninputting ints...")
     data = newInts()
 # Generate floats
 elif(dataType == 2):
-    print("inputting floats...")
+    print("\ninputting floats...")
     data = newFloats()
 # Generate chars
 elif(dataType == 3):
-    print("inputting letters...")
+    print("\ninputting letters...")
     data = newChars()
 # Generate a new hex
 else:
-    print("inputting hex number...")
+    print("\ninputting hex number...")
     data = newHex()
 print("\ntotal elements:", len(data))
 print("data inputted:", data)

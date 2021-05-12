@@ -402,8 +402,8 @@ class generate():
         if(isLetters == True):
             # Find highest value in int array from letters. 
             # This is the limit for how many notes to generate. 
-            total = max(data)
             scale = []
+            total = max(data)
             for i in range(total):
                 note = "{}{}".format(root[n], octave)
                 scale.append(note)
