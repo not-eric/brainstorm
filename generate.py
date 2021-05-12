@@ -59,25 +59,32 @@ class generate():
         # Enharmonically spelled note names starting on A. Indicies: 0-16.
         '''
         NOTE: 
-            Interval mappings for enhamonicly spelled chromatic scale array starting on A
-                0 = unison
-                1, 2 = half-step
-                3 = whole-step
-                4 = minor third
-                5, 6 = major third
-                7 = perfect 4th
-                8, 9 = tritone
-                10 = perfect 5th
-                11 = minor 6th
-                12, 13 = major 6th/dim 7th
-                14 = minor 7th
-                15, 16 = major 7th
+            Interval mappings for enhamonicly spelled chromatic scale array starting on C
+                0 - 0        = unison
+                0 - 1 or 2   = half-step
+                0 - 3        = whole-step
+                0 - 4        = minor third
+                0 - 5 or 6   = major third
+                0 - 7        = perfect 4th
+                0 - 8 or 9   = tritone
+                0 - 10       = perfect 5th
+                0 - 11       = minor 6th
+                0 - 12 or 13 = major 6th/dim 7th
+                0 - 14       = minor 7th
+                0 - 15 or 16 = major 7th
         '''
-        self.notes = ["A", "A#", "Bb", "B", 
-                      "C", "C#", "Db", "D", 
+        self.notes = ["C", "C#", "Db", "D", 
                       "D#", "Eb", "E", "F", 
                       "F#", "Gb", "G", "G#",
-                      "Ab"]
+                      "Ab", "A", "A#", "Bb", "B"]
+
+        # Chormatic scale (using all sharps). Indicies 0 - 11.
+        self.chromaticScaleSharps = ["C", "C#", "D", "D#", "E", "F",
+                                     "F#", "G", "G#", "A", "A#", "B"] 
+
+        # Chormatic scale (using all flats). Indicies 0 - 11.
+        self.chromaticScaleFlats = ["C", "Db", "D", "Eb", "E", "F",
+                                    "Gb", "G", "Ab", "A", "Bb", "B"]        
 
         # Major Scales
         self.scales = {1: ['C', 'D', 'E', 'F', 'G', 'A', 'B'], 
@@ -418,14 +425,6 @@ class generate():
             return -1
         return notes
 
-    # Generate a scale of n length to be picked from in newNotes()
-    '''
-    NOTE: 
-        Make a generation function that builds scales off randomly chosen
-        intervals, rather than a pre-defined major scale. Each sub-set/sub-scale
-        must span one octave. 
-    '''
-
     # Returns a randomly generated scale within one octave to be used
     # as a 'root'
     def newScale(self, octave):
@@ -435,22 +434,25 @@ class generate():
         '''
         print("\nGenerating new root scale...")
         pcs = []
+        # Use sharps (1) or flats (2)?
+        sof = randint(1, 2)
         # generate an ascending set of integers/note array indices 
         while(len(pcs) < 8):
             # pick note 
-            n = randint(0, 16)
-            '''NOTE: resolve enharmonic choices by consulting the interval
-                     mapping above self.notes. If randint() returns a 2 and a 3
-                     in the same scale, pick one of the two and replace the other
-                     with the decided value. '''
+            n = randint(0, 11)
             if(n not in pcs):
                 pcs.append(n)
         # sort in ascending order
         pcs.sort()
         # convert to strings
+        print("new ints:", pcs)
+        print("total:", len(pcs))
         scale = []
-        for i in range(len(scale) - 1):
-            note = "{}{}".format(self.notes[pcs[i]], octave)
+        for i in range(len(pcs)):
+            if(sof == 1):
+                note = "{}{}".format(self.chromaticScaleSharps[pcs[i]], octave)
+            else:
+                note = "{}{}".format(self.chromaticScaleFlats[pcs[i]], octave)
             scale.append(note)
         if(len(scale) == 0):
             print("ERROR: unable to generate scale!")
