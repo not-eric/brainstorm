@@ -130,8 +130,4 @@ else:
     data = newHex()
 print("\ntotal elements:", len(data))
 print("data inputted:", data)
-if(randint(1, 2) == 1):
-    isMinor = True
-else:
-    isMinor = False
-result = create.newMelody(data, dataType, isMinor)
+result = create.newMelody(data, dataType)
