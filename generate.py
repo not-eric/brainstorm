@@ -675,23 +675,29 @@ class generate():
         # If ints, scale as necessary
         if(dataType == 1):
             data = self.scaleTheScale(data)
+            print("\nTotal elements:", len(data))
+            print("Inputted data after processing:", data)
 
         # If floats then convert to ints and scale
         if(dataType == 2):
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
+            print("\nTotal elements:", len(data))
+            print("Inputted data after processing:", data)
 
         # If letters/chars then match letters to their corresponding index numbers.
         isLetters = False
         if(dataType == 3):
             data = self.mapLettersToNumbers(data)
             isLetters = True
-            print("\nInputted data after processing:", data)
+            print("\nTotal elements:", len(data))
+            print("Inputted data after processing:", data)
 
         # If hex convert to array of ints and scale
         if(dataType == 4):
             data = self.hexToIntArray(data)
-            print("\nInputted data after processing:", data)
+            print("\nTotal elements:", len(data))
+            print("Inputted data after processing:", data)
 
 
         #-----------------------Generate!------------------------#
