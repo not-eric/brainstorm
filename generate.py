@@ -347,7 +347,7 @@ class generate():
         octave = randint(1, 3)
 
         # Pick initial root/starting scale (major or minor)
-        root = self.scales[randint(1, 12)]
+        root = self.scales[randint(1, len(self.scales) - 1)]
         # Will this be a minor scale (0 = no, 1 = yes)?
         isMinor = False
         if(randint(0, 1) == 1):
@@ -362,14 +362,15 @@ class generate():
         '''
         Note generation algorithm:
 
-            1. Total notes is equivalent to *highest single integer* in data set.
+            1. Total notes is equivalent to *highest single integer* in supplied data set.
             2. Generate a starting key/scale, and a starting octave.
             3. Cycle through this scale appending each note to a list
                of available notes until we reach the last note in the scale
                in octave 6.
             4. If we reach this note, reset octave to starting point, and 
                pick a new starting scale at random.
-            5. Repeat steps 3-4 until we reach the end of the supplied data set.
+            5. Repeat steps 3-4 until we have as many notes as the highest single
+               integer from the supplied data set.
         '''    
         #-----Generate notes to pick from-----#
 
@@ -383,17 +384,17 @@ class generate():
         n = 0
         scale = []
         total = max(data)
-        for i in range(total):
+        for i in range(total + 1):
             note = "{}{}".format(root[n], octave)
             scale.append(note)
             n += 1
             '''NOTE: At most, the alphabet will map to 4 1/3 octaves.
                         Still didn't want to exceed octave 6'''
-            if(i % 6 == 0):
+            if(i % 7 == 0):
                 octave += 1
                 if(octave > 6):
                     octave = randint(1, 3)
-                    root = self.scales[randint(1, 12)]
+                    root = self.scales[randint(1, len(self.scales) - 1)]
                     # Re-decide if we're using minor (1) or major (2) again
                     if(randint(1, 2) == 1):
                         isMinor = True
@@ -411,7 +412,7 @@ class generate():
 
         # Pick notes according to integers in data array
         notes = []
-        for i in range(len(data) - 1):
+        for i in range(len(data)):
             notes.append(scale[data[i]])
 
         # Check results
@@ -430,7 +431,7 @@ class generate():
         pcs = []
         # Use sharps (1) or flats (2)?
         sof = randint(1, 2)
-        # generate an ascending set of integers/note array indices 
+        # generate an ascending set of 8 integers/note array indices 
         while(len(pcs) < 8):
             # pick note 
             n = randint(0, 11)
@@ -662,7 +663,7 @@ class generate():
         array for a person's name (or any random set of characters), or an array of 
         either floats or integers of n length.
 
-        Appends to pretty_midi object and exports a MIDI file. Returns a newMelody() object.
+        Appends to newMelody() object and exports a MIDI file. Returns a newMelody() object.
         '''
         # Melody container object
         newMelody = melody()
@@ -700,7 +701,7 @@ class generate():
         # Pick tempo
         newMelody.tempo = self.newTempo()
         # Pick notes
-        newMelody.notes = self.newNotes(data, isLetters)
+        newMelody.notes = self.newNotes(data)
         # Pick rhythms
         newMelody.rhythms = self.newRhythms(len(newMelody.notes))
         # Pick dynamics
