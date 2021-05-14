@@ -8,6 +8,24 @@
     This class handles all generative functions. It contains a set of resource data
     that is accessed by a variety of generative algorithms and mapping functions.  
 
+    
+    NOTE:
+        newMelody()
+
+        Long data sets will have the same note associated with different 
+        values elsewhere in the array. 
+        
+        If we ascend through the available octaves we can pick a new 
+        key/scale and cycle through the octaves again. This will allow for 
+        some cool chromaticism to emerge rather "organiclly" while minimizing
+        the amount of repeated notes associated with different elements in 
+        the data array (unless we get the same scale chosen again, or there's
+        a lot of common tones between the scales that are picked) . 
+
+    NOTE:
+        Consolidate newRhythms() and newDynamics() into single generative loop, with an
+        additional 'type' (int) argument. Each type chooses which resource data to draw from. 
+
 ----------------------------------------------------------------------------------------------------------------
 '''
 
@@ -23,12 +41,6 @@ class generate():
     '''
     This class handles all generative functions. It contains a set of resource data
     that is accessed by a variety of generative algorithms and mapping functions.
-
-    NOTE:
-    
-    Consolidate newRhythms() and newDynamics() into single generative loop, with an
-    additional 'type' (int) argument. Each type chooses which resource data to draw from.
-
     '''
 
     # Constructor
@@ -58,20 +70,19 @@ class generate():
 
         # Enharmonically spelled note names starting on A. Indicies: 0-16.
         '''
-        NOTE: 
-            Interval mappings for enhamonicly spelled chromatic scale array starting on C
-                0 - 0        = unison
-                0 - 1 or 2   = half-step
-                0 - 3        = whole-step
-                0 - 4        = minor third
-                0 - 5 or 6   = major third
-                0 - 7        = perfect 4th
-                0 - 8 or 9   = tritone
-                0 - 10       = perfect 5th
-                0 - 11       = minor 6th
-                0 - 12 or 13 = major 6th/dim 7th
-                0 - 14       = minor 7th
-                0 - 15 or 16 = major 7th
+        Interval mappings for enhamonicly spelled chromatic scale array starting on C
+            0 - 0        = unison
+            0 - 1 or 2   = half-step
+            0 - 3        = whole-step
+            0 - 4        = minor third
+            0 - 5 or 6   = major third
+            0 - 7        = perfect 4th
+            0 - 8 or 9   = tritone
+            0 - 10       = perfect 5th
+            0 - 11       = minor 6th
+            0 - 12 or 13 = major 6th/dim 7th
+            0 - 14       = minor 7th
+            0 - 15 or 16 = major 7th
         '''
         self.notes = ["C", "C#", "Db", "D", 
                       "D#", "Eb", "E", "F", 
@@ -104,21 +115,19 @@ class generate():
         #---------------------------Rhythm-----------------------------------#
 
         '''
-        NOTE:
-            Durations in seconds (1 = quarter note (60bpm))
-            Whole note to 32nd note
-            
-                [0] 4 = whole note                                                          
-                [1] 3 = dotted half
-                [2] 2 = half note           
-                [3] 1.5 = dotted quarter    
-                [4] 1 = quarter             
-                [5] 0.75 = dotted eighth
-                [6] 0.5 = eighth
-                [7] 0.375 = dotted sixteenth
-                [8] 0.25 = sixteenth 
-                [9] 0.125 = thirty-second
-
+        Durations in seconds (1 = quarter note (60bpm))
+        Whole note to 32nd note
+        
+            [0] 4 = whole note                                                          
+            [1] 3 = dotted half
+            [2] 2 = half note           
+            [3] 1.5 = dotted quarter    
+            [4] 1 = quarter             
+            [5] 0.75 = dotted eighth
+            [6] 0.5 = eighth
+            [7] 0.375 = dotted sixteenth
+            [8] 0.25 = sixteenth 
+            [9] 0.125 = thirty-second
         '''
         # Rhythms (0-9)
         self.rhythms = [4.0, 3.0, 2.0, 1.5, 1.0, 0.75, 0.5, 
@@ -146,7 +155,7 @@ class generate():
         #--------------------------Dynamics---------------------------------#
         
         '''
-        NOTE: MIDI velocity/dynamics range: 0 - 127
+        MIDI velocity/dynamics range: 0 - 127
         '''
 
         # Dynamics (0-26)
@@ -325,19 +334,9 @@ class generate():
     '''
     def newNotes(self, data):
         '''
-        Generate a series of notes based on inputted data (an array of integers)
-        This randomly picks the key and the starting octave! 
-
-        NOTE:
-            Long data sets will have the same note associated with different 
-            values elsewhere in the array. 
-            
-            If we ascend through the available octaves we can pick a new 
-            key/scale and cycle through the octaves again. This will allow for 
-            some cool chromaticism to emerge rather "organiclly" while minimizing
-            the amount of repeated notes associated with different elements in 
-            the data array (unless we get the same scale chosen again, or there's
-            a lot of common tones between the scales that are picked) .  
+        Generates a set of notes based on inputted data (an array of integers).
+        Data is used as index numbers to select notes from this series in order
+        to generate a melody.
         '''
         if(len(data) == 0):
             print("ERROR: no data inputted!")

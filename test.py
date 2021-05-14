@@ -111,7 +111,7 @@ def newChars():
 
 
 # New root/scale test
-print("\n***new root/scale test")
+print("\n***new scale test***")
 scale = create.newScale(4)
 print("new scale:", scale)
 print("total:", len(scale))
