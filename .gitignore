@@ -1,5 +1,5 @@
 .env
 .vscode/
 images/
-test
+test/
 test outputs/

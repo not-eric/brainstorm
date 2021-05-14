@@ -110,32 +110,32 @@ def newChars():
 # print("\nresult", result)
 
 
-# # New root/scale test
-# print("\n***new root/scale test")
-# scale = create.newScale(4)
-# print("new scale:", scale)
-# print("total:", len(scale))
+# New root/scale test
+print("\n***new root/scale test")
+scale = create.newScale(4)
+print("new scale:", scale)
+print("total:", len(scale))
 
 
-# New melody test fron integers
-print("\n***new melody from ints/floats/chars/hex test***")
-dataType = randint(1, 4)
-# Generate ints
-if(dataType == 1):
-    print("\ninputting ints...")
-    data = newInts()
-# Generate floats
-elif(dataType == 2):
-    print("\ninputting floats...")
-    data = newFloats()
-# Generate chars
-elif(dataType == 3):
-    print("\ninputting letters...")
-    data = newChars()
-# Generate a new hex
-else:
-    print("\ninputting hex number...")
-    data = newHex()
-print("\ntotal elements:", len(data))
-print("data inputted:", data)
-result = create.newMelody(data, dataType)
+# # New melody test fron integers
+# print("\n***new melody from ints/floats/chars/hex test***")
+# dataType = randint(1, 4)
+# # Generate ints
+# if(dataType == 1):
+#     print("\ninputting ints...")
+#     data = newInts()
+# # Generate floats
+# elif(dataType == 2):
+#     print("\ninputting floats...")
+#     data = newFloats()
+# # Generate chars
+# elif(dataType == 3):
+#     print("\ninputting letters...")
+#     data = newChars()
+# # Generate a new hex
+# else:
+#     print("\ninputting hex number...")
+#     data = newHex()
+# print("\ntotal elements:", len(data))
+# print("data inputted:", data)
+# result = create.newMelody(data, dataType)

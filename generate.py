@@ -374,16 +374,10 @@ class generate():
         '''    
         #-----Generate notes to pick from-----#
 
-        '''NOTE: Alter so we ONLY go off of largest value in the array instead of
-                 number of elements in the data aray? This might be very wasteful
-                 if the supplied array were something like [1, 3, 10003230, 4]. 
-                 
-                 It would also mean we wouldn't have to scale or alter the inputted 
-                 data beyond being only an integer array, though.'''
-
         n = 0
         scale = []
         total = max(data)
+
         for i in range(total + 1):
             note = "{}{}".format(root[n], octave)
             scale.append(note)
@@ -432,7 +426,7 @@ class generate():
         # Use sharps (1) or flats (2)?
         sof = randint(1, 2)
         # generate an ascending set of 8 integers/note array indices 
-        while(len(pcs) < 8):
+        while(len(pcs) < 7):
             # pick note 
             n = randint(0, 11)
             if(n not in pcs):
