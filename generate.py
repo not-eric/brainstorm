@@ -317,6 +317,21 @@ class generate():
     #-------------------------------------Pitch-------------------------------------#
     #-------------------------------------------------------------------------------#
 
+
+    # Returns a randomly chosen note in a randomly chosen octave
+    def newRandNote(self):
+        '''
+        Returns a randomly chosen note in a randomly chosen octave
+        '''
+        # Sharps or flats?
+        if(randint(1, 2) == 1):
+            note = self.chromaticScaleSharps[randint(0, 11)]
+        else:
+            note = self.chromaticScaleFlats[randint(0, 11)]
+        # Add octave
+        note = "{}{}".format(note, randint(1, 6))
+        return note
+
     # Converts a given integer to a pitch in a specified octave (ex C#6)
     def newNote(self, num, octave):
         '''
@@ -334,20 +349,6 @@ class generate():
             note = self.chromaticScaleFlats[num]
         # Add octave
         note = "{}{}".format(note, octave)
-        return note
-
-    # Returns a randomly chosen note in a randomly chosen octave
-    def newRandNote(self):
-        '''
-        Returns a randomly chosen note in a randomly chosen octave
-        '''
-        # Sharps or flats?
-        if(randint(1, 2) == 1):
-            note = self.chromaticScaleSharps[randint(0, 11)]
-        else:
-            note = self.chromaticScaleFlats[randint(0, 11)]
-        # Add octave
-        note = "{}{}".format(note, randint(1, 6))
         return note
 
     # Generate a series of notes based off an inputted array of integers
@@ -487,7 +488,7 @@ class generate():
     #-----------------------------------------------------------------------------------#
 
 
-    #Pick a rhythm
+    # Pick a rhythm
     def newRhythm(self):
         '''
         Generates a single new rhythm
@@ -495,7 +496,7 @@ class generate():
         rhythm = self.rhythms[randint(0, len(self.rhythms) - 1)]
         return rhythm
 
-    #Generate a list containing a rhythmic pattern
+    # Generate a list containing a rhythmic pattern
     def newRhythms(self, total):
         '''
         Generates a series of rhythms of n length, where n is supplied
@@ -504,11 +505,11 @@ class generate():
         rhythms = []
         print("\nGenerating", total, "rhythms...")
         while(len(rhythms) < total):
-            #Pick rhythm and add to list    
+            # Pick rhythm and add to list    
             rhythm = self.rhythms[randint(0, len(self.rhythms) - 1)]
-            #Repeat this rhythm or not? 1 = yes, 2 = no
+            # Repeat this rhythm or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
-                #Limit reps to no more than 1/3 of the total no. of rhythms
+                # Limit reps to no more than 1/3 of the total no. of rhythms
                 limit = math.floor(len(rhythms)/3)
                 '''Note: This limit will increase rep levels w/longer list lengths
                          May need to scale for larger lists'''
@@ -533,8 +534,8 @@ class generate():
     #--------------------------------------------------------------------------------#
 
 
-    #Generate a single dynamic (to be used such that a passage doesn't have consistenly
-    #changing dynamics)
+    # Generate a single dynamic (to be used such that a passage doesn't have consistenly
+    # changing dynamics)
     def newDynamic(self):
         '''
         Generates a single dynamic/velocity between 20 - 124
@@ -542,7 +543,7 @@ class generate():
         dynamic = self.dynamics[randint(0, len(self.dynamics) - 1)]
         return dynamic
 
-    #Generate a list of dynamics. 
+    # Generate a list of dynamics. 
     def newDynamics(self, total):
         '''
         Generates a list of dynamics (MIDI velocites) of n length, 
@@ -551,11 +552,11 @@ class generate():
         dynamics = []
         print("\nGenerating", total, "dynamics...")
         while(len(dynamics) < total):
-            #Pick dynamic    
+            # Pick dynamic    
             dynamic = self.dynamics[randint(0, 9)]
-            #Repeat this dynamic or not? 1 = yes, 2 = no
+            # Repeat this dynamic or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
-                #Limit reps to no more than 1/3 of the supplied total
+                # Limit reps to no more than 1/3 of the supplied total
                 limit = math.floor(total/3)
                 '''Note: This limit will increase rep levels w/longer totals
                          May need to scale for larger lists'''
