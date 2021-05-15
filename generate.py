@@ -20,7 +20,12 @@
         some cool chromaticism to emerge rather "organiclly" while minimizing
         the amount of repeated notes associated with different elements in 
         the data array (unless we get the same scale chosen again, or there's
-        a lot of common tones between the scales that are picked) . 
+        a lot of common tones between the scales that are picked) .
+
+    NOTE: 
+        Should newNotes()'s total output be contingent on the total data elements
+        inputted? Is there a way to scale integers to a randomly chosen index within
+        the bounds of a new array of notes that's already been generated? Probably. 
 
     NOTE:
         Consolidate newRhythms() and newDynamics() into single generative loop, with an
@@ -55,10 +60,9 @@ class generate():
         # ----------------------------Letters---------------------------------#  
 
         '''
-        NOTE:
-            Used to search against and return an integer representing an 
-            Array index. The array will be used to generate a scale from
-            whos total is the len(alphabet) - 1
+        Used to search against and return an integer representing an 
+        Array index. The array will be used to generate a scale from
+        whos total is the len(alphabet) - 1
         '''
 
         self.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
@@ -327,11 +331,6 @@ class generate():
         return newNote
 
     # Generate a series of notes based off an inputted array of integers
-    '''
-    NOTE: Should newNotes()'s total output be contingent on the total data elements
-          inputted? Is there a way to scale integers to a randomly chosen index within
-          the bounds of a new array of notes that's already been generated? Probably.
-    '''
     def newNotes(self, data):
         '''
         Generates a set of notes based on inputted data (an array of integers).
@@ -376,7 +375,6 @@ class generate():
         n = 0
         scale = []
         total = max(data)
-
         for i in range(total + 1):
             note = "{}{}".format(root[n], octave)
             scale.append(note)
@@ -402,12 +400,10 @@ class generate():
                         print("Key-change! Now using", root[0], "major")
                 # Reset n to stay within len(root)
                 n = 0
-
         # Pick notes according to integers in data array
         notes = []
         for i in range(len(data)):
             notes.append(scale[data[i]])
-
         # Check results
         if(len(notes) == 0):
             print("ERROR: Unable to generate notes!")
@@ -424,7 +420,7 @@ class generate():
         pcs = []
         # Use sharps (1) or flats (2)?
         sof = randint(1, 2)
-        # generate an ascending set of 8 integers/note array indices 
+        # generate an ascending set of 7 integers/note array indices 
         while(len(pcs) < 7):
             # pick note 
             n = randint(0, 11)
@@ -565,7 +561,7 @@ class generate():
 
 
     # Generates a single chord from a given scale
-    def newChord(self, scale):
+    def newChordFromScale(self, scale):
         '''
         Generates a single new chord from the notes in a given scale.
         '''

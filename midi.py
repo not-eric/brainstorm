@@ -5,7 +5,7 @@
 '''
     This module is for handling MIDI I/O with generous help from the pretty_midi library.
 '''
-# from datetime import datetime
+from datetime import datetime
 import pretty_midi as pm
 from pretty_midi import constants as inst
 
@@ -17,19 +17,21 @@ class midiStuff():
     def __init__(self):
         super().__init__()
 
-    # # Auto generate a file name (date:time)
-    # def newFileName(self, fileType):
-    #     '''
-    #     Returns a string with the format: <type><date><time>
-    #     '''
-    #     # Get date and time.
-    #     date = datetime.now()
-    #     # Convert to str d-m-y (hh:mm:ss)
-    #     dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
-    #     # Alt format ( "<month> the <date> of <year> is <day> at <time>)
-    #     # dateStr = date.strftime("%B the %d of %Y is %A at %I:%M %p")
-    #     fileName = "{}{}".format(fileType, dateStr)
-    #     return fileName
+    # Auto generate a file name (date:time)
+    def newFileName(self, fileType):
+        '''
+        Takes a string as an argument, returns a string 
+        with the format: name - date:time
+        
+        NOTE: maybe the date module is causing the OS error?
+        '''
+        # Get date and time.
+        date = datetime.now()
+        # Convert to str d-m-y (hh:mm:ss)
+        dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
+        # Merge date and file type
+        fileName = "{}{}".format(fileType, dateStr)
+        return fileName
 
     # Imports a MIDI file
     def load(self, fileName):
