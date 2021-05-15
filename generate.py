@@ -330,6 +330,19 @@ class generate():
         newNote = "{}{}".format(newNote, octave)
         return newNote
 
+    # Returns a randomly chosen note in a randomly chosen octave
+    def newRandNote(self):
+        '''
+        Returns a randomly chosen note in a randomly chosen octave
+        '''
+        # Sharps or flats?
+        if(randint(1, 2) == 1):
+            note = self.chromaticScaleSharps[randint(0, 11)]
+        else:
+            note = self.chromaticScaleFlats[randint(0, 11)]
+        note = "{}{}".format(note, randint(1, 6))
+        return note
+
     # Generate a series of notes based off an inputted array of integers
     def newNotes(self, data):
         '''
@@ -375,7 +388,6 @@ class generate():
         n = 0
         scale = []
         total = max(data)
-
         for i in range(total + 1):
             note = "{}{}".format(root[n], octave)
             scale.append(note)
