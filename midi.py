@@ -58,7 +58,7 @@ class midiStuff():
     def save(self, fileName):
         if(fileName is None):
             return -1
-        print("\nSaving file...")
+        print("\nSaving", fileName, "...")
         pm.PrettyMIDI.write(fileName)
         return 0
     
