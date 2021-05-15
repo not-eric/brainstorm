@@ -24,7 +24,7 @@ class chord():
         Is there complete chord data? 
         If True, then all fields have been used.
         '''
-        if(self.temp != 0.0 and
+        if(self.tempo != 0.0 and
             len(self.notes) != 0 and
             self.rhythm != 0.0 and
             len(self.dynamics) != 0):
