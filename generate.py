@@ -230,7 +230,6 @@ class generate():
                 else:
                     while(data[i] > len(data) - 1):
                         data[i] -= 1
-        print("\nnew data:", data)
         return data
 
     # Maps letters to index numbers
