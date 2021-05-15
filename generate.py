@@ -675,10 +675,8 @@ class generate():
             print("Inputted data after processing:", data)
 
         # If letters/chars then match letters to their corresponding index numbers.
-        isLetters = False
         if(dataType == 3):
             data = self.mapLettersToNumbers(data)
-            isLetters = True
             print("\nTotal elements:", len(data))
             print("Inputted data after processing:", data)
 

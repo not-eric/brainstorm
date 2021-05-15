@@ -118,7 +118,7 @@ class midiStuff():
 
 
     # Outputs a single MIDI chord.
-    def saveChord(self, newchord, dynamics):
+    def saveChord(self, newChord):
         '''
         Outputs a single MIDI chord (ideally). Also returns a pretty_midi object. 
         To be used with chord generation.
@@ -128,26 +128,23 @@ class midiStuff():
             Tempo: 120
             Velocity: 100
         '''
-        if(not newchord or not dynamics):
+        if(newChord.isEmpty() == True):
             return -1
 
-        strt = 0.0
-        end = 2.0
-
         # Create instrument/MIDI object
-        aNewChord = pm.PrettyMIDI(initial_tempo=60)
+        mid = pm.PrettyMIDI(initial_tempo=60)
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         chord = pm.Instrument(program = instrument)
 
         # Add data to pm object
-        for i in range(len(newchord) - 1):
-            note = pm.note_name_to_number(newchord[i])
-            note = pm.Note(velocity= dynamics[i], pitch= note, start= strt, end= end)
+        for i in range(len(newChord.notes) - 1):
+            note = pm.note_name_to_number(newChord.notes[i])
+            note = pm.Note(velocity= newChord.dynamics[i], pitch= note, start= 0.0, end= newChord.rhythm)
             chord.notes.append(note)
         
         # Write out file from MIDI object
-        aNewChord.instruments.append(chord)
-        aNewChord.write('new-chord.mid')
+        mid.instruments.append(chord)
+        mid.write('new-chord.mid')
 
         return 0
 
