@@ -34,14 +34,14 @@
 ----------------------------------------------------------------------------------------------------------------
 '''
 
-#IMPORTS
+# IMPORTS
 import math
 from random import randint
 from datetime import datetime
 from midi import midiStuff as mid
 from containers.melody import melody
 
-#Generative functions
+# Generative functions
 class generate():
     '''
     This class handles all generative functions. It contains a set of resource data
@@ -319,7 +319,7 @@ class generate():
 
 
     # Returns a randomly chosen note in a randomly chosen octave
-    def newRandNote(self):
+    def newNoteRand(self):
         '''
         Returns a randomly chosen note in a randomly chosen octave
         '''
