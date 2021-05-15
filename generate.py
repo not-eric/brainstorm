@@ -318,17 +318,23 @@ class generate():
     #-------------------------------------------------------------------------------#
 
     # Converts a given integer to a pitch in a specified octave (ex C#6)
-    def newNote(self, num, scale, octave):
+    def newNote(self, num, octave):
         '''
         Converts a given integer to a pitch in a specified octave (ex C#6).
         Requires an integer, a given scale, and the required octave. 
         Returns a single string.
         '''
-        if(num > len(scale) - 1): return -1
-        if(octave < 1 or octave > 8): return -1
-        newNote = scale[num]
-        newNote = "{}{}".format(newNote, octave)
-        return newNote
+        if(num < 0 or num > 11 or 
+           octave > 6 or octave < 0):
+            return -1
+        # Sharps or flats
+        if(randint(1, 2) == 1):
+            note = self.chromaticScaleSharps[num]
+        else:
+            note = self.chromaticScaleFlats[num]
+        # Add octave
+        note = "{}{}".format(note, octave)
+        return note
 
     # Returns a randomly chosen note in a randomly chosen octave
     def newRandNote(self):
@@ -340,6 +346,7 @@ class generate():
             note = self.chromaticScaleSharps[randint(0, 11)]
         else:
             note = self.chromaticScaleFlats[randint(0, 11)]
+        # Add octave
         note = "{}{}".format(note, randint(1, 6))
         return note
 
