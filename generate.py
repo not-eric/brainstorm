@@ -336,6 +336,18 @@ class generate():
         Generates a set of notes based on inputted data (an array of integers).
         Data is used as index numbers to select notes from this series in order
         to generate a melody.
+
+        Note generation algorithm:
+
+            1. Total notes is equivalent to *highest single integer* in supplied data set.
+            2. Generate a starting key/scale, and a starting octave.
+            3. Cycle through this scale appending each note to a list
+                of available notes until we reach the last note in the scale
+                in octave 6.
+            4. If we reach this note, reset octave to starting point, and 
+                pick a new starting scale at random.
+            5. Repeat steps 3-4 until we have as many notes as the highest single
+                integer from the supplied data set.
         '''
         if(len(data) == 0):
             print("ERROR: no data inputted!")
@@ -357,24 +369,13 @@ class generate():
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "minor")
         else:
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "major")
-        '''
-        Note generation algorithm:
 
-            1. Total notes is equivalent to *highest single integer* in supplied data set.
-            2. Generate a starting key/scale, and a starting octave.
-            3. Cycle through this scale appending each note to a list
-               of available notes until we reach the last note in the scale
-               in octave 6.
-            4. If we reach this note, reset octave to starting point, and 
-               pick a new starting scale at random.
-            5. Repeat steps 3-4 until we have as many notes as the highest single
-               integer from the supplied data set.
-        '''    
         #-----Generate notes to pick from-----#
 
         n = 0
         scale = []
         total = max(data)
+
         for i in range(total + 1):
             note = "{}{}".format(root[n], octave)
             scale.append(note)
@@ -623,6 +624,7 @@ class generate():
     #---------------------------------------------------------------------------------#
     #-------------------------------MELODIC GENERATION--------------------------------#
     #---------------------------------------------------------------------------------#
+
 
     # Display newMelody() object data
     def displayMelody(self, newMelody):
