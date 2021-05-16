@@ -133,8 +133,8 @@ print("new scale:", scale)
 chords = create.newChordsFromScale(scale)
 print("total chords:", len(chords))
 print("new chords:")
-for chord in chords:
-    chord.notes
+for i in range(len(chords)):
+    print("chord:", chords[i].notes)
 print("picking a chord from the set...")
 chord = chords[randint(0, len(chords) - 1)]
 print("chosen chord:", chord)
