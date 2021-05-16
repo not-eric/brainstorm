@@ -320,7 +320,7 @@ class generate():
 
 
     # Returns a randomly chosen note in a randomly chosen octave
-    def newNoteRand(self):
+    def newRandNote(self):
         '''
         Returns a randomly chosen note in a randomly chosen octave
         '''
@@ -334,8 +334,7 @@ class generate():
     def newNote(self, num, octave):
         '''
         Converts a given integer to a pitch in a specified octave (ex C#6).
-        Requires an integer, a given scale, and the required octave. 
-        Returns a single string.
+        Requires an integer and the required octave. Returns a single string.
         '''
         if(num < 0 or num > 11 or 
            octave > 6 or octave < 0):
@@ -589,7 +588,7 @@ class generate():
             return -1
         chord = []
         # How many notes? 2 to however many notes in the scale(!)
-        total = randint(2, len(scale))
+        total = randint(2, len(scale) - 1)
         while(len(chord) < total):
             # Pick note
             note = scale[randint(0, len(scale) - 1)]
