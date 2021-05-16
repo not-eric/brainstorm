@@ -42,6 +42,7 @@ from random import randint
 from datetime import datetime
 from midi import midiStuff as mid
 from containers.melody import melody
+from containers.chord import chord
 
 # Generative functions
 class generate():
@@ -582,29 +583,31 @@ class generate():
     def newChordFromScale(self, scale):
         '''
         Generates a single new chord from the notes in a given scale.
+        Returns a chord object.
         '''
         if(len(scale) == 0):
             print("ERROR: no input!")
             return -1
-        chord = []
+        # newchord object
+        newchord = chord()
         # How many notes? 2 to however many notes in the scale(!)
         total = randint(2, len(scale) - 1)
-        while(len(chord) < total):
+        while(len(newchord.notes) < total):
             # Pick note
             note = scale[randint(0, len(scale) - 1)]
             # Append if not already in chord
-            if(note not in chord):
-                chord.append(note)
-        if(len(chord) == 0):
+            if(note not in newchord.notes):
+                newchord.notes.append(note)
+        if(len(newchord.notes) == 0):
             print("ERROR: no chord generated!")
             return -1
-        return chord
+        return newchord
 
     # Generates a chord progression from the notes of a given scale
     def newChordsFromScale(self, scale):
         '''
         Generates a progression from the notes of a given scale.
-        Returns -1 if recieving bad input, and -2 if generation was unsuccessfull
+        Returns a list of chord objects (notes only).
         
         NOTE: Chords will be derived from the given scale ONLY! Could possibly
               add more randomly inserted chromatic tones to give progressions more
@@ -620,18 +623,19 @@ class generate():
         print("\nGenerating", total, "chords...")
         # Pick notes
         while(len(chords) < total):
-            chord = []
+            # New chord object
+            newchord = chord()
             # How many notes in this chord?
             totalNotes = randint(2, 7)
-            while(len(chord) < totalNotes):
+            while(len(newchord.notes) < totalNotes):
                 # Pick note
                 note = scale[randint(0, len(scale) - 1)]
                 # Add if not already in list
-                if(note not in chord):
-                    chord.append(note)
-                elif(note in chord and len(chord) > 2):
+                if(note not in newchord.notes):
+                    newchord.notes.append(note)
+                elif(note in newchord.notes and len(chord) > 2):
                     break
-            chords.append(chord)
+            chords.append(newchord)
         if(len(chords) == 0):
             print("ERROR: Unable to generate chords!")
             return -1

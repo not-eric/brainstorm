@@ -134,7 +134,8 @@ chords = create.newChordsFromScale(scale)
 print("total chords:", len(chords))
 print("new chords:", chords)
 print("picking a chord from the set...")
-print("chosen chord:", chords[randint(0, len(chords) - 1)])
+chord = chords[randint(0, len(chords) - 1)]
+print("chosen chord:", chord)
 
 
 # # New melody test fron integers
