@@ -5,6 +5,7 @@
 '''
 
 # Import and new object
+import midi as mid
 from random import uniform
 from random import randint
 from generate import generate 
@@ -119,8 +120,7 @@ def newChars():
 
 # New chord from scale test
 print("\n***new chord from scale test***")
-octave = randint(3, 5)
-scale = create.newScale(octave)
+scale = create.newScale(randint(3, 5))
 print("scale inputted:", scale)
 chord = create.newChordFromScale(scale)
 print("total notes:", len(chord.notes))
@@ -129,8 +129,7 @@ print("new chord:", chord.notes)
 
 # New chords from scale test
 print("\n***new chords from scale test***")
-octave = randint(3, 5)
-scale = create.newScale(octave)
+scale = create.newScale(randint(3, 5))
 print("new scale:", scale)
 chords = create.newChordsFromScale(scale)
 print("total chords:", len(chords))
@@ -142,25 +141,31 @@ chord = chords[randint(0, len(chords) - 1)]
 print("chosen chord:", chord.notes)
 
 
-# # New melody test fron integers
-# print("\n***new melody from ints/floats/chars/hex test***")
-# dataType = randint(1, 4)
-# # Generate ints
-# if(dataType == 1):
-#     print("\ninputting ints...")
-#     data = newInts()
-# # Generate floats
-# elif(dataType == 2):
-#     print("\ninputting floats...")
-#     data = newFloats()
-# # Generate chars
-# elif(dataType == 3):
-#     print("\ninputting letters...")
-#     data = newChars()
-# # Generate a new hex
-# else:
-#     print("\ninputting hex number...")
-#     data = newHex()
-# print("\ntotal elements:", len(data))
-# print("data inputted:", data)
-# result = create.newMelody(data, dataType)
+# New melody test fron integers
+print("\n***new melody from ints/floats/chars/hex test***")
+dataType = randint(1, 4)
+# Generate ints
+if(dataType == 1):
+    print("\ninputting ints...")
+    data = newInts()
+# Generate floats
+elif(dataType == 2):
+    print("\ninputting floats...")
+    data = newFloats()
+# Generate chars
+elif(dataType == 3):
+    print("\ninputting letters...")
+    data = newChars()
+# Generate a new hex
+else:
+    print("\ninputting hex number...")
+    data = newHex()
+print("\ntotal elements:", len(data))
+print("data inputted:", data)
+result = create.newMelody(data, dataType)
+
+# Save to MIDI file
+'''NOTE: fileName is returning an OS error??'''
+fileName = create.newFileName('solo melody ')
+if(mid.saveMelody(result, fileName) == -1):
+    print("ERROR: unable to export melody!")

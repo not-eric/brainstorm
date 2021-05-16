@@ -732,13 +732,6 @@ class generate():
             print("ERROR: missing melody data!")
             return -1
 
-        # Add data to MIDI object and write out file.
-        '''NOTE: fileName is returning an OS error??'''
-        fileName = self.newFileName('solo melody ')
-        if(mid.saveMelody(self, newMelody, fileName) == -1):
-            print("ERROR: unable to export melody!")
-            return -1
-
         # Display results
         self.displayMelody(newMelody)
 
