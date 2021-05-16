@@ -119,7 +119,8 @@ def newChars():
 
 # New chord from scale test
 print("\n***new chord from scale test***")
-scale = create.newScale(4)
+octave = randint(3, 5)
+scale = create.newScale(octave)
 print("scale inputted:", scale)
 chord = create.newChordFromScale(scale)
 print("total notes:", len(chord.notes))
@@ -128,7 +129,8 @@ print("new chord:", chord.notes)
 
 # New chords from scale test
 print("\n***new chords from scale test***")
-scale = create.newScale(4)
+octave = randint(3, 5)
+scale = create.newScale(octave)
 print("new scale:", scale)
 chords = create.newChordsFromScale(scale)
 print("total chords:", len(chords))
@@ -137,7 +139,7 @@ for i in range(len(chords)):
     print("chord:", chords[i].notes)
 print("picking a chord from the set...")
 chord = chords[randint(0, len(chords) - 1)]
-print("chosen chord:", chord)
+print("chosen chord:", chord.notes)
 
 
 # # New melody test fron integers
