@@ -10,7 +10,7 @@ from random import randint
 from generate import generate 
 create = generate()
 
-#---------------------test functions---------------------------#
+#---------------------------test functions------------------------------#
 
 # Generate a list of 10 - 50 random numbers between 0-200
 def newInts():
@@ -49,7 +49,7 @@ def newChars():
         chars.append(char)
     return chars    
 
-#--------------------------------------------------------------#
+#---------------------------------------------------------------------#
 
 
 # # Scaling test
@@ -133,6 +133,9 @@ print("new scale:", scale)
 chords = create.newChordsFromScale(scale)
 print("total chords:", len(chords))
 print("new chords:", chords)
+print("picking a chord from the set...")
+print("chosen chord:", chords[randint(0, len(chords) - 1)])
+
 
 # # New melody test fron integers
 # print("\n***new melody from ints/floats/chars/hex test***")
