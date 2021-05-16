@@ -122,8 +122,8 @@ print("\n***new chord from scale test***")
 scale = create.newScale(4)
 print("scale inputted:", scale)
 chord = create.newChordFromScale(scale)
-print("total notes:", len(chord))
-print("new chord:", chord)
+print("total notes:", len(chord.notes))
+print("new chord:", chord.notes)
 
 
 # New chords from scale test
@@ -132,7 +132,9 @@ scale = create.newScale(4)
 print("new scale:", scale)
 chords = create.newChordsFromScale(scale)
 print("total chords:", len(chords))
-print("new chords:", chords)
+print("new chords:")
+for chord in chords:
+    chord.notes
 print("picking a chord from the set...")
 chord = chords[randint(0, len(chords) - 1)]
 print("chosen chord:", chord)

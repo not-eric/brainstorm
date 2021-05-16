@@ -633,7 +633,7 @@ class generate():
                 # Add if not already in list
                 if(note not in newchord.notes):
                     newchord.notes.append(note)
-                elif(note in newchord.notes and len(chord) > 2):
+                elif(note in newchord.notes and len(newchord.notes) > 2):
                     break
             chords.append(newchord)
         if(len(chords) == 0):
