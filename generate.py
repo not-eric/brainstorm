@@ -324,11 +324,8 @@ class generate():
         '''
         Returns a randomly chosen note in a randomly chosen octave
         '''
-        # Sharps or flats?
-        if(randint(1, 2) == 1):
-            note = self.chromaticScaleSharps[randint(0, 11)]
-        else:
-            note = self.chromaticScaleFlats[randint(0, 11)]
+        # Pick note
+        note = self.notes[randint(0, 16)]
         # Add octave
         note = "{}{}".format(note, randint(1, 6))
         return note
