@@ -598,19 +598,15 @@ class generate():
             return -1
         # newchord object
         newchord = chord()
-        # How many notes? 2 to however many notes in the scale(!)
-        total = randint(2, len(scale) - 1)
+        # How many notes? 2 to 10 (for now)
+        total = randint(2, 10)
         print("\ngenerating", total, "note chord...")
         while(len(newchord.notes) < total):
             # Pick note
             note = scale[randint(0, len(scale) - 1)]
-            print("picked note:", note)
             # Append if not already in chord
             if(note not in newchord.notes):
                 newchord.notes.append(note)
-                print("added!")
-            else:
-                print("not added")
         if(len(newchord.notes) == 0):
             print("\nERROR: no chord generated!")
             return -1
