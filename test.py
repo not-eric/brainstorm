@@ -140,40 +140,39 @@ def newChars():
 #     print("\nsaving file new-chord.mid...")
 
 
+# New chords from scale test
+print("\n***new chords from scale test***")
+scale = create.newScale(randint(3, 5))
+print("new scale:", scale)
+chords = create.newChordsFromScale(scale)
+print("total chords:", len(chords))
+print("new chords:")
+for i in range(len(chords)):
+    print("chord:", chords[i].notes)
+print("picking a chord from the set...")
+chord = chords[randint(0, len(chords) - 1)]
+print("chosen chord:", chord.notes)
 
-# # New chords from scale test
-# print("\n***new chords from scale test***")
-# scale = create.newScale(randint(3, 5))
-# print("new scale:", scale)
-# chords = create.newChordsFromScale(scale)
-# print("total chords:", len(chords))
-# print("new chords:")
-# for i in range(len(chords)):
-#     print("chord:", chords[i].notes)
-# print("picking a chord from the set...")
-# chord = chords[randint(0, len(chords) - 1)]
-# print("chosen chord:", chord.notes)
 
-
-# New melody test fron integers
-print("\n***new melody from ints/floats/chars/hex test***")
-dataType = randint(1, 4)
-# Generate ints
-if(dataType == 1):
-    print("\ninputting ints...")
-    data = newInts()
-# Generate floats
-elif(dataType == 2):
-    print("\ninputting floats...")
-    data = newFloats()
-# Generate chars
-elif(dataType == 3):
-    print("\ninputting letters...")
-    data = newChars()
-# Generate a new hex
-else:
-    print("\ninputting hex number...")
-    data = newHex()
-print("\ntotal elements:", len(data))
-print("data inputted:", data)
-result = create.newMelody(data, dataType)
+# # New melody test fron integers
+# print("\n***new melody from ints/floats/chars/hex test***")
+# dataType = randint(1, 4)
+# # Generate ints
+# if(dataType == 1):
+#     print("\ninputting ints...")
+#     data = newInts()
+# # Generate floats
+# elif(dataType == 2):
+#     print("\ninputting floats...")
+#     data = newFloats()
+# # Generate chars
+# elif(dataType == 3):
+#     print("\ninputting letters...")
+#     data = newChars()
+# # Generate a new hex
+# else:
+#     print("\ninputting hex number...")
+#     data = newHex()
+# print("\ntotal elements:", len(data))
+# print("data inputted:", data)
+# result = create.newMelody(data, dataType)

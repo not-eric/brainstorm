@@ -601,6 +601,12 @@ class generate():
         if(len(newchord.notes) == 0):
             print("ERROR: no chord generated!")
             return -1
+        # Export to MIDI file
+        print("\nSaving chord as 'new-chord.mid...'")
+        if(mid.saveChord(self, newchord, 'new-chord.mid') == -1):
+            print("\nERROR: unable to save chord as MIDI file!")
+        else:
+            print("\nChord saved successfully!")
         return newchord
 
     # Generates a chord progression from the notes of a given scale
@@ -639,6 +645,12 @@ class generate():
         if(len(chords) == 0):
             print("ERROR: Unable to generate chords!")
             return -1
+        # Export to MIDI file
+        # print("\nSaving chords as 'new-chords.mid...'")
+        # if(mid.saveChords(self, chords, 'new-chords.mid') == -1):
+        #     print("\nERROR: unable to save chords as MIDI file!")
+        # else:
+        #     print("\nChords saved successfully!")
         return chords
 
 
