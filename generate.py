@@ -593,8 +593,8 @@ class generate():
     # Generates a single chord from a given scale
     def newChordFromScale(self, scale):
         '''
-        Generates a single new chord from the notes in a given scale.
-        Returns a chord object.
+        Generates a single new chord from the notes in a given scale and
+        rhythm Returns a chord object.
         '''
         if(len(scale) == 0):
             print("ERROR: no input!")
@@ -615,11 +615,10 @@ class generate():
             return -1
         '''NOTE: this is here for testing purposes. Might modify
                 function to allow this data as an argument. We'll see '''    
-        # Add rhythm (whole note) and dynamic (mf-ish, i think?)
-        # Default tempo of 60.0 is suppolied by mid.saveChord() for now.
+        newchord.tempo = 60.0
         newchord.rhythm = 4.0
-        for i in range(len(newchord.dynamics)):
-            newchord.dynamics.append(100)
+        while(len(newchord.dynamics) < len(newchord.notes)):
+            newchord.dynamics.append(70)
         
         # Dispay chord
         print("\nchord:", newchord.notes)

@@ -132,7 +132,7 @@ class midiStuff():
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         chord = pm.Instrument(program = instrument)
 
-        print("Created instrument:", chord)
+        print("Created instrument:", 'Acoustic Grand Piano')
 
         # Add data to pm object
         for i in range(len(newChord.notes)):
