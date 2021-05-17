@@ -121,9 +121,9 @@ class midiStuff():
         Outputs a single MIDI chord (ideally). Also returns a pretty_midi object. 
         To be used with chord generation.
         '''
-        if(newChord.hasData() == False):
-            print("\nERROR: no data inputted!")
-            return -1
+        # if(newChord.hasData() == False):
+        #     print("\nERROR: no data inputted!")
+        #     return -1
 
         print("\nRecieved chord data:", newChord)
 

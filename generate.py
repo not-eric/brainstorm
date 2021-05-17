@@ -37,6 +37,7 @@
 '''
 
 # IMPORTS
+from hashlib import new
 import math
 from random import randint
 from datetime import datetime
@@ -578,6 +579,16 @@ class generate():
     #--------------------------------------Chords------------------------------------#
     #--------------------------------------------------------------------------------#
 
+    # Display a list of chords
+    def displayChords(self, chords):
+        if(len(chords) == 0):
+            print("\nERROR: no chord inputted!")
+            return -1
+        print("\n---------chords:------------")
+        for i in range(len(chords)):
+            print(i,':', chords[i].notes)
+        return 0
+            
 
     # Generates a single chord from a given scale
     def newChordFromScale(self, scale):
@@ -592,6 +603,7 @@ class generate():
         newchord = chord()
         # How many notes? 2 to however many notes in the scale(!)
         total = randint(2, len(scale) - 1)
+        print("\ngenerating", total, "note chord...")
         while(len(newchord.notes) < total):
             # Pick note
             note = scale[randint(0, len(scale) - 1)]
@@ -599,14 +611,29 @@ class generate():
             if(note not in newchord.notes):
                 newchord.notes.append(note)
         if(len(newchord.notes) == 0):
-            print("ERROR: no chord generated!")
+            print("\nERROR: no chord generated!")
             return -1
+        '''NOTE: this is here for testing purposes. Might modify
+                function to allow this data as an argument. We'll see '''    
+        # Add rhythm (whole note) and dynamic (mf-ish, i think?)
+        # Default tempo of 60.0 is suppolied by mid.saveChord() for now.
+        newchord.rhythm = 4.0
+        for i in range(len(newchord.dynamics)):
+            newchord.dynamics.append(100)
+        
+        # Dispay chord
+        print("\nchord:", newchord.notes)
+        print("tempo:", newchord.tempo)
+        print("rhythm:", newchord.rhythm)
+        print("dynamics:", newchord.dynamics)
+
         # Export to MIDI file
-        print("\nSaving chord as 'new-chord.mid...'")
-        if(mid.saveChord(self, newchord, 'new-chord.mid') == -1):
+        print("\nsaving chord as 'new-chord.mid...'")
+        if(mid.saveChord(self, newchord) == -1):
             print("\nERROR: unable to save chord as MIDI file!")
+            return -1
         else:
-            print("\nChord saved successfully!")
+            print("\nchord saved successfully!")
         return newchord
 
     # Generates a chord progression from the notes of a given scale
@@ -645,6 +672,8 @@ class generate():
         if(len(chords) == 0):
             print("ERROR: Unable to generate chords!")
             return -1
+        # Display chords
+        self.displayChords(chords)
         # Export to MIDI file
         # print("\nSaving chords as 'new-chords.mid...'")
         # if(mid.saveChords(self, chords, 'new-chords.mid') == -1):

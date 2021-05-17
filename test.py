@@ -119,39 +119,24 @@ def newChars():
 
 
 # New chord from scale test
-# print("\n***new chord from scale test***")
-# scale = create.newScale(randint(3, 5))
-# print("\nscale inputted:", scale)
-# chord = create.newChordFromScale(scale)
-# # Default rhythm and dynamic for testing purposes
-# print("adding rhythm (whole note)...")
-# chord.rhythm = 4.0
-# print("adding dynamics...")
-# for i in range(len(chord.notes)):
-#     chord.dynamics.append(100)
-# print("\ntotal notes:", len(chord.notes))
-# print("notes:", chord.notes)
-# print("dynamics:", chord.dynamics)
-# print("rhythm:", chord.rhythm)
-# # Save to MIDI file
-# if(mid.saveChord(chord) == -1):
-#     print("\nunable to save MIDI file!")
-# else:
-#     print("\nsaving file new-chord.mid...")
+print("\n***new chord from scale test***")
+scale = create.newScale(randint(3, 5))
+print("\nscale inputted:", scale)
+chord = create.newChordFromScale(scale)
 
 
 # New chords from scale test
-print("\n***new chords from scale test***")
-scale = create.newScale(randint(3, 5))
-print("new scale:", scale)
-chords = create.newChordsFromScale(scale)
-print("total chords:", len(chords))
-print("new chords:")
-for i in range(len(chords)):
-    print("chord:", chords[i].notes)
-print("picking a chord from the set...")
-chord = chords[randint(0, len(chords) - 1)]
-print("chosen chord:", chord.notes)
+# print("\n***new chords from scale test***")
+# scale = create.newScale(randint(3, 5))
+# print("new scale:", scale)
+# chords = create.newChordsFromScale(scale)
+# print("total chords:", len(chords))
+# print("new chords:")
+# for i in range(len(chords)):
+#     print("chord:", chords[i].notes)
+# print("picking a chord from the set...")
+# chord = chords[randint(0, len(chords) - 1)]
+# print("chosen chord:", chord.notes)
 
 
 # # New melody test fron integers
