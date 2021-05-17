@@ -581,9 +581,6 @@ class generate():
 
     # Display a list of chords
     def displayChords(self, chords):
-        if(len(chords) == 0):
-            print("\nERROR: no chord inputted!")
-            return -1
         print("\n---------chords:------------")
         for i in range(len(chords)):
             print(i + 1,':', chords[i].notes)
@@ -607,9 +604,13 @@ class generate():
         while(len(newchord.notes) < total):
             # Pick note
             note = scale[randint(0, len(scale) - 1)]
+            print("picked note:", note)
             # Append if not already in chord
             if(note not in newchord.notes):
                 newchord.notes.append(note)
+                print("added!")
+            else:
+                print("not added")
         if(len(newchord.notes) == 0):
             print("\nERROR: no chord generated!")
             return -1
@@ -621,10 +622,7 @@ class generate():
             newchord.dynamics.append(70)
         
         # Dispay chord
-        print("\nchord:", newchord.notes)
-        print("tempo:", newchord.tempo)
-        print("rhythm:", newchord.rhythm)
-        print("dynamics:", newchord.dynamics)
+        print("\nnew chord:", newchord)
 
         # Export to MIDI file
         print("\nsaving chord as 'new-chord.mid...'")

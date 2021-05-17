@@ -50,7 +50,8 @@ def newChars():
         chars.append(char)
     return chars    
 
-#---------------------------------------------------------------------#
+
+#------------------------------Translation--------------------------------#
 
 
 # # Scaling test
@@ -118,42 +119,49 @@ def newChars():
 # print("total:", len(scale))
 
 
+#-----------------------------------Melody---------------------------------------#
+
+
+# New melody test fron integers
+print("\n***new melody from ints/floats/chars/hex test***")
+dataType = randint(1, 4)
+# Generate ints
+if(dataType == 1):
+    print("\ninputting ints...")
+    data = newInts()
+# Generate floats
+elif(dataType == 2):
+    print("\ninputting floats...")
+    data = newFloats()
+# Generate chars
+elif(dataType == 3):
+    print("\ninputting letters...")
+    data = newChars()
+# Generate a new hex
+else:
+    print("\ninputting hex number...")
+    data = newHex()
+print("\ntotal elements:", len(data))
+print("data inputted:", data)
+result = create.newMelody(data, dataType)
+
+
+#--------------------------------------Harmony-----------------------------------------#
+
+
 # New chord from scale test
-# print("\n***new chord from scale test***")
+print("\n***new chord from scale test***")
+print("NOTE: using newMelody() object from previous test!")
 # scale = create.newScale(randint(3, 5))
-# print("\nscale inputted:", scale)
-# chord = create.newChordFromScale(scale)
+print("\nscale inputted:", result.notes)
+chord = create.newChordFromScale(result.notes)
 
 
 # New chords from scale test
-print("\n***new chords from scale test***")
-scale = create.newScale(randint(3, 5))
-print("new scale:", scale)
-chords = create.newChordsFromScale(scale)
-print("\npicking a chord from the set...")
-chord = chords[randint(0, len(chords) - 1)]
-print("chosen chord:", chord.notes)
-
-
-# # New melody test fron integers
-# print("\n***new melody from ints/floats/chars/hex test***")
-# dataType = randint(1, 4)
-# # Generate ints
-# if(dataType == 1):
-#     print("\ninputting ints...")
-#     data = newInts()
-# # Generate floats
-# elif(dataType == 2):
-#     print("\ninputting floats...")
-#     data = newFloats()
-# # Generate chars
-# elif(dataType == 3):
-#     print("\ninputting letters...")
-#     data = newChars()
-# # Generate a new hex
-# else:
-#     print("\ninputting hex number...")
-#     data = newHex()
-# print("\ntotal elements:", len(data))
-# print("data inputted:", data)
-# result = create.newMelody(data, dataType)
+# print("\n***new chords from scale test***")
+# scale = create.newScale(randint(3, 5))
+# print("new scale:", scale)
+# chords = create.newChordsFromScale(scale)
+# print("\npicking a chord from the set...")
+# chord = chords[randint(0, len(chords) - 1)]
+# print("chosen chord:", chord.notes)

@@ -184,7 +184,7 @@ class midiStuff():
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
-                end += strt
+                end += newChords[i + 1].rhythm
                 # Add chord to instrument list
                 myChords.instruments.append(chord)
             except IndexError:
