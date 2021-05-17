@@ -127,8 +127,9 @@ class midiStuff():
 
         print("\nRecieved chord data:", newChord)
 
-        # Create instrument/MIDI object
+        # Create PrettyMIDI object
         mid = pm.PrettyMIDI(initial_tempo=60)
+        # Create instrument object.
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         chord = pm.Instrument(program = instrument)
 
@@ -163,56 +164,61 @@ class midiStuff():
             Example input:
             newChords = [['C#2','Db6', 'B4'],['','','','','','','','',],['','','','']...,n]
 
-            i = 0: first subarray in newChords[]
-            i = 1: second sub-array ""
-            etc...
-
-            i < newChords(len(i)) ??? 
-            Need to iterate for the length of each individual sub-arrays.
-
-            strt = 0
-            end = rhythms[0]
-            for i in range(len(rhythms)):
-                for j in newChords[i[j]]:
-                    note_number = pm.note_name_to_number(note_name)
-                    note = pm.Note(velocity= vel, pitch= note_number, start= strt, end= end)
-                    chords.notes.append(note)
-                strt += end
-                end += rhythms[i]
-
-            Add returning object from newChord as an argument?
         '''
 
         print("\nGenerating MIDI chords...")
-
-        # Variables and stuff
-        i = 0
-        dur = 4.0
-        strt = 0.0
-        end = 4.0
-        vel = 60
         
-        # Create instrument
+        # Create PrettyMIDI object
         myChords = pm.PrettyMIDI(initial_tempo = 60)
-        chordProgram = pm.instrument_name_to_program('Acoustic Grand Piano')
-        chords = pm.Instrument(program = chordProgram)
 
-        # Generate chords and append to MIDI object
-        '''
-        Note: Confirm whether a pm.Instrument.notes list 
-              can function as a list of lists.
-        '''
-        while(i < len(newChords)):
-            for note_name in newChords[i]:
-                note_number = pm.note_name_to_number(note_name)
-                note = pm.Note(velocity= vel, pitch= note_number, start= strt, end= end)
-                chords.notes.append(note)
-                strt += dur
-                end += dur
-            i += 1
+        strt = 0
+        end = newChords[0].rhythm
+        for i in range(len(newChords)):
+            # Create instrument object.
+            instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
+            chord = pm.Instrument(program = instrument)
+            for j in range(len(newChords[i].notes)):
+                note = pm.note_name_to_number(newChords[i].notes[j])
+                note = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
+                chord.notes.append(note)
+            try:
+                # Increment strt/end times
+                strt += newChords[i].rhythm
+                end += strt
+                # Add chord to instrument list
+                myChords.instruments.append(chord)
+            except IndexError:
+                break
 
         # Write out file from MIDI object
-        myChords.instruments.append(chords)
         myChords.write('test-chords.mid')
 
         return myChords
+
+
+
+
+
+
+
+
+'''
+i = 0: first subarray in newChords[]
+i = 1: second sub-array ""
+etc...
+
+i < newChords(len(i)) ??? 
+Need to iterate for the length of each individual sub-arrays.
+
+strt = 0
+end = rhythms[0]
+for i in range(len(rhythms)):
+    for j in newChords[i[j]]:
+        note_number = pm.note_name_to_number(note_name)
+        note = pm.Note(velocity= vel, pitch= note_number, start= strt, end= end)
+        chords.notes.append(note)
+    strt += end
+    end += rhythms[i]
+
+Add returning object from newChord as an argument?
+'''

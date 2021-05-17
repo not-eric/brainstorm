@@ -586,7 +586,7 @@ class generate():
             return -1
         print("\n---------chords:------------")
         for i in range(len(chords)):
-            print(i,':', chords[i].notes)
+            print(i + 1,':', chords[i].notes)
         return 0
             
 
@@ -675,7 +675,7 @@ class generate():
         self.displayChords(chords)
         # Export to MIDI file
         # print("\nSaving chords as 'new-chords.mid...'")
-        # if(mid.saveChords(self, chords, 'new-chords.mid') == -1):
+        # if(mid.saveChords(self, chords) == -1):
         #     print("\nERROR: unable to save chords as MIDI file!")
         # else:
         #     print("\nChords saved successfully!")
