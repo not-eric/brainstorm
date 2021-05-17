@@ -618,7 +618,10 @@ class generate():
             newchord.dynamics.append(70)
         
         # Dispay chord
-        print("\nnew chord:", newchord)
+        print("\nnew chord:")
+        print("notes:", newchord.notes)
+        print("rhythm:", newchord.rhythm)
+        print("dynamics:", newchord.dynamics)
 
         # Export to MIDI file
         print("\nsaving chord as 'new-chord.mid...'")

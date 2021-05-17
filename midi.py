@@ -153,17 +153,6 @@ class midiStuff():
     def saveChords(self, newChords):
         '''
         Generates a MIDI file of the chords created by newChord()
-
-        NOTE: Not ready. 
-            
-            Still need to find a way to iterate through individual
-            chords in newChords while assigning the same duration to each note
-            in the chord before progressing to the next associated set of dynamics
-            and chords.
-
-            Example input:
-            newChords = [['C#2','Db6', 'B4'],['','','','','','','','',],['','','','']...,n]
-
         '''
 
         print("\nGenerating MIDI chords...")
@@ -172,8 +161,8 @@ class midiStuff():
         myChords = pm.PrettyMIDI(initial_tempo = 60)
 
         strt = 0
-        end = newChords[0].rhythm
-        for i in range(len(newChords)):
+        end = newChords[0].rhythms[0]
+        for i in range(len(newChords.notes)):
             # Create instrument object.
             instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
             chord = pm.Instrument(program = instrument)
@@ -183,8 +172,8 @@ class midiStuff():
                 chord.notes.append(note)
             try:
                 # Increment strt/end times
-                strt += newChords[i].rhythm
-                end += newChords[i + 1].rhythm
+                strt += newChords[i].rhythms[i + 1]
+                end += strt
                 # Add chord to instrument list
                 myChords.instruments.append(chord)
             except IndexError:
