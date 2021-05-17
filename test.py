@@ -5,7 +5,7 @@
 '''
 
 # Import and new object
-import midi as mid
+from midi import midiStuff as mid
 from random import uniform
 from random import randint
 from generate import generate 
@@ -119,26 +119,40 @@ def newChars():
 
 
 # New chord from scale test
-print("\n***new chord from scale test***")
-scale = create.newScale(randint(3, 5))
-print("scale inputted:", scale)
-chord = create.newChordFromScale(scale)
-print("total notes:", len(chord.notes))
-print("new chord:", chord.notes)
+# print("\n***new chord from scale test***")
+# scale = create.newScale(randint(3, 5))
+# print("\nscale inputted:", scale)
+# chord = create.newChordFromScale(scale)
+# # Default rhythm and dynamic for testing purposes
+# print("adding rhythm (whole note)...")
+# chord.rhythm = 4.0
+# print("adding dynamics...")
+# for i in range(len(chord.notes)):
+#     chord.dynamics.append(100)
+# print("\ntotal notes:", len(chord.notes))
+# print("notes:", chord.notes)
+# print("dynamics:", chord.dynamics)
+# print("rhythm:", chord.rhythm)
+# # Save to MIDI file
+# if(mid.saveChord(chord) == -1):
+#     print("\nunable to save MIDI file!")
+# else:
+#     print("\nsaving file new-chord.mid...")
 
 
-# New chords from scale test
-print("\n***new chords from scale test***")
-scale = create.newScale(randint(3, 5))
-print("new scale:", scale)
-chords = create.newChordsFromScale(scale)
-print("total chords:", len(chords))
-print("new chords:")
-for i in range(len(chords)):
-    print("chord:", chords[i].notes)
-print("picking a chord from the set...")
-chord = chords[randint(0, len(chords) - 1)]
-print("chosen chord:", chord.notes)
+
+# # New chords from scale test
+# print("\n***new chords from scale test***")
+# scale = create.newScale(randint(3, 5))
+# print("new scale:", scale)
+# chords = create.newChordsFromScale(scale)
+# print("total chords:", len(chords))
+# print("new chords:")
+# for i in range(len(chords)):
+#     print("chord:", chords[i].notes)
+# print("picking a chord from the set...")
+# chord = chords[randint(0, len(chords) - 1)]
+# print("chosen chord:", chord.notes)
 
 
 # New melody test fron integers
@@ -163,9 +177,3 @@ else:
 print("\ntotal elements:", len(data))
 print("data inputted:", data)
 result = create.newMelody(data, dataType)
-
-# Save to MIDI file
-'''NOTE: fileName is returning an OS error??'''
-fileName = create.newFileName('solo melody ')
-if(mid.saveMelody(result, fileName) == -1):
-    print("ERROR: unable to export melody!")

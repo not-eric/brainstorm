@@ -735,4 +735,11 @@ class generate():
         # Display results
         self.displayMelody(newMelody)
 
+        # Write out to MIDI file
+        if(mid.saveMelody(self, newMelody, 'new-melody.mid') == -1):
+            print("\nERROR: unable to save file!")
+            return -1
+        else:
+            print("\nFile saved as 'new-melody.mid'")
+
         return newMelody

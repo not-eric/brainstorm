@@ -120,22 +120,22 @@ class midiStuff():
         '''
         Outputs a single MIDI chord (ideally). Also returns a pretty_midi object. 
         To be used with chord generation.
-        
-        Defaults:
-            Instrument: Piano
-            Tempo: 120
-            Velocity: 100
         '''
-        if(newChord.isEmpty() == True):
+        if(newChord.hasData() == False):
+            print("\nERROR: no data inputted!")
             return -1
+
+        print("\nRecieved chord data:", newChord)
 
         # Create instrument/MIDI object
         mid = pm.PrettyMIDI(initial_tempo=60)
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         chord = pm.Instrument(program = instrument)
 
+        print("Created instrument:", chord)
+
         # Add data to pm object
-        for i in range(len(newChord.notes) - 1):
+        for i in range(len(newChord.notes)):
             note = pm.note_name_to_number(newChord.notes[i])
             note = pm.Note(velocity= newChord.dynamics[i], pitch= note, start= 0.0, end= newChord.rhythm)
             chord.notes.append(note)
@@ -144,11 +144,12 @@ class midiStuff():
         mid.instruments.append(chord)
         mid.write('new-chord.mid')
 
+        print("'new-chord.mid' file saved!")
         return 0
 
 
     # Generates a MIDI file of the chords created by newChord()
-    def chordsMIDI(self, newChords):
+    def saveChords(self, newChords):
         '''
         Generates a MIDI file of the chords created by newChord()
 
