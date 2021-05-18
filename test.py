@@ -165,7 +165,6 @@ if(randint(0, 1) == 1):
 tempo = create.newTempo()
 # Test output
 print("\n***new chords from scale test***")
-print("NOTE: using melody() object from previous test!")
 print("scale inputted:", scale)
 # Generate chords
 chords = create.newChordsFromScale(scale, tempo)

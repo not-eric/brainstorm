@@ -606,8 +606,21 @@ class generate():
             print(i + 1,': ', 'Notes:', chords[i].notes)
             print('     Rhythm:', chords[i].rhythm)
             print('     Dynamics:', chords[i].dynamics)
-        return 0
-            
+        return 0  
+
+    # Generates a chord with randomly chosen notes
+    def newRandChord(self):
+        '''
+        Generates a chord with randomly chosen notes. 
+        Returns a chord() object (has no tempo or dynamics data!)
+        '''
+        # Create new chord() object
+        newChord = chord()
+        # Total notes
+        total = randint(2, 9)
+        while(len(newChord.notes) < total):
+            newChord.notes.append(self.newRandNote())
+        return newChord
 
     # Generates a single chord from a given scale
     def newChordFromScale(self, scale, tempo):
@@ -621,8 +634,8 @@ class generate():
             return -1
         # newchord object
         newchord = chord()
-        # how many notes in this chord? 2 to 10 (for now)
-        total = randint(2, 10)
+        # how many notes in this chord? 2 to 9 (for now)
+        total = randint(2, 9)
         while(len(newchord.notes) < total):
             # Pick note
             note = scale[randint(0, len(scale) - 1)]
