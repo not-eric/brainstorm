@@ -592,8 +592,8 @@ class generate():
         print("\n----------------chords:-------------------")
         for i in range(len(chords)):
             print(i + 1,': ', 'Notes:', chords[i].notes)
-            print('          Rhythm:', chords[i].rhythm)
-            print('          Dynamics:', chords[i].dynamics)
+            print('      Rhythm:', chords[i].rhythm)
+            print('      Dynamics:', chords[i].dynamics)
         return 0
             
 
@@ -630,13 +630,6 @@ class generate():
             newchord.dynamics.append(dynamic)
         # Dispay chord
         # self.displayChord(newchord)
-        # Export to MIDI file
-        # print("\nsaving chord as 'new-chord.mid...'")
-        # if(mid.saveChord(self, newchord) == -1):
-        #     print("\nERROR: unable to save chord as MIDI file!")
-        #     return -1
-        # else:
-        #     print("\nchord saved successfully!")
         return newchord
 
     # Generates a chord progression from the notes of a given scale
@@ -652,8 +645,6 @@ class generate():
         if(len(scale) == 0):
             print("ERROR: no scale inputted!")
             return -1
-        oops = 0
-        oopLimit = 50
         # How many chords?
         chords = []
         # Create between 3 and however many notes there are in the scale
@@ -663,9 +654,6 @@ class generate():
         while(len(chords) < total):
             newchord = self.newChordFromScale(scale, tempo)
             chords.append(newchord)
-            oops += 1
-            if(oops == oopLimit):
-                break
         if(len(chords) == 0):
             print("ERROR: Unable to generate chords!")
             return -1
