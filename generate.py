@@ -646,8 +646,6 @@ class generate():
         '''NOTE: This is avoids getting the while loop stuck
                  if there's a lot of repeated notes in the melody '''
         newchord.notes = list(dict.fromkeys(newchord.notes))
-        '''NOTE: this is here for testing purposes. Might modify
-                function to allow this data as an argument. We'll see '''
         # Use inputted tempo    
         newchord.tempo = tempo
         # Pick a rhythm
