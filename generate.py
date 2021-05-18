@@ -808,12 +808,12 @@ class generate():
         # Generate harmonies
         newChords = self.newChordsFromScale(newTune.notes, newTune.tempo)
         # Check data
-        if(newMelody.hasData() == False):
+        if(newTune.hasData() == False):
             print("\nERROR: No melody data created")
         elif(len(newChords) == 0):
             print("\nERROR: no chord data created!")
         # Save to MIDI file
-        if(mid.saveComposition(newTune, newChords) != -1):
+        if(mid.saveComposition(self, newTune, newChords) != -1):
             print("Piece saved as 'new-composition.mid!'")
             return 0
         else:
