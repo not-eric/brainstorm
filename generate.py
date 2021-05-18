@@ -589,9 +589,11 @@ class generate():
 
     # Display a list of chords
     def displayChords(self, chords):
-        print("\n---------chords:------------")
+        print("\n----------------chords:-------------------")
         for i in range(len(chords)):
-            print(i + 1,':', chords[i].notes)
+            print(i + 1,': ', 'Notes:', chords[i].notes)
+            print('          Rhythm:', chords[i].rhythm)
+            print('          Dynamics:', chords[i].dynamics)
         return 0
             
 
@@ -599,33 +601,20 @@ class generate():
     def newChordFromScale(self, scale, tempo):
         '''
         Generates a single new chord from the notes in a given scale and
-        rhythm Returns a chord object.
-
-        NOTE: Gets stuck if melody has a lot of repeated notes. I added a counting
-        variable that will break the loop if it reaches a certain point. It's not
-        pretty, but it seems to work.
+        rhythm Returns a chord object. Allows for doubling (or more) of 
+        individual notes.
         '''
         if(len(scale) == 0):
             print("ERROR: no input!")
             return -1
-        # loop tracker/exiters
-        oops = 0
-        oopsLimit = 500
         # newchord object
         newchord = chord()
         # how many notes? 2 to 10 (for now)
         total = randint(2, 10)
-        print("\ngenerating", total, "note chord...")
         while(len(newchord.notes) < total):
             # Pick note
             note = scale[randint(0, len(scale) - 1)]
-            # Append if not already in chord
-            if(note not in newchord.notes):
-                newchord.notes.append(note)
-                oops += 1
-            # Did we get stuck?
-            if(oops == oopsLimit):
-                break
+            newchord.notes.append(note)
         if(len(newchord.notes) == 0):
             print("\nERROR: no chord generated!")
             return -1
@@ -663,6 +652,8 @@ class generate():
         if(len(scale) == 0):
             print("ERROR: no scale inputted!")
             return -1
+        oops = 0
+        oopLimit = 50
         # How many chords?
         chords = []
         # Create between 3 and however many notes there are in the scale
@@ -672,6 +663,9 @@ class generate():
         while(len(chords) < total):
             newchord = self.newChordFromScale(scale, tempo)
             chords.append(newchord)
+            oops += 1
+            if(oops == oopLimit):
+                break
         if(len(chords) == 0):
             print("ERROR: Unable to generate chords!")
             return -1
