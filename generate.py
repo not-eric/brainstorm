@@ -37,7 +37,6 @@
 '''
 
 # IMPORTS
-from hashlib import new
 import math
 from random import randint
 from datetime import datetime
