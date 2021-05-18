@@ -154,6 +154,9 @@ class midiStuff():
         '''
         Takes a chord() object as an argument and generates a MIDI file.
         Returns a pretty_midi object. Returns 0.
+
+        NOTE: Currently creates a separate track for EACH chord. Need to find a way
+              to get them all onto one track.
         '''
 
         print("\nGenerating MIDI chords...")
@@ -168,49 +171,24 @@ class midiStuff():
             instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
             chord = pm.Instrument(program = instrument)
             for j in range(len(newChords[i].notes)):
+                # Translate note to MIDI note
                 note = pm.note_name_to_number(newChords[i].notes[j])
                 note = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
+                # Add to instrument object
                 chord.notes.append(note)
-            # # Add chord to instrument list (will this consolidate to one track?)
-            # myChords.instruments.append(chord)
+                # Add chord to instrument list (will this consolidate to one track?)
+                # myChords.instruments.append(chord)
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
                 end += newChords[i].rhythm
-                # # Add chord to instrument list (original spot)
-                # myChords.instruments.append(chord)
             except IndexError:
                 break
+
+        # Add chord to instrument list (will this consolidate to one track?)
+        myChords.instruments.append(chord)
 
         # Write out file from MIDI object
         myChords.write('test-chords.mid')
 
         return 0
-
-
-
-
-
-
-
-
-'''
-i = 0: first subarray in newChords[]
-i = 1: second sub-array ""
-etc...
-
-i < newChords(len(i)) ??? 
-Need to iterate for the length of each individual sub-arrays.
-
-strt = 0
-end = rhythms[0]
-for i in range(len(rhythms)):
-    for j in newChords[i[j]]:
-        note_number = pm.note_name_to_number(note_name)
-        note = pm.Note(velocity= vel, pitch= note_number, start= strt, end= end)
-        chords.notes.append(note)
-    strt += end
-    end += rhythms[i]
-
-Add returning object from newChord as an argument?
-'''

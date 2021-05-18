@@ -592,8 +592,8 @@ class generate():
         print("\n----------------chords:-------------------")
         for i in range(len(chords)):
             print(i + 1,': ', 'Notes:', chords[i].notes)
-            print('      Rhythm:', chords[i].rhythm)
-            print('      Dynamics:', chords[i].dynamics)
+            print('     Rhythm:', chords[i].rhythm)
+            print('     Dynamics:', chords[i].dynamics)
         return 0
             
 
@@ -609,7 +609,7 @@ class generate():
             return -1
         # newchord object
         newchord = chord()
-        # how many notes? 2 to 10 (for now)
+        # how many notes in this chord? 2 to 10 (for now)
         total = randint(2, 10)
         while(len(newchord.notes) < total):
             # Pick note
