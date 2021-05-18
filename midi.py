@@ -152,7 +152,8 @@ class midiStuff():
     # Generates a MIDI file of the chords created by newChord()
     def saveChords(self, newChords):
         '''
-        Generates a MIDI file of the chords created by newChord()
+        Takes a chord() object as an argument and generates a MIDI file.
+        Returns a pretty_midi object. Returns 0.
         '''
 
         print("\nGenerating MIDI chords...")
@@ -161,8 +162,8 @@ class midiStuff():
         myChords = pm.PrettyMIDI(initial_tempo = 60)
 
         strt = 0
-        end = newChords[0].rhythms[0]
-        for i in range(len(newChords.notes)):
+        end = newChords[0].rhythm
+        for i in range(len(newChords)):
             # Create instrument object.
             instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
             chord = pm.Instrument(program = instrument)
@@ -172,7 +173,7 @@ class midiStuff():
                 chord.notes.append(note)
             try:
                 # Increment strt/end times
-                strt += newChords[i].rhythms[i + 1]
+                strt += newChords[i].rhythm
                 end += strt
                 # Add chord to instrument list
                 myChords.instruments.append(chord)
@@ -182,7 +183,7 @@ class midiStuff():
         # Write out file from MIDI object
         myChords.write('test-chords.mid')
 
-        return myChords
+        return 0
 
 
 

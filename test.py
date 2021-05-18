@@ -143,25 +143,22 @@ else:
     data = newHex()
 print("\ntotal elements:", len(data))
 print("data inputted:", data)
-result = create.newMelody(data, dataType)
+newTune = create.newMelody(data, dataType)
 
 
 #--------------------------------------Harmony-----------------------------------------#
 
 
-# New chord from scale test
-print("\n***new chord from scale test***")
-print("NOTE: using newMelody() object from previous test!")
-# scale = create.newScale(randint(3, 5))
-print("\nscale inputted:", result.notes)
-chord = create.newChordFromScale(result.notes)
+# # New chord from scale test
+# print("\n***new chord from scale test***")
+# print("NOTE: using newMelody() object from previous test!")
+# # scale = create.newScale(randint(3, 5))
+# print("\nscale inputted:", result.notes)
+# chord = create.newChordFromScale(result.notes)
 
 
 # New chords from scale test
-# print("\n***new chords from scale test***")
-# scale = create.newScale(randint(3, 5))
-# print("new scale:", scale)
-# chords = create.newChordsFromScale(scale)
-# print("\npicking a chord from the set...")
-# chord = chords[randint(0, len(chords) - 1)]
-# print("chosen chord:", chord.notes)
+print("\n***new chords from scale test***")
+print("NOTE: using melody() object from previous test!")
+print("scale inputted:", newTune.notes)
+chords = create.newChordsFromScale(newTune.notes, newTune.tempo)
