@@ -142,8 +142,6 @@ class midiStuff():
                 note = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
                 # Add to instrument object
                 chord.notes.append(note)
-                # Add chord to instrument list
-                # myChords.instruments.append(chord)
             # Add chord to instrument list 
             myChords.instruments.append(chord)
             try:
@@ -192,7 +190,7 @@ class midiStuff():
             except IndexError:
                 break  
 
-        # Write out file from MIDI object
+        # Add melody to instrument list
         mid.instruments.append(melody)
 
         #-----------------------------Add Chords---------------------------------#
@@ -200,6 +198,27 @@ class midiStuff():
         # Create chord instrument (piano)
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         melody = pm.Instrument(program = instrument)
+
+        strt = 0
+        end = newChords[0].rhythm
+        for i in range(len(newChords)):
+            # Create instrument object.
+            instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
+            chord = pm.Instrument(program = instrument)
+            for j in range(len(newChords[i].notes)):
+                # Translate note to MIDI note
+                note = pm.note_name_to_number(newChords[i].notes[j])
+                note = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
+                # Add to instrument object
+                chord.notes.append(note)
+            # Add chord to instrument list 
+            mid.instruments.append(chord)
+            try:
+                # Increment strt/end times
+                strt += newChords[i].rhythm
+                end += newChords[i + 1].rhythm
+            except IndexError:
+                break
 
         # mid.write(fileName)
         mid.write('new-composition.mid')

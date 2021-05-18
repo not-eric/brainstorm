@@ -685,12 +685,6 @@ class generate():
             return -1
         # Display chords
         self.displayChords(chords)
-        # Export to MIDI file
-        print("\nSaving chords as 'new-chords.mid...'")
-        if(mid.saveChords(self, chords) == -1):
-            print("\nERROR: unable to save chords as MIDI file!")
-        else:
-            print("\nChords saved successfully!")
         return chords
 
 
@@ -795,3 +789,36 @@ class generate():
         #     print("\nFile saved as 'new-melody.mid'")
 
         return newMelody
+
+    #-------------------------------------------------------------------------------------#
+    #-------------------------------COMPOSITION GENERATION--------------------------------#
+    #-------------------------------------------------------------------------------------#
+
+    # Outputs a single melody with chords in a MIDI file
+    def newComposition(self, data, dataType):
+        '''
+        Takes an array of ints of any length as an arg.
+        Outputs a single melody with chords in a MIDI file (hopefully)
+        '''
+        # Check incoming data
+        if(len(data) == 0):
+            print("\nERROR: no data inputted!")
+            return -1
+        # Generate melody
+        newTune = self.newMelody(data, dataType)
+        # Generate harmonies
+        newChords = self.newChordsFromScale(newTune.notes, newTune.tempo)
+        # Check data
+        if(newMelody.hasData() == False):
+            print("\nERROR: No melody data created")
+        elif(len(newChords) == 0):
+            print("\nERROR: no chord data created!")
+        # Save to MIDI file
+        if(mid.saveComposition(newTune, newChords) != -1):
+            print("Piece saved as 'new-composition.mid!'")
+            return 0
+        else:
+            print("Unable to export piece to MIDI file!")
+            return -1
+        
+        
