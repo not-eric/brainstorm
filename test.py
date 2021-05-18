@@ -122,28 +122,28 @@ def newChars():
 #-----------------------------------Melody---------------------------------------#
 
 
-# New melody test fron integers
-print("\n***new melody from ints/floats/chars/hex test***")
-dataType = randint(1, 4)
-# Generate ints
-if(dataType == 1):
-    print("\ninputting ints...")
-    data = newInts()
-# Generate floats
-elif(dataType == 2):
-    print("\ninputting floats...")
-    data = newFloats()
-# Generate chars
-elif(dataType == 3):
-    print("\ninputting letters...")
-    data = newChars()
-# Generate a new hex
-else:
-    print("\ninputting hex number...")
-    data = newHex()
-print("\ntotal elements:", len(data))
-print("data inputted:", data)
-newTune = create.newMelody(data, dataType)
+# # New melody test fron integers
+# print("\n***new melody from ints/floats/chars/hex test***")
+# dataType = randint(1, 4)
+# # Generate ints
+# if(dataType == 1):
+#     print("\ninputting ints...")
+#     data = newInts()
+# # Generate floats
+# elif(dataType == 2):
+#     print("\ninputting floats...")
+#     data = newFloats()
+# # Generate chars
+# elif(dataType == 3):
+#     print("\ninputting letters...")
+#     data = newChars()
+# # Generate a new hex
+# else:
+#     print("\ninputting hex number...")
+#     data = newHex()
+# print("\ntotal elements:", len(data))
+# print("data inputted:", data)
+# newTune = create.newMelody(data, dataType)
 
 
 #--------------------------------------Harmony-----------------------------------------#
@@ -156,9 +156,16 @@ newTune = create.newMelody(data, dataType)
 # print("\nscale inputted:", result.notes)
 # chord = create.newChordFromScale(result.notes)
 
-
 # New chords from scale test
+scale = create.newMajorScale()
+# Make this a minor scale?
+if(randint(0, 1) == 1):
+    scale = create.convertToMinor(scale)
+# Pick tempo
+tempo = create.newTempo()
+# Test output
 print("\n***new chords from scale test***")
 print("NOTE: using melody() object from previous test!")
-print("scale inputted:", newTune.notes)
-chords = create.newChordsFromScale(newTune.notes, newTune.tempo)
+print("scale inputted:", scale)
+# Generate chords
+chords = create.newChordsFromScale(scale, tempo)

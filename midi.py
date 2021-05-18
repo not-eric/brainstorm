@@ -176,8 +176,10 @@ class midiStuff():
                 note = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
                 # Add to instrument object
                 chord.notes.append(note)
-                # Add chord to instrument list (will this consolidate to one track?)
+                # Add chord to instrument list
                 # myChords.instruments.append(chord)
+            # Add chord to instrument list 
+            myChords.instruments.append(chord)
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
@@ -185,8 +187,6 @@ class midiStuff():
             except IndexError:
                 break
 
-        # Add chord to instrument list (will this consolidate to one track?)
-        myChords.instruments.append(chord)
 
         # Write out file from MIDI object
         myChords.write('test-chords.mid')

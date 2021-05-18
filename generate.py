@@ -92,10 +92,10 @@ class generate():
             0 - 14       = minor 7th
             0 - 15 or 16 = major 7th
         '''
-        self.notes = ["C", "C#", "Db", "D", 
-                      "D#", "Eb", "E", "F", 
-                      "F#", "Gb", "G", "G#",
-                      "Ab", "A", "A#", "Bb", "B"]
+        self.notes = ["C ", "C#", "Db", "D ", 
+                      "D#", "Eb", "E ", "F ", 
+                      "F#", "Gb", "G ", "G#",
+                      "Ab", "A ", "A#", "Bb", "B "]
 
         # Chormatic scale (using all sharps). Indicies 0 - 11.
         self.chromaticScaleSharps = ["C", "C#", "D", "D#", "E", "F",
@@ -106,18 +106,18 @@ class generate():
                                     "Gb", "G", "Ab", "A", "Bb", "B"]        
 
         # Major Scales
-        self.scales = {1: ['C', 'D', 'E', 'F', 'G', 'A', 'B'], 
-                       2: ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C'],
-                       3: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#' ],
-                       4: ['Eb', 'F', 'G', 'Ab', 'Bb', 'C', 'D'],
-                       5: ['E', 'F#', 'G#', 'A', 'B', 'C#', "D#"],
-                       6: ['F', 'G', 'A', 'Bb', 'C', 'D', 'E'],
-                       7: ['F#', 'G#', 'A#', 'B', 'C#', 'D#', 'E#'],
-                       8: ['G', 'A', 'B', 'C', 'D', 'E', 'F#'],
-                       9: ['Ab', 'Bb', 'C', 'Db', 'Eb', 'F', 'G'],
-                       10:['A', 'B', 'C#', 'D', 'E', 'F#', 'G#'],
-                       11:['Bb', 'C', 'D', 'Eb', 'F', 'G', 'A'],
-                       12:['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#']}
+        self.scales = {1: ["C", "D", "E", "F", "G", "A", "B"], 
+                       2: ["Db", "Eb", "F ", "Gb", "Ab", "Bb", "C"],
+                       3: ["D", "E", "F#", "G", "A", "B", "C#"],
+                       4: ["Eb", "F", "G", "Ab", "Bb", "C", "D"],
+                       5: ["E", "F#", "G#", "A", "B", "C#", "D#"],
+                       6: ["F", "G", "A", "Bb", "C", "D", "E"],
+                       7: ["F#", "G#", "A#", "B", "C#", "D#", "E#"],
+                       8: ["G", "A", "B", "C", "D", "E", "F#"],
+                       9: ["Ab", "Bb", "C", "Db", "Eb", "F", "G"],
+                       10:["A", "B", "C#", "D", "E", "F#", "G#"],
+                       11:["Bb", "C", "D", "Eb", "F", "G", "A"],
+                       12:["B", "C#", "D#", "E", "F#", "G#", "A#"]}
 
      
         #---------------------------Rhythm-----------------------------------#
@@ -463,6 +463,18 @@ class generate():
             return -1
         return scale
 
+    # Picks one of twelve major keys. 
+    def newMajorScale(self):
+        finalScale = []
+        # Pick scale
+        scale = self.scales[randint(1, len(self.scales) - 1)]
+        # Assign octave
+        octave = randint(3, 5)
+        for i in range(len(scale)):
+            note = "{}{}".format(scale[i], octave)
+            finalScale.append(note)
+        return finalScale
+
     # Converts a major scale to its relative minor
     def convertToMinor(self, scale):
         print("\nConverting scale to relative minor...")
@@ -761,11 +773,11 @@ class generate():
         # Display results
         self.displayMelody(newMelody)
 
-        # Write out to MIDI file
-        if(mid.saveMelody(self, newMelody, 'new-melody.mid') == -1):
-            print("\nERROR: unable to save file!")
-            return -1
-        else:
-            print("\nFile saved as 'new-melody.mid'")
+        # # Write out to MIDI file
+        # if(mid.saveMelody(self, newMelody, 'new-melody.mid') == -1):
+        #     print("\nERROR: unable to save file!")
+        #     return -1
+        # else:
+        #     print("\nFile saved as 'new-melody.mid'")
 
         return newMelody
