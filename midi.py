@@ -111,7 +111,7 @@ class midiStuff():
         mid.instruments.append(melody)
         # print("saving", fileName, "...")
         # mid.write(fileName)
-        mid.write('test-melody.mid')
+        mid.write('new-melody.mid')
         return 0
 
 
@@ -121,11 +121,7 @@ class midiStuff():
         Outputs a single MIDI chord (ideally). Also returns a pretty_midi object. 
         To be used with chord generation.
         '''
-        # if(newChord.hasData() == False):
-        #     print("\nERROR: no data inputted!")
-        #     return -1
-
-        print("\nRecieved chord data:", newChord)
+        print("\nSaving chord...")
 
         # Create PrettyMIDI object
         mid = pm.PrettyMIDI(initial_tempo=60)
@@ -144,7 +140,6 @@ class midiStuff():
         # Write out file from MIDI object
         mid.instruments.append(chord)
         mid.write('new-chord.mid')
-
         print("'new-chord.mid' file saved!")
         return 0
 
@@ -183,12 +178,11 @@ class midiStuff():
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
-                end += newChords[i].rhythm
+                end += newChords[i + 1].rhythm
             except IndexError:
                 break
 
-
         # Write out file from MIDI object
-        myChords.write('test-chords.mid')
-
+        myChords.write('new-chords.mid')
+        print("'new-chords' saved successfully!")
         return 0

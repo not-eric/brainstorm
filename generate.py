@@ -107,7 +107,7 @@ class generate():
 
         # Major Scales
         self.scales = {1: ["C", "D", "E", "F", "G", "A", "B"], 
-                       2: ["Db", "Eb", "F ", "Gb", "Ab", "Bb", "C"],
+                       2: ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"],
                        3: ["D", "E", "F#", "G", "A", "B", "C#"],
                        4: ["Eb", "F", "G", "Ab", "Bb", "C", "D"],
                        5: ["E", "F#", "G#", "A", "B", "C#", "D#"],
@@ -626,8 +626,7 @@ class generate():
     def newChordFromScale(self, scale, tempo):
         '''
         Generates a single new chord from the notes in a given scale and
-        rhythm Returns a chord object. Allows for doubling (or more) of 
-        individual notes.
+        rhythm Returns a chord object. Does not double/repeat notes!
         '''
         if(len(scale) == 0):
             print("ERROR: no input!")
@@ -643,6 +642,10 @@ class generate():
         if(len(newchord.notes) == 0):
             print("\nERROR: no chord generated!")
             return -1
+        # Remove duplicate notes/doublings
+        '''NOTE: This is avoids getting the while loop stuck
+                 if there's a lot of repeated notes in the melody '''
+        newchord.notes = list(dict.fromkeys(newchord.notes))
         '''NOTE: this is here for testing purposes. Might modify
                 function to allow this data as an argument. We'll see '''
         # Use inputted tempo    
