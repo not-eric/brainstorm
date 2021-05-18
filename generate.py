@@ -600,10 +600,17 @@ class generate():
         '''
         Generates a single new chord from the notes in a given scale and
         rhythm Returns a chord object.
+
+        NOTE: Gets stuck if melody has a lot of repeated notes. I added a counting
+        variable that will break the loop if it reaches a certain point. It's not
+        pretty, but it seems to work.
         '''
         if(len(scale) == 0):
             print("ERROR: no input!")
             return -1
+        # loop tracker/exiters
+        oops = 0
+        oopsLimit = 500
         # newchord object
         newchord = chord()
         # how many notes? 2 to 10 (for now)
@@ -615,6 +622,10 @@ class generate():
             # Append if not already in chord
             if(note not in newchord.notes):
                 newchord.notes.append(note)
+                oops += 1
+            # Did we get stuck?
+            if(oops == oopsLimit):
+                break
         if(len(newchord.notes) == 0):
             print("\nERROR: no chord generated!")
             return -1
@@ -629,7 +640,7 @@ class generate():
         while(len(newchord.dynamics) < len(newchord.notes)):
             newchord.dynamics.append(dynamic)
         # Dispay chord
-        self.displayChord(newchord)
+        # self.displayChord(newchord)
         # Export to MIDI file
         # print("\nsaving chord as 'new-chord.mid...'")
         # if(mid.saveChord(self, newchord) == -1):
