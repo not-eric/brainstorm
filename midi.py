@@ -32,35 +32,6 @@ class midiStuff():
         # Merge date and file type
         fileName = "{}{}".format(fileType, dateStr)
         return fileName
-
-    # Imports a MIDI file
-    def load(self, fileName):
-        '''
-        Imports a MIDI file from a given file name or path.
-        Returns a PrettyMIDI object using the given filename.
-        '''
-        print("\nImporting MIDI file...")
-        # Import file
-        thisTune = pm.PrettyMIDI(fileName) 
-        if(not thisTune):
-            print("...Unable to import file!")
-            return -1
-        print("...File imported!")
-        return thisTune
-
-
-    # Save a MIDI object to a pre-existing file
-    # def saveCurrent(self, fileName, notes, rhythms, dynamics, tempo, instTotal)
-    '''
-    Saves a MIDI object to a pre-existing MIDI file. Input must be a 
-    string with the format 'filename.mid'
-    '''
-    def save(self, fileName):
-        if(fileName is None):
-            return -1
-        print("\nSaving", fileName, "...")
-        pm.PrettyMIDI.write(fileName)
-        return 0
     
     # Outputs a single melody/instrument to a MIDI file
     def saveMelody(self, newMelody, fileName):
@@ -185,4 +156,51 @@ class midiStuff():
         # Write out file from MIDI object
         myChords.write('new-chords.mid')
         print("'new-chords' saved successfully!")
+        return 0
+
+    # Save a melody and chords
+    def saveComposition(self, newMelody, newChords):
+        # Check incoming data
+        if(newMelody.hasData() == False):
+            return -1
+        if(len(newChords) == 0):
+            return -1
+        # Variables
+        strt = 0
+        end = 0
+        # Create PM object PM object is used to just write out the file.
+        mid = pm.PrettyMIDI(initial_tempo = newMelody.tempo)
+        # Create melody instrument (strings)
+        instrument = pm.instrument_name_to_program('Synth Strings 1')
+        melody = pm.Instrument(program = instrument)
+
+        #----------------------------Add Melody----------------------------------#
+
+        # Attach notes, rhythms, and dynamics to melody instrument/MIDI object
+        end += newMelody.rhythms[0]
+        for i in range(len(newMelody.notes)):
+            # Converts note name strings to MIDI note numbers
+            note = pm.note_name_to_number(newMelody.notes[i])
+            # Attaches MIDI note number, dynamic, and strt/end time to pm.Note container
+            note = pm.Note(velocity= newMelody.dynamics[i], pitch= note, start= strt, end= end)
+            # Then places container in melody notes list.
+            melody.notes.append(note)
+            # Increment rhythms (note event strt/end times)
+            try:
+                strt += newMelody.rhythms[i]
+                end += newMelody.rhythms[i + 1]
+            except IndexError:
+                break  
+
+        # Write out file from MIDI object
+        mid.instruments.append(melody)
+
+        #-----------------------------Add Chords---------------------------------#
+
+        # Create chord instrument (piano)
+        instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
+        melody = pm.Instrument(program = instrument)
+
+        # mid.write(fileName)
+        mid.write('new-composition.mid')
         return 0
