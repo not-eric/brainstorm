@@ -208,6 +208,9 @@ class midiStuff():
         # Create instrument object.
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         chord = pm.Instrument(program = instrument)
+
+        strt = 0
+        end = newChords[0].rhythm
         for i in range(len(newChords)):
             # Add *this* chord's notes
             for j in range(len(newChords[i].notes)):
@@ -216,14 +219,15 @@ class midiStuff():
                 note = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
                 # Add to instrument object
                 chord.notes.append(note)
-            # Add chord to instrument list 
-            mid.instruments.append(chord)
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
                 end += newChords[i + 1].rhythm
             except IndexError:
                 break
+
+        # Add chord to instrument list 
+        mid.instruments.append(chord)
 
 
         # mid.write(fileName)

@@ -685,11 +685,11 @@ class generate():
         # Display chords
         self.displayChords(chords)
         # Test output
-        if(mid.saveChords(self, chords) != -1):
-            print("chords saved!")
-        else:
-            print("unable to save chords!")
-            return -1
+        # if(mid.saveChords(self, chords) != -1):
+        #     print("chords saved!")
+        # else:
+        #     print("unable to save chords!")
+        #     return -1
         return chords
 
 
@@ -816,8 +816,10 @@ class generate():
         # Check data
         if(newTune.hasData() == False):
             print("\nERROR: No melody data created")
+            return -1
         elif(len(newChords) == 0):
             print("\nERROR: no chord data created!")
+            return -1
         # Save to MIDI file
         if(mid.saveComposition(self, newTune, newChords) != -1):
             print("Piece saved as 'new-composition.mid!'")
