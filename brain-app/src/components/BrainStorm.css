@@ -1,0 +1,34 @@
+.gen-container {
+  background: rgb(2, 16, 29);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  align-items: center;
+  object-fit: contain;
+}
+
+.gen-container > h2 {
+  color: rgb(194, 6, 6);
+  margin-bottom: 20px;
+  margin-top: -25px;
+}
+
+.modSynth {
+  height: 400px;
+}
+
+.friends {
+  color: orange;
+  justify-content: center;
+  align-items: center;
+}
+
+.submission {
+  margin-top: 10px;
+}
+
+.genName {
+  width: 600px;
+}
