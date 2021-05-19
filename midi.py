@@ -3,7 +3,20 @@
 #*******************************************************************************************************#
 
 '''
-    This module is for handling MIDI I/O with generous help from the pretty_midi library.
+
+    This module is for handling MIDI I/O with generous help from the pretty_midi library
+
+
+-----------------------------------------------NOTES-----------------------------------------------------
+    This module is for handling MIDI I/O with generous help from the pretty_midi library
+
+    
+    NOTE: Double check the math for how strt and end are incremented according to
+    the supplied durations. Either Finale is doing something weird or the compounding
+    values are creating highly precice floating point numbers that might make sheet music
+    representation very messy. 
+
+---------------------------------------------------------------------------------------------------------    
 '''
 from datetime import datetime
 import pretty_midi as pm
@@ -38,11 +51,6 @@ class midiStuff():
         '''
         Outputs a single instrument MIDI file (ideally). Returns 0 on success, -1 on failure. 
         To be used with melody generation.
-
-        NOTE: Double check the math for how strt and end are incremented according to
-        the supplied durations. Either Finale is doing something weird or the compounding
-        values are creating highly precice floating point numbers that might make sheet music
-        representation very messy. 
         '''
         # Check incoming data
         if(newMelody.hasData() == False):
@@ -80,8 +88,6 @@ class midiStuff():
 
         # Write out file from MIDI object
         mid.instruments.append(melody)
-        # print("saving", fileName, "...")
-        # mid.write(fileName)
         mid.write('new-melody.mid')
         return 0
 
@@ -92,7 +98,6 @@ class midiStuff():
         Outputs a single MIDI chord (ideally). Also returns a pretty_midi object. 
         To be used with chord generation.
         '''
-        print("\nSaving chord...")
 
         # Create PrettyMIDI object
         mid = pm.PrettyMIDI(initial_tempo=60)
@@ -120,13 +125,8 @@ class midiStuff():
         '''
         Takes a chord() object as an argument and generates a MIDI file.
         Returns a pretty_midi object. Returns 0.
-
-        NOTE: Currently creates a separate track for EACH chord. Need to find a way
-              to get them all onto one track.
         '''
 
-        print("\nGenerating MIDI chords...")
-        
         # Create PrettyMIDI object
         myChords = pm.PrettyMIDI(initial_tempo = 60)
 
