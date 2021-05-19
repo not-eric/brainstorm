@@ -56,42 +56,43 @@ def newChars():
 
 # New melody test fron integers
 # print("\n***new melody from ints/floats/chars/hex test***")
-dataType = randint(1, 4)
-# Generate ints
-if(dataType == 1):
-    print("\ninputting ints...")
-    data = newInts()
-# Generate floats
-elif(dataType == 2):
-    print("\ninputting floats...")
-    data = newFloats()
-# Generate chars
-elif(dataType == 3):
-    print("\ninputting letters...")
-    data = newChars()
-# Generate a new hex
-else:
-    print("\ninputting hex number...")
-    data = newHex()
-print("\ntotal elements:", len(data))
-print("data inputted:", data)
+# dataType = randint(1, 4)
+# # Generate ints
+# if(dataType == 1):
+#     print("\ninputting ints...")
+#     data = newInts()
+# # Generate floats
+# elif(dataType == 2):
+#     print("\ninputting floats...")
+#     data = newFloats()
+# # Generate chars
+# elif(dataType == 3):
+#     print("\ninputting letters...")
+#     data = newChars()
+# # Generate a new hex
+# else:
+#     print("\ninputting hex number...")
+#     data = newHex()
+# print("\ntotal elements:", len(data))
+# print("data inputted:", data)
 # newTune = create.newMelody(data, dataType)
 
 #---------------------------------Harmony---------------------------------------#
 
-
+scale = create.newScale(4)
+tempo = create.newTempo()
 # Test output
-# print("\n***new chords from scale test***")
-# print("scale inputted:", newTune.notes)
+print("\n***new chords from scale test***")
+print("scale inputted:", scale)
 # Generate chords
-# chords = create.newChordsFromScale(newTune.notes, newTune.tempo)
+chords = create.newChordsFromScale(scale, tempo)
 
 
 #------------------------------MIDI Output--------------------------------------#
 
 # Put together melody and harmony data and output as single MIDI file
-print("\n***generating melody with harmony***")
-if(create.newComposition(data, dataType) != -1):
-    print("...piece created!")
-else:
-    print("...unable to create piece!")
+# print("\n***generating melody with harmony***")
+# if(create.newComposition(data, dataType) != -1):
+#     print("...piece created!")
+# else:
+#     print("...unable to create piece!")

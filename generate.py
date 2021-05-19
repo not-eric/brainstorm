@@ -684,6 +684,12 @@ class generate():
             return -1
         # Display chords
         self.displayChords(chords)
+        # Test output
+        if(mid.saveChords(self, chords) != -1):
+            print("chords saved!")
+        else:
+            print("unable to save chords!")
+            return -1
         return chords
 
 
