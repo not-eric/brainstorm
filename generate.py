@@ -598,16 +598,14 @@ class generate():
         print("\nnotes:", chord.notes)
         print("rhythm:", chord.rhythm)
         print("dynamics:", chord.dynamics)
-        return 0
 
     # Display a list of chords
     def displayChords(self, chords):
         print("\n----------------HARMONY DATA:-------------------")
         for i in range(len(chords)):
-            print(i + 1,': ', '\nNotes:', chords[i].notes)
-            print('     Rhythm:', chords[i].rhythm)
-            print('     Dynamics:', chords[i].dynamics)
-        return 0  
+            print('\n', i + 1,': ', 'Notes:', chords[i].notes)
+            print('      Rhythm:', chords[i].rhythm)
+            print('      Dynamics:', chords[i].dynamics) 
 
     # Generates a chord with randomly chosen notes
     def newRandChord(self):
@@ -627,7 +625,7 @@ class generate():
     def newChordFromScale(self, scale, tempo):
         '''
         Generates a single new chord from the notes in a given scale and
-        rhythm Returns a chord object. Does not double/repeat notes!
+        rhythm returns a chord() object. Does not double/repeat notes!
         '''
         if(len(scale) == 0):
             print("ERROR: no input!")
