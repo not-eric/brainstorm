@@ -38,8 +38,9 @@
 
 # IMPORTS
 import math
-from pretty_midi import constants
+# from pretty_midi import constants, instrument
 import requests
+import instruments
 from random import randint
 from datetime import datetime
 from midi import midiStuff as mid
@@ -89,20 +90,20 @@ class generate():
         #-----------------------Instrumentation------------------------------#
         # Ensemble size
         self.size = {1: 'solo',
-                      2: 'duo', 
-                      3: 'trio',
-                      4: 'quartet',
-                      5: 'quintet',
-                      6: 'sextet',
-                      7: 'septet',
-                      8: 'octet',
-                      9: 'nonet',
-                      10: 'decet',
-                      11: 'large ensemble', 
-                      12: 'open instrumentation'}
+                     2: 'duo', 
+                     3: 'trio',
+                     4: 'quartet',
+                     5: 'quintet',
+                     6: 'sextet',
+                     7: 'septet',
+                     8: 'octet',
+                     9: 'nonet',
+                     10: 'decet',
+                     11: 'large ensemble', 
+                     12: 'open instrumentation'}
         
-        # Instrument list from pretty_midi's constants.py file.
-        self.instruments = constants.INSTRUMENT_MAP
+        # Instrument list
+        self.instruments = instruments.INSTRUMENT_MAP
 
 
         #-----------------------Notes and Scales------------------------------#
@@ -302,7 +303,7 @@ class generate():
         return numArr
 
     # Auto generate a file/composition name (type - date:time)
-    def newMusicName(self, musicType):
+    def newMusicName(self, ensemble):
         '''
         Generates a title/file name by picking two random words
         then attaching the composition type (solo, duo, ensemble, etc..),
@@ -321,9 +322,9 @@ class generate():
             # Pick two random words
             name = words[randint(0, len(words) - 1)] + "_" + words[randint(0, len(words) - 1)]
             # Format first half of file name
-            name = name + " - " + musicType + " - "
+            name = name + " - " + ensemble + " - "
         except requests.exceptions.RequestException:
-            name = musicType + " - "
+            name = ensemble + " - "
 
         # Get date and time.
         date = datetime.now()
