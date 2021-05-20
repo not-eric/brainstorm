@@ -148,7 +148,7 @@ class midiStuff():
         return 0
 
     # Save a melody and chords
-    def saveComposition(self, newMelody, newChords):
+    def saveComposition(self, newMelody, newChords, fileName):
         '''
         Save a single-line melody with chords generated
         to a MIDI file. Returns -1 upon failure.
@@ -217,6 +217,6 @@ class midiStuff():
         # Add chord to instrument list 
         mid.instruments.append(chord)
         # Write to MIDI file
-        # mid.write(fileName)
-        mid.write('new-composition.mid')
+        mid.write(fileName)
+        # mid.write('new-composition.mid')
         return 0

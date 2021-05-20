@@ -314,24 +314,25 @@ class generate():
         Random word generation technique from:
             https://stackoverflow.com/questions/18834636/random-word-generator-python
         '''
-        url = "https://www.mit.edu/~ecprice/wordlist.10000"
         try:
             # Get word list
+            url = "https://www.mit.edu/~ecprice/wordlist.10000"
             response = requests.get(url)
             words = response.content.splitlines()
             # Pick two random words
-            name = words[randint(0, len(words) - 1)] + "_" + words[randint(0, len(words) - 1)]
+            name = words[randint(0, len(words) - 1)] + '_' + words[randint(0, len(words) - 1)]
             # Format first half of file name
-            name = name + " - " + ensemble + " - "
+            name = name + ' - ' + ensemble + ' - '
         except requests.exceptions.RequestException:
-            name = ensemble + " - "
-
+            name = ensemble + ' - '
+            
         # Get date and time.
         date = datetime.now()
         # Convert to str d-m-y (hh:mm:ss)
         dateStr = date.strftime("%d-%b-%y (%H:%M:%S.%f)")
 
         # Name and date, and add file extension
+        name = name + ' - ' + dateStr
         fileName = '{}{}.mid'.format(name, dateStr)
         return fileName
 
@@ -861,7 +862,8 @@ class generate():
             print("\nERROR: no chord data created!")
             return -1
         # Save to MIDI file
-        if(mid.saveComposition(self, newTune, newChords) != -1):
+        fileName = self.newMusicName('duet')
+        if(mid.saveComposition(self, newTune, newChords, fileName) != -1):
             print("\nPiece saved as 'new-composition.mid!'")
             return 0
         else:
