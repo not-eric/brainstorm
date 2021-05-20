@@ -43,6 +43,7 @@ import urllib.request
 from random import randint
 from datetime import datetime
 from midi import midiStuff as mid
+from containers.composition import music
 from containers.melody import melody
 from containers.chord import chord
 
@@ -212,50 +213,68 @@ class generate():
         Generates a new file to save a new composition's meta-data to
         '''
         # Create a new file opening object thing
-        f = open(fileName, 'x')
+        f = open(fileName, 'a')
         
         # Generate a header
-        header = '\n\n*******************************************************************************'
+        header = '\n\n*****************************************************************'
         f.write(header)
-        header = '----------------------------NEW COMPOSITION------------------------------------'
+        header = '\n------------------------NEW COMPOSITION--------------------------'
         f.write(header)
-        header = '*******************************************************************************'
+        header = '\n*****************************************************************'
         f.write(header)
 
         # Save piece title and inputted data
-        title = '\nTITLE: ' + fileName
+        title = '\n\n\nTITLE: ' + fileName
         f.write(title)
-        dataInfo = '\nInputted data:' + data
+
+        dataStr = ''.join([str(i) for i in data])
+        dataInfo = '\n\nInputted data:' + dataStr
+        f.write(dataInfo)
 
         # Save melody data
-        f.write(dataInfo)
-        header = "\n\n----------------MELODY DATA-------------------"
+        header = "\n\n\n----------------MELODY DATA-------------------"
         f.write(header)
-        tempo = '\nTempo: ' + newMelody.tempo + 'bpm'
+
+        tempo = '\n\nTempo: ' + str(newMelody.tempo) + 'bpm'
         f.write(tempo)
-        totalNotes = '\nTotal Notes: ' + len(newMelody.notes)
+
+        totalNotes = '\nTotal Notes: ' + str(len(newMelody.notes))
         f.write(totalNotes)
-        notes = 'Notes: ' + newMelody.notes
+
+        noteStr = ''.join(newMelody.notes)
+        notes = '\nNotes: ' + noteStr
         f.write(notes)
-        totalRhythms = '\nTotal rhythms:' + len(newMelody.rhythms)
+
+        totalRhythms = '\nTotal rhythms:' + str(len(newMelody.rhythms))
         f.write(totalRhythms)
-        rhythms = 'Rhythms: ' +  newMelody.rhythms
+
+        rhythmStr = ''.join([str(i) for i in newMelody.rhythms])
+        rhythms = '\nRhythms: ' +  rhythmStr
         f.write(rhythms)
-        totalDynamics = '\nTotal dynamics:' + len(newMelody.dynamics)
+        
+        totalDynamics = '\nTotal dynamics:' + str(len(newMelody.dynamics))
         f.write(totalDynamics)
-        dynamics = 'Dynamics:' + newMelody.dynamics
+
+        dynamicStr = ''.join([str(i) for i in newMelody.dynamics])
+        dynamics = '\nDynamics:' + dynamicStr
         f.write(dynamics)
 
         # Save harmony data
-        header = "\n\n----------------HARMONY DATA-------------------"
+        header = "\n\n\n----------------HARMONY DATA-------------------"
         f.write(header)
-        for i in range(len(newChords)):
-            notes = '\n' + i + 1 + ': ' + newChords[i].notes
-            f.write(notes)
-            rhythm = '      Rhythm: ' + newChords[i].rhythm
-            f.write(rhythm)
-            dynamics = '      Dynamics: ' + newChords[i].dynamics 
-            f.write(dynamics)
+
+        i = 0
+        noteStr = ''.join([str(i) for i in newChords[i].notes])
+        notes = '\nNotes: ' + noteStr
+        f.write(notes)
+
+        rhythm = '\nRhythm: ' + str(newChords[i].rhythm)
+        f.write(rhythm)
+        
+        i = 0
+        dynamicsStr = ''.join([str(i) for i in newChords[i].dynamics])
+        dynamics = '\nDynamics: ' + dynamicsStr
+        f.write(dynamics)
 
         # Close instance
         f.close()
@@ -785,6 +804,8 @@ class generate():
         # else:
         #     print("unable to save chords!")
         #     return -1
+        # Display chords
+        self.displayChords(chords)
         return chords
 
 
@@ -902,29 +923,47 @@ class generate():
         (int (1), float (2), char (3), or hex number (4)).
 
         Outputs a single melody with chords in a MIDI file (hopefully).
+        Returns a music() object containing lists of melody() and chord()
+        objects
         '''
+        # newPiece = music()
+
         # Check incoming data
         if(len(data) == 0):
             print("\nERROR: no data inputted!")
             return -1
+        if(dataType < 1 or dataType > 4):
+            print("\nERROR: bad data type!")
+            return -1
+        
+        '''NOTE: append at start or end of lists???'''
         # Generate melody
         newTune = self.newMelody(data, dataType)
+        # music.melodies.append(newTune)
+
         # Generate harmonies
         newChords = self.newChordsFromScale(newTune.notes, newTune.tempo)
+        # music.chords.append(newChords)
+
         # Check data
         if(newTune.hasData() == False or len(newChords) == 0):
             print("\nERROR: No composition data created")
             return -1
+        # if(len(music.melodies) == 0 or len(music.chords) == 0):
+        #     print("\ERROR: unable to create music() object")
+        #     return -1
 
         # Save to MIDI file
-        fileName = self.newFileName(' - duet - ')
+        # fileName = self.newFileName(' - duet - ')
+        fileName = 'untitled duet.txt'
         if(mid.saveComposition(self, newTune, newChords, 'duet.mid') != -1):
             print("\nPiece saved as", 'duet.mid')
-            return 0
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
+
         # Save composition meta-data to .txt file
         self.save(data, fileName, newTune, newChords)
+        return 0
         
         
