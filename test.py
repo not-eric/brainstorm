@@ -98,6 +98,11 @@ def newData(dataType):
 
 #------------------------------MIDI Output--------------------------------------#
 
+# Test meta-data ouput
+# print("\n***testing meta-data output***")
+# data = "test"
+# create.saveData(data, 'data.txt')
+
 
 # Generate a file name
 # print("\n***generating a new file name***")
@@ -108,8 +113,25 @@ def newData(dataType):
 
 # Put together melody and harmony data and output as single MIDI file
 print("\n***generating melody with harmony***")
+
+fileName = 'data.txt'
+
+header = '\n----------------------------NEW COMPOSITION------------------------------------'
+create.saveData(header, fileName)
+
+ensemble = '- duet -'
+name = create.newFileName(ensemble)
+title = 'Piece title: ' + name
+create.saveData(title, fileName)
+
 dataType = randint(1, 4)
+dataInfo = 'data type:' + dataType
+create.saveData(dataInfo, fileName)
+
 data = newData(dataType)
+dataInfo = 'raw inputted data:' + data
+create.saveData(dataInfo, fileName)
+
 print("\ninputting:", data)
 if(create.newComposition(data, dataType) != -1):
     print("\n...Here's some new music! :)")

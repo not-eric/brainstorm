@@ -202,9 +202,102 @@ class generate():
         self.dynamicsLoud = [92, 96, 100, 104, 108, 112, 116, 120, 124]
 
 
+    #-----------------------------------------------------------------------------------------#
+    #-----------------------------------Utility Functions-------------------------------------#
+    #-----------------------------------------------------------------------------------------#
+
+    # Generates a new file to save a new composition's meta-data to
+    def save(self, data, fileName, newMelody, newChords):
+        '''
+        Generates a new file to save a new composition's meta-data to
+        '''
+        # Create a new file opening object thing
+        f = open(fileName, 'x')
+        
+        # Generate a header
+        header = '\n\n*******************************************************************************'
+        f.write(header)
+        header = '----------------------------NEW COMPOSITION------------------------------------'
+        f.write(header)
+        header = '*******************************************************************************'
+        f.write(header)
+
+        # Save piece title and inputted data
+        title = '\nTITLE: ' + fileName
+        f.write(title)
+        dataInfo = '\nInputted data:' + data
+
+        # Save melody data
+        f.write(dataInfo)
+        header = "\n\n----------------MELODY DATA-------------------"
+        f.write(header)
+        tempo = '\nTempo: ' + newMelody.tempo + 'bpm'
+        f.write(tempo)
+        totalNotes = '\nTotal Notes: ' + len(newMelody.notes)
+        f.write(totalNotes)
+        notes = 'Notes: ' + newMelody.notes
+        f.write(notes)
+        totalRhythms = '\nTotal rhythms:' + len(newMelody.rhythms)
+        f.write(totalRhythms)
+        rhythms = 'Rhythms: ' +  newMelody.rhythms
+        f.write(rhythms)
+        totalDynamics = '\nTotal dynamics:' + len(newMelody.dynamics)
+        f.write(totalDynamics)
+        dynamics = 'Dynamics:' + newMelody.dynamics
+        f.write(dynamics)
+
+        # Save harmony data
+        header = "\n\n----------------HARMONY DATA-------------------"
+        f.write(header)
+        for i in range(len(newChords)):
+            notes = '\n' + i + 1 + ': ' + newChords[i].notes
+            f.write(notes)
+            rhythm = '      Rhythm: ' + newChords[i].rhythm
+            f.write(rhythm)
+            dynamics = '      Dynamics: ' + newChords[i].dynamics 
+            f.write(dynamics)
+
+        # Close instance
+        f.close()
+        return 0
+
+    # Auto generate a file/composition name (type - date:time)
+    def newFileName(self, ensemble):
+        '''
+        Generates a title/file name by picking two random words
+        then attaching the composition type (solo, duo, ensemble, etc..),
+        followed by the date.
+
+        Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
+        
+        Random word generation technique from:
+            https://stackoverflow.com/questions/18834636/random-word-generator-python
+        '''
+        try:
+            # Get word list
+            url = "https://www.mit.edu/~ecprice/wordlist.10000"
+            # response = requests.get(url)
+            response = urllib.request.urlopen(url)
+            # words = response.content.splitlines()
+            text = response.read().decode()
+            words = text.splitlines()
+            # Pick two random words
+            name = words[randint(0, len(words) - 1)] + '_' + words[randint(0, len(words) - 1)]
+        except urllib.error.URLError:
+            name = ensemble + ' - '
+
+        # Get date and time.
+        date = datetime.now()
+        # Convert to str d-m-y (hh:mm:ss)
+        dateStr = date.strftime("%d-%b-%y (%H:%M:%S.%f)")
+
+        # Name and date, and add file extension
+        fileName = '{}{}{}.mid'.format(name, ensemble, dateStr)
+        return fileName
+
 
     #-----------------------------------------------------------------------------------------#
-    #-----------------------------Conversion and Utility Functions----------------------------#
+    #----------------------------------Conversion Functions-----------------------------------#
     #-----------------------------------------------------------------------------------------#
 
 
@@ -300,40 +393,6 @@ class generate():
         # Convert to array of ints (ie. 132 -> [1, 3, 2])
         numArr = [int(x) for x in str(hexStr)]
         return numArr
-
-    # Auto generate a file/composition name (type - date:time)
-    def newFileName(self, ensemble):
-        '''
-        Generates a title/file name by picking two random words
-        then attaching the composition type (solo, duo, ensemble, etc..),
-        followed by the date.
-
-        Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
-        
-        Random word generation technique from:
-            https://stackoverflow.com/questions/18834636/random-word-generator-python
-        '''
-        try:
-            # Get word list
-            url = "https://www.mit.edu/~ecprice/wordlist.10000"
-            # response = requests.get(url)
-            response = urllib.request.urlopen(url)
-            # words = response.content.splitlines()
-            text = response.read().decode()
-            words = text.splitlines()
-            # Pick two random words
-            name = words[randint(0, len(words) - 1)] + '_' + words[randint(0, len(words) - 1)]
-        except urllib.error.URLError:
-            name = ensemble + ' - '
-
-        # Get date and time.
-        date = datetime.now()
-        # Convert to str d-m-y (hh:mm:ss)
-        dateStr = date.strftime("%d-%b-%y (%H:%M:%S.%f)")
-
-        # Name and date, and add file extension
-        fileName = '{}{}{}.mid'.format(name, ensemble, dateStr)
-        return fileName
 
 
     #--------------------------------------------------------------------------------#
@@ -693,8 +752,6 @@ class generate():
         dynamic = self.newDynamic()
         while(len(newchord.dynamics) < len(newchord.notes)):
             newchord.dynamics.append(dynamic)
-        # Dispay chord
-        # self.displayChord(newchord)
         return newchord
 
     # Generates a chord progression from the notes of a given scale
@@ -722,8 +779,6 @@ class generate():
         if(len(chords) == 0):
             print("ERROR: Unable to generate chords!")
             return -1
-        # Display chords
-        self.displayChords(chords)
         # Test output
         # if(mid.saveChords(self, chords) != -1):
         #     print("chords saved!")
@@ -741,12 +796,13 @@ class generate():
     # Display newMelody() object data
     def displayMelody(self, newMelody):
         '''
-        Display newMelody() object data
+        Displays newMelody() object data and exports to .txt file
         '''
         if(newMelody.hasData() == False):
             print("ERROR: no melody data!")
             return -1
 
+        # Display data
         print("\n-----------MELODY Data:------------")
         print("\nTempo:", newMelody.tempo, "bpm")
         print("\nTotal Notes:", len(newMelody.notes))
