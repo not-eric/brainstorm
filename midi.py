@@ -2,21 +2,12 @@
 #-----------------------------Utility functions for working with MIDI I/O ------------------------------#
 #*******************************************************************************************************#
 
-'''
-
-    This module is for handling MIDI I/O with generous help from the pretty_midi library
-
-
------------------------------------------------NOTES-----------------------------------------------------
-    This module is for handling MIDI I/O with generous help from the pretty_midi library
-
-    
+''' 
     NOTE: Double check the math for how strt and end are incremented according to
     the supplied durations. Either Finale is doing something weird or the compounding
     values are creating highly precice floating point numbers that might make sheet music
     representation very messy. 
-
----------------------------------------------------------------------------------------------------------    
+  
 '''
 from datetime import datetime
 import pretty_midi as pm
@@ -138,9 +129,9 @@ class midiStuff():
             for j in range(len(newChords[i].notes)):
                 # Translate note to MIDI note
                 note = pm.note_name_to_number(newChords[i].notes[j])
-                note = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
+                achord = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
                 # Add to instrument object
-                chord.notes.append(note)
+                chord.notes.append(achord)
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
@@ -200,7 +191,7 @@ class midiStuff():
         # Add melody to instrument list
         mid.instruments.append(melody)
 
-        #-----------------------------Add Chords---------------------------------#
+        #----------------------------Add Harmonies-------------------------------#
 
         # Create instrument object.
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
@@ -213,9 +204,9 @@ class midiStuff():
             for j in range(len(newChords[i].notes)):
                 # Translate note to MIDI note
                 note = pm.note_name_to_number(newChords[i].notes[j])
-                note = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
+                achord = pm.Note(velocity= newChords[i].dynamics[j], pitch= note, start= strt, end= end)
                 # Add to instrument object
-                chord.notes.append(note)
+                chord.notes.append(achord)
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
@@ -225,8 +216,7 @@ class midiStuff():
 
         # Add chord to instrument list 
         mid.instruments.append(chord)
-
-
+        # Write to MIDI file
         # mid.write(fileName)
         mid.write('new-composition.mid')
         return 0

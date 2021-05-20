@@ -38,6 +38,7 @@
 
 # IMPORTS
 import math
+import urllib.request
 from random import randint
 from datetime import datetime
 from midi import midiStuff as mid
@@ -279,20 +280,41 @@ class generate():
         numArr = [int(x) for x in str(hexStr)]
         return numArr
 
-    # Auto generate a file name (date:time)
-    def newFileName(self, fileType):
+    # Auto generate a file/composition name (type - date:time)
+    def newMusicName(self, musicType):
         '''
-        Takes a string as an argument, returns a string 
-        with the format: name - date:time
+        Generates a title/file name by picking 1 - 3 random words,
+        then attaching the composition type (solo, duo, ensemble, etc..),
+        followed by the date.
+
+        Format: "<word(s)> - <type> - <date: d-m-y (hh:mm:ss)>"
         
-        NOTE: maybe the date module is causing the OS error?
+        Random word generation technique from:
+            https://stackoverflow.com/questions/18834636/random-word-generator-python
         '''
+        url = ""
+        response = urllib.request.urlopen(url)
+        text = response.read().decode()
+        words = text.splitlines()
+        # Upper and lower case word lists generated with list comprehension
+        upperWords = [word for word in words if word[0].isupper()]
+        lowerWords = [word for word in words if word[0].islower()]
+
+        # Piece the items together
+        if(randint(1, 2) == 1):
+            name = upperWords[randint(0, len(upperWords) - 1)] + lowerWords[randint(0, len(lowerWords) - 1)]
+            name = name + " - " + musicType + " - "
+        else:
+            name = lowerWords[randint(0, len(lowerWords) - 1)] + upperWords[randint(0, len(upperWords) - 1)]
+            name = name + " - " + musicType + " - "
+
         # Get date and time.
         date = datetime.now()
         # Convert to str d-m-y (hh:mm:ss)
-        dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
-        # Merge date and file type
-        fileName = "{}{}".format(fileType, dateStr)
+        dateStr = date.strftime("%d-%b-%y (%H:%M:%S.%f)")
+
+        # Name and date, and add file extension
+        fileName = '{}{}.mid'.format(name, dateStr)
         return fileName
 
 
