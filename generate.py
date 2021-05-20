@@ -38,7 +38,8 @@
 
 # IMPORTS
 import math
-import urllib.request
+from pretty_midi import constants
+import requests
 from random import randint
 from datetime import datetime
 from midi import midiStuff as mid
@@ -73,6 +74,36 @@ class generate():
                          'h', 'i', 'j', 'k', 'l', 'm', 'n',
                          'o', 'p', 'q', 'r', 's', 't', 'u',
                          'v', 'w', 'x', 'y', 'z']
+
+
+        #----------------------------Tempo-----------------------------------#
+
+        # Tempos (indices: 0-38)
+        self.tempos = [40.0, 42.0, 44.0, 46.0, 50.0, 52.0, 54.0, 56.0, 58.0, #1-9 (0-8)
+                       60.0, 63.0, 66.0, 69.0, 72.0, 76.0, 80.0, 84.0, 88.0, #10-18 (9-17)
+                       92.0, 96.0, 100.0, 104.0, 108.0, 112.0, 116.0, 120.0, # 19-27 (18-26)
+                       126.0, 132.0, 128.0, 144.0, 152.0, 160.0, 168.0, 176.0, #28-36 (27-35)
+                       184.0, 200.0, 208.0] #37-39 (36-38)
+
+
+        #-----------------------Instrumentation------------------------------#
+        # Ensemble size
+        self.size = {1: 'solo',
+                      2: 'duo', 
+                      3: 'trio',
+                      4: 'quartet',
+                      5: 'quintet',
+                      6: 'sextet',
+                      7: 'septet',
+                      8: 'octet',
+                      9: 'nonet',
+                      10: 'decet',
+                      11: 'large ensemble', 
+                      12: 'open instrumentation'}
+        
+        # Instrument list from pretty_midi's constants.py file.
+        self.instruments = constants.INSTRUMENT_MAP
+
 
         #-----------------------Notes and Scales------------------------------#
 
@@ -148,16 +179,6 @@ class generate():
         # Slow rhythms (0-7) - [n2 = n1 + (n1/2)]
         self.rhythmsSlow = [8.0, 12.0, 18.0, 27.0, 
                             40.5, 60.75, 91.125, 136.6875]
-        
-  
-        #----------------------------Tempo-----------------------------------#
-
-        # Tempos (indices: 0-38)
-        self.tempos = [40.0, 42.0, 44.0, 46.0, 50.0, 52.0, 54.0, 56.0, 58.0, #1-9 (0-8)
-                       60.0, 63.0, 66.0, 69.0, 72.0, 76.0, 80.0, 84.0, 88.0, #10-18 (9-17)
-                       92.0, 96.0, 100.0, 104.0, 108.0, 112.0, 116.0, 120.0, # 19-27 (18-26)
-                       126.0, 132.0, 128.0, 144.0, 152.0, 160.0, 168.0, 176.0, #28-36 (27-35)
-                       184.0, 200.0, 208.0] #37-39 (36-38)
 
 
         #--------------------------Dynamics---------------------------------#
@@ -283,30 +304,26 @@ class generate():
     # Auto generate a file/composition name (type - date:time)
     def newMusicName(self, musicType):
         '''
-        Generates a title/file name by picking 1 - 3 random words,
+        Generates a title/file name by picking two random words
         then attaching the composition type (solo, duo, ensemble, etc..),
         followed by the date.
 
-        Format: "<word(s)> - <type> - <date: d-m-y (hh:mm:ss)>"
+        Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
         
         Random word generation technique from:
             https://stackoverflow.com/questions/18834636/random-word-generator-python
         '''
-        url = ""
-        response = urllib.request.urlopen(url)
-        text = response.read().decode()
-        words = text.splitlines()
-        # Upper and lower case word lists generated with list comprehension
-        upperWords = [word for word in words if word[0].isupper()]
-        lowerWords = [word for word in words if word[0].islower()]
-
-        # Piece the items together
-        if(randint(1, 2) == 1):
-            name = upperWords[randint(0, len(upperWords) - 1)] + lowerWords[randint(0, len(lowerWords) - 1)]
+        url = "https://www.mit.edu/~ecprice/wordlist.10000"
+        try:
+            # Get word list
+            response = requests.get(url)
+            words = response.content.splitlines()
+            # Pick two random words
+            name = words[randint(0, len(words) - 1)] + "_" + words[randint(0, len(words) - 1)]
+            # Format first half of file name
             name = name + " - " + musicType + " - "
-        else:
-            name = lowerWords[randint(0, len(lowerWords) - 1)] + upperWords[randint(0, len(upperWords) - 1)]
-            name = name + " - " + musicType + " - "
+        except requests.exceptions.RequestException:
+            name = musicType + " - "
 
         # Get date and time.
         date = datetime.now()
