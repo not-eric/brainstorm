@@ -38,10 +38,10 @@
 
 # IMPORTS
 import math
+import datetime
 import instruments
 import urllib.request
 from random import randint
-from datetime import datetime
 from midi import midiStuff as mid
 from containers.composition import music
 from containers.melody import melody
@@ -965,8 +965,6 @@ class generate():
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
 
-        # Save composition meta-data to .txt file
+        # Save composition data to a .txt file
         self.save(data, fileName, newTune, newChords)
         return 0
-        
-        
