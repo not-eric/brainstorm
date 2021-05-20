@@ -47,7 +47,7 @@ class midiStuff():
         return fileName
     
     # Outputs a single melody/instrument to a MIDI file
-    def saveMelody(self, newMelody, fileName):
+    def saveMelody(self, newMelody):
         '''
         Outputs a single instrument MIDI file (ideally). Returns 0 on success, -1 on failure. 
         To be used with melody generation.
@@ -95,12 +95,10 @@ class midiStuff():
     # Outputs a single MIDI chord.
     def saveChord(self, newChord):
         '''
-        Outputs a single MIDI chord (ideally). Also returns a pretty_midi object. 
-        To be used with chord generation.
+        Takes a single chord() object and outputs a MIDI file of that chord.
         '''
-
         # Create PrettyMIDI object
-        mid = pm.PrettyMIDI(initial_tempo=60)
+        mid = pm.PrettyMIDI(initial_tempo=newChord.tempo)
         # Create instrument object.
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         chord = pm.Instrument(program = instrument)
@@ -126,9 +124,8 @@ class midiStuff():
         Takes a chord() object as an argument and generates a MIDI file.
         Returns a pretty_midi object. Returns 0.
         '''
-
         # Create PrettyMIDI object
-        myChords = pm.PrettyMIDI(initial_tempo = 60)
+        myChords = pm.PrettyMIDI(initial_tempo = newChords.tempo)
 
         # Create instrument object.
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
