@@ -103,6 +103,6 @@ dataType = randint(1, 4)
 data = newData(dataType)
 print("\n***generating melody with harmony***")
 if(create.newComposition(data, dataType) != -1):
-    print("...piece created!")
+    print("\n...Here's some new music! :)")
 else:
-    print("...unable to create piece!")
+    print("\n... :(")

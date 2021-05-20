@@ -82,7 +82,7 @@ class midiStuff():
             # Increment rhythms (note event strt/end times)
             try:
                 strt += newMelody.rhythms[i]
-                end += newMelody.rhythms[i + 1]
+                end += newMelody.rhythms[i+1]
             except IndexError:
                 break  
 
@@ -147,7 +147,7 @@ class midiStuff():
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
-                end += newChords[i + 1].rhythm
+                end += newChords[i+1].rhythm
             except IndexError:
                 break
 
@@ -162,7 +162,7 @@ class midiStuff():
     # Save a melody and chords
     def saveComposition(self, newMelody, newChords):
         '''
-        Save a single-line melody with chords generated from that melody
+        Save a single-line melody with chords generated
         to a MIDI file. Returns -1 upon failure.
         '''
         # Check incoming data
@@ -196,7 +196,7 @@ class midiStuff():
             # Increment rhythms (note event strt/end times)
             try:
                 strt += newMelody.rhythms[i]
-                end += newMelody.rhythms[i + 1]
+                end += newMelody.rhythms[i+1]
             except IndexError:
                 break  
 
@@ -222,7 +222,7 @@ class midiStuff():
             try:
                 # Increment strt/end times
                 strt += newChords[i].rhythm
-                end += newChords[i + 1].rhythm
+                end += newChords[i+1].rhythm
             except IndexError:
                 break
 

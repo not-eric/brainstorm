@@ -363,7 +363,7 @@ class generate():
             3. Cycle through this scale appending each note to a list
                 of available notes until we reach the last note in the scale
                 in octave 6.
-            4. If we reach this note, reset octave to starting point, and 
+            4. If we reach this note, reset octave to a new starting point, and 
                 pick a new starting scale at random.
             5. Repeat steps 3-4 until we have as many notes as the highest single
                 integer from the supplied data set.
@@ -403,7 +403,9 @@ class generate():
             if(i % 7 == 0):
                 octave += 1
                 if(octave > 6):
+                    # Reset starting octave
                     octave = randint(1, 3)
+                    # Pick new root scale
                     root = self.scales[randint(1, len(self.scales) - 1)]
                     # Re-decide if we're using minor (1) or major (2) again
                     if(randint(1, 2) == 1):
@@ -592,17 +594,17 @@ class generate():
 
     # Display single chord
     def displayChord(self, chord):      
-        print("\n------------chord:-------------")
-        print("notes:", chord.notes)
+        print("\n------------Chord:-------------")
+        print("\nnotes:", chord.notes)
         print("rhythm:", chord.rhythm)
         print("dynamics:", chord.dynamics)
         return 0
 
     # Display a list of chords
     def displayChords(self, chords):
-        print("\n----------------chords:-------------------")
+        print("\n----------------HARMONY DATA:-------------------")
         for i in range(len(chords)):
-            print(i + 1,': ', 'Notes:', chords[i].notes)
+            print(i + 1,': ', '\nNotes:', chords[i].notes)
             print('     Rhythm:', chords[i].rhythm)
             print('     Dynamics:', chords[i].dynamics)
         return 0  
@@ -822,10 +824,10 @@ class generate():
             return -1
         # Save to MIDI file
         if(mid.saveComposition(self, newTune, newChords) != -1):
-            print("Piece saved as 'new-composition.mid!'")
+            print("\nPiece saved as 'new-composition.mid!'")
             return 0
         else:
-            print("Unable to export piece to MIDI file!")
+            print("\nERROR:Unable to export piece to MIDI file!")
             return -1
         
         
