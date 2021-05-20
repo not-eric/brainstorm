@@ -38,8 +38,8 @@
 
 # IMPORTS
 import math
-import requests
 import instruments
+import urllib.request
 from random import randint
 from datetime import datetime
 from midi import midiStuff as mid
@@ -316,13 +316,14 @@ class generate():
         try:
             # Get word list
             url = "https://www.mit.edu/~ecprice/wordlist.10000"
-            response = requests.get(url)
-            words = response.content.splitlines()
+            # response = requests.get(url)
+            response = urllib.request.urlopen(url)
+            # words = response.content.splitlines()
+            text = response.read().decode()
+            words = text.splitlines()
             # Pick two random words
             name = words[randint(0, len(words) - 1)] + '_' + words[randint(0, len(words) - 1)]
-            # Format first half of file name
-            name = name + ' - ' + ensemble + ' - '
-        except requests.exceptions.RequestException:
+        except urllib.error.URLError:
             name = ensemble + ' - '
 
         # Get date and time.
@@ -331,8 +332,7 @@ class generate():
         dateStr = date.strftime("%d-%b-%y (%H:%M:%S.%f)")
 
         # Name and date, and add file extension
-        name = name + ' - ' + dateStr
-        fileName = '{}{}.mid'.format(name, dateStr)
+        fileName = '{}{}{}.mid'.format(name, ensemble, dateStr)
         return fileName
 
 
@@ -860,7 +860,7 @@ class generate():
             print("\nERROR: No composition data created")
             return -1
         # Save to MIDI file
-        # fileName = self.newFileName('duet')
+        # fileName = self.newFileName(' - duet - ')
         if(mid.saveComposition(self, newTune, newChords, 'duet.mid') != -1):
             print("\nPiece saved as", 'duet.mid')
             return 0
