@@ -217,6 +217,7 @@ class midiStuff():
         # Add chord to instrument list 
         mid.instruments.append(chord)
         # Write to MIDI file
+        print("\nsaving", fileName, "...")
         mid.write(fileName)
         # mid.write('new-composition.mid')
         return 0

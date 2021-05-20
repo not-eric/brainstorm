@@ -38,7 +38,6 @@
 
 # IMPORTS
 import math
-# from pretty_midi import constants, instrument
 import requests
 import instruments
 from random import randint
@@ -303,7 +302,7 @@ class generate():
         return numArr
 
     # Auto generate a file/composition name (type - date:time)
-    def newMusicName(self, ensemble):
+    def newFileName(self, ensemble):
         '''
         Generates a title/file name by picking two random words
         then attaching the composition type (solo, duo, ensemble, etc..),
@@ -325,7 +324,7 @@ class generate():
             name = name + ' - ' + ensemble + ' - '
         except requests.exceptions.RequestException:
             name = ensemble + ' - '
-            
+
         # Get date and time.
         date = datetime.now()
         # Convert to str d-m-y (hh:mm:ss)
@@ -843,8 +842,10 @@ class generate():
     # Outputs a single melody with chords in a MIDI file
     def newComposition(self, data, dataType):
         '''
-        Takes an array of ints of any length as an arg.
-        Outputs a single melody with chords in a MIDI file (hopefully)
+        Takes an array of ints of any length as an arg, plus the data type 
+        (int (1), float (2), char (3), or hex number (4)).
+
+        Outputs a single melody with chords in a MIDI file (hopefully).
         '''
         # Check incoming data
         if(len(data) == 0):
@@ -855,16 +856,13 @@ class generate():
         # Generate harmonies
         newChords = self.newChordsFromScale(newTune.notes, newTune.tempo)
         # Check data
-        if(newTune.hasData() == False):
-            print("\nERROR: No melody data created")
-            return -1
-        elif(len(newChords) == 0):
-            print("\nERROR: no chord data created!")
+        if(newTune.hasData() == False or len(newChords) == 0):
+            print("\nERROR: No composition data created")
             return -1
         # Save to MIDI file
-        fileName = self.newMusicName('duet')
-        if(mid.saveComposition(self, newTune, newChords, fileName) != -1):
-            print("\nPiece saved as 'new-composition.mid!'")
+        # fileName = self.newFileName('duet')
+        if(mid.saveComposition(self, newTune, newChords, 'duet.mid') != -1):
+            print("\nPiece saved as", 'duet.mid')
             return 0
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
