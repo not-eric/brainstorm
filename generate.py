@@ -915,13 +915,16 @@ class generate():
         if(newTune.hasData() == False or len(newChords) == 0):
             print("\nERROR: No composition data created")
             return -1
+
         # Save to MIDI file
-        # fileName = self.newFileName(' - duet - ')
+        fileName = self.newFileName(' - duet - ')
         if(mid.saveComposition(self, newTune, newChords, 'duet.mid') != -1):
             print("\nPiece saved as", 'duet.mid')
             return 0
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
+        # Save composition meta-data to .txt file
+        self.save(data, fileName, newTune, newChords)
         
         
