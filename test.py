@@ -98,28 +98,12 @@ def newData(dataType):
 
 #------------------------------MIDI Output--------------------------------------#
 
-# Filename test
-# print("\n***file name/composition name generator test***")
-# types = {1: 'solo',
-#          2: 'duo', 
-#          3: 'trio',
-#          4: 'quartet',
-#          5: 'quintet',
-#          6: 'sextet',
-#          7: 'septet',
-#          8: 'octet',
-#          9: 'nonet',
-#          10: 'decet',
-#          11: 'large ensemble', 
-#          12: 'open instrumentation'}
-# fileName = create.newMusicName(types[randint(1, len(types) - 1)])
-# print("\nNew name:", fileName)
-
 
 # Put together melody and harmony data and output as single MIDI file
 dataType = randint(1, 4)
 data = newData(dataType)
 print("\n***generating melody with harmony***")
+print("\ninputting:", data)
 if(create.newComposition(data, dataType) != -1):
     print("\n...Here's some new music! :)")
 else:
