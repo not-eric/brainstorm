@@ -9,6 +9,8 @@
     representation very messy. 
   
 '''
+import urllib.request
+from random import randint
 from datetime import datetime
 import pretty_midi as pm
 from pretty_midi import constants as inst
@@ -21,22 +23,116 @@ class midiStuff():
     def __init__(self):
         super().__init__()
 
-    # Auto generate a file name (date:time)
-    def newFileName(self, fileType):
+
+    # Autogenerates a new filename
+    def newFileName(self, ensemble):
         '''
-        Takes a string as an argument, returns a string 
-        with the format: name - date:time
+        Generates a title/file name by picking two random words
+        then attaching the composition type (solo, duo, ensemble, etc..),
+        followed by the date.
+
+        Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
         
-        NOTE: maybe the date module is causing the OS error?
+        Random word generation technique from:
+            https://stackoverflow.com/questions/18834636/random-word-generator-python
         '''
+        try:
+            # Get word list
+            url = "https://www.mit.edu/~ecprice/wordlist.10000"
+            # response = requests.get(url)
+            response = urllib.request.urlopen(url)
+            # words = response.content.splitlines()
+            text = response.read().decode()
+            words = text.splitlines()
+            # Pick two random words
+            name = words[randint(0, len(words) - 1)] + '_' + words[randint(0, len(words) - 1)]
+        except urllib.error.URLError:
+            name = ensemble + ' - '
+
         # Get date and time.
         date = datetime.now()
         # Convert to str d-m-y (hh:mm:ss)
-        dateStr = date.strftime("%d-%b-%Y (%H:%M:%S.%f)")
-        # Merge date and file type
-        fileName = "{}{}".format(fileType, dateStr)
+        dateStr = date.strftime("%d-%b-%y (%H:%M:%S.%f)")
+
+        # Name and date, and add file extension
+        fileName = '{}{}{}.mid'.format(name, ensemble, dateStr)
         return fileName
-    
+
+
+    # Save data about a new piece in a .txt file
+    def save(self, data, fileName, newMelody, newChords):
+        '''
+        Generates a new file to save a new composition's meta-data to
+        '''
+        # Create a new file opening object thing
+        f = open(fileName, 'w')
+        
+        # Generate a header
+        header = '\n\n*****************************************************************'
+        f.write(header)
+        header = '\n------------------------NEW COMPOSITION--------------------------'
+        f.write(header)
+        header = '\n*****************************************************************'
+        f.write(header)
+
+        # Save piece title and inputted data
+        title = '\n\n\nTITLE: ' + fileName
+        f.write(title)
+
+        dataStr = ''.join([str(i) for i in data])
+        dataInfo = '\n\nInputted data:' + dataStr
+        f.write(dataInfo)
+
+        # Save melody data
+        header = "\n\n\n----------------MELODY DATA-------------------"
+        f.write(header)
+
+        tempo = '\n\nTempo: ' + str(newMelody.tempo) + 'bpm'
+        f.write(tempo)
+
+        totalNotes = '\n\nTotal Notes: ' + str(len(newMelody.notes))
+        f.write(totalNotes)
+
+        noteStr = ''.join(newMelody.notes)
+        notes = '\nNotes: ' + noteStr
+        f.write(notes)
+
+        totalRhythms = '\n\nTotal rhythms:' + str(len(newMelody.rhythms))
+        f.write(totalRhythms)
+
+        rhythmStr = ''.join([str(i) for i in newMelody.rhythms])
+        rhythms = '\nRhythms: ' +  rhythmStr
+        f.write(rhythms)
+        
+        totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
+        f.write(totalDynamics)
+
+        dynamicStr = ''.join([str(i) for i in newMelody.dynamics])
+        dynamics = '\nDynamics:' + dynamicStr
+        f.write(dynamics)
+
+        # Save harmony data
+        header = "\n\n\n----------------HARMONY DATA-------------------"
+        f.write(header)
+
+        for j in range(len(newChords)):
+            i = 0
+            noteStr = ''.join([str(i) for i in newChords[j].notes])
+            notes = '\n\nNotes: ' + noteStr
+            f.write(notes)
+
+            rhythm = '\nRhythm: ' + str(newChords[j].rhythm)
+            f.write(rhythm)
+            
+            i = 0
+            dynamicsStr = ''.join([str(i) for i in newChords[j].dynamics])
+            dynamics = '\nDynamics: ' + dynamicsStr
+            f.write(dynamics)
+
+        # Close instance
+        f.close()
+        return 0
+
     # Outputs a single melody/instrument to a MIDI file
     def saveMelody(self, newMelody):
         '''
@@ -146,6 +242,7 @@ class midiStuff():
         myChords.write('new-chords.mid')
         print("'new-chords' saved successfully!")
         return 0
+
 
     # Save a melody and chords
     def saveComposition(self, newMelody, newChords, fileName):
