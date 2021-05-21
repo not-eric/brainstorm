@@ -244,7 +244,7 @@ class generate():
     
     
     # Generates a new file to save a new composition's meta-data to
-    def save(self, data, fileName, newMelody, newChords):
+    def saveInfo(self, data, fileName, newMelody, newChords):
         '''
         Generates a new file to save a new composition's meta-data to
         '''
@@ -559,6 +559,9 @@ class generate():
         within one octave to be used as a 'root'. Returns -1 on failure.
         '''
         print("\nGenerating new root scale...")
+        if(octave < 1 or octave > 6):
+            print("\nERROR: octave out of range!")
+            return -1
         pcs = []
         # Use sharps (1) or flats (2)?
         sof = randint(1, 2)
@@ -585,8 +588,12 @@ class generate():
             return -1
         return scale
 
-    # Picks one of twelve major keys. 
+    # Picks one of twelve major scales
     def newMajorScale(self):
+        '''
+        Picks one of twelve major scales.
+        '''
+        print("\nPicking major scale...")
         finalScale = []
         # Pick scale
         scale = self.scales[randint(1, len(self.scales) - 1)]
@@ -597,9 +604,21 @@ class generate():
             finalScale.append(note)
         return finalScale
 
+    # Picks one of twelve melodic minor scales
+    def newMinorScale(self):
+        '''
+        Picks one of twelve melodic minor scales
+        '''
+        print("\nPicking minor scale...")
+        # Pick major scale
+        scale = self.newMajorScale()
+        # Convert to minor
+        scale = self.convertToMinor(scale)
+        return scale
+
     # Converts a major scale to its relative minor
     def convertToMinor(self, scale):
-        print("\nConverting scale to relative minor...")
+        print("\nConverting major scale to relative minor...")
         if(len(scale) == 0):
             print("ERROR: no scale inputted!")
             return -1
@@ -966,5 +985,5 @@ class generate():
             return -1
 
         # Save composition data to a .txt file
-        self.save(data, fileName, newTune, newChords)
+        self.saveInfo(data, fileName, newTune, newChords)
         return 0
