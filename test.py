@@ -72,43 +72,7 @@ def newData(dataType):
     return data
 
 
-#-----------------------------------Melody---------------------------------------#
-
-
-# New melody test fron integers
-# print("\n***new melody from ints/floats/chars/hex test***")
-# dataType = randint(1, 4)
-# data = newData(dataType)
-# print("\ntotal elements:", len(data))
-# print("data inputted:", data)
-# # newTune = create.newMelody(data, dataType)
-
-
-#---------------------------------Harmony---------------------------------------#
-
-
-# scale = create.newScale(4)
-# tempo = create.newTempo()
-# # Test output
-# print("\n***new chords from scale test***")
-# print("scale inputted:", scale)
-# # Generate chords
-# chords = create.newChordsFromScale(scale, tempo)
-
-
-#------------------------------MIDI Output--------------------------------------#
-
-# Test meta-data ouput
-# print("\n***testing meta-data output***")
-# data = "test"
-# create.saveData(data, 'data.txt')
-
-
-# Generate a file name
-# print("\n***generating a new file name***")
-# ensemble = ' - solo piano - '
-# fileName = create.newFileName(ensemble)
-# print("new file name:", fileName, "\n")
+#---------------------------------------------------------------------------#
 
 
 # Put together melody and harmony data and output as single MIDI file
