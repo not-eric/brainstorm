@@ -74,13 +74,17 @@ def newData(dataType):
 
 #---------------------------------------------------------------------------#
 
+# New riff test
+print("\n***new riff test***")
+riff = create.newRiff()
+
 
 # Put together melody and harmony data and output as single MIDI file
-print("\n***generating melody with harmony***")
-dataType = randint(1, 4)
-data = newData(dataType)
-print("\ninputting:", data)
-if(create.newComposition(data, dataType) != -1):
-    print("\n...Here's some new music! :)")
-else:
-    print("\n... :(")
+# print("\n***generating melody with harmony***")
+# dataType = randint(1, 4)
+# data = newData(dataType)
+# print("\ninputting:", data)
+# if(create.newComposition(data, dataType) != -1):
+#     print("\n...Here's some new music! :)")
+# else:
+#     print("\n... :(")

@@ -441,22 +441,14 @@ class generate():
     #-------------------------------------------------------------------------------#
 
 
-    # Returns a randomly chosen note in a randomly chosen octave
-    def newRandNote(self):
-        '''
-        Returns a randomly chosen note in a randomly chosen octave
-        '''
-        # Pick note
-        note = self.notes[randint(0, 16)]
-        # Add octave
-        note = "{}{}".format(note, randint(1, 6))
-        return note
-
     # Converts a given integer to a pitch in a specified octave (ex C#6)
     def newNote(self, num, octave):
         '''
         Converts a given integer to a pitch in a specified octave (ex C#6).
         Requires an integer and the required octave. Returns a single string.
+
+        NOTE: use randint(0, 11) and randint(2, 5) for num/octave args to get a 
+              randomly chosen note
         '''
         if(num < 0 or num > 11 or 
            octave > 6 or octave < 0):
@@ -679,6 +671,26 @@ class generate():
             print("ERROR: Unable to generate pattern!")
             return -1
         return rhythms
+
+    # New rhythmic pattern
+    def newRhythmPattern(self, total):
+        '''
+        Generates a short rhythmic pattern of n length to be played t (total) times
+        '''
+        riff = []
+        # Pick 3 to 8 rhythms
+        riffLen = randint(3, 8)
+        # Stay within provided bounds
+        if(riffLen > total):
+            while(riffLen > math.floor(total/2)):
+                riff -= 1
+        # Generate pattern
+        while(len(riff) < riffLen):
+            riff.append(self.newRhythm())
+        if(len(riff) == 0):
+            print("\nERROR: unable to generate rhythmic pattern!")
+            return -1
+        return riff
 
 
     #--------------------------------------------------------------------------------#
@@ -937,6 +949,40 @@ class generate():
     #-------------------------------------------------------------------------------------#
     #-------------------------------COMPOSITION GENERATION--------------------------------#
     #-------------------------------------------------------------------------------------#
+
+    # Outputs a melody with lots of notes but using a short rhythmic pattern
+    def newRiff(self):
+        print("\nGenerating riff...")
+        # New melody() object
+        riff = melody()
+        # Pick tempo
+        riff.tempo = self.newTempo()
+        # Use 8 to 20 notes
+        riffLen = randint(8, 20)
+        # Pick rhythmic pattern first
+        pattern = self.newRhythmPattern(riffLen)
+        # Pick notes and dynamics
+        r = 0
+        for i in range(riffLen):
+            riff.notes.append(self.newNote(randint(0, 11), randint(2, 5)))
+            riff.dynamics.append(self.newDynamic())
+            riff.rhythms.append(pattern[r])
+            r += 1
+            # If we reach the end of the pattern, reset to beginning
+            if(r > len(pattern) - 1):
+                r = 0
+        # Check data
+        if(riff.hasData() == False):
+            print("\nERROR: Unable to generate riff!")
+            return -1
+        # Save to MIDI file
+        if(mid.saveMelody(self, riff) != -1):
+            print("\nRiff saved!")
+        else:
+            print("\nUnable to save riff!")
+            return -1
+        return riff
+
 
     # Outputs a single melody with chords in a MIDI file
     def newComposition(self, data, dataType):
