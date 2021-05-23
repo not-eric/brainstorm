@@ -77,10 +77,6 @@ class midiStuff():
         # PM object is mainly used to just write out the file.
         mid = pm.PrettyMIDI(initial_tempo = newMelody.tempo)
         instrument = pm.instrument_name_to_program(newMelody.instrument)
-        '''
-        Randomly choose an instrument? 
-        instrument = pm.instrument_name_to_program(inst.INSTRUMENT_MAP[randint(0, 110))
-        '''
         melody = pm.Instrument(program = instrument)
 
         # Attach notes, rhythms, and dynamics to melody instrument/MIDI object
@@ -115,8 +111,6 @@ class midiStuff():
         # Create instrument object.
         instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
         chord = pm.Instrument(program = instrument)
-
-        print("Created instrument:", 'Acoustic Grand Piano')
 
         # Add data to pm object
         for i in range(len(newChord.notes)):
@@ -166,12 +160,12 @@ class midiStuff():
 
         # Write out file from MIDI object
         myChords.write('new-chords.mid')
-        print("'new-chords' saved successfully!")
+        print("\n'new-chords.mid' saved successfully!")
         return 0
 
 
     # Save a melody and chords
-    def saveComposition(self, newMelody, newChords, fileName):
+    def saveComposition(self, newMelody, newChords, title):
         '''
         Save a single-line melody with chords generated
         to a MIDI file. Returns -1 upon failure.
@@ -240,6 +234,6 @@ class midiStuff():
         # Add chord to instrument list 
         mid.instruments.append(chord)
         # Write to MIDI file
-        print("\nSaving", fileName, "...")
-        mid.write(fileName)
+        print("\nSaving", title, "...")
+        mid.write(title)
         return 0

@@ -44,9 +44,9 @@ import instruments
 import urllib.request
 from random import randint
 from midi import midiStuff as mid
-from containers.composition import music
 from containers.melody import melody
 from containers.chord import chord
+from containers.composition import composition as music
 
 # Generative functions
 class generate():
@@ -1080,15 +1080,17 @@ class generate():
         #     return -1
 
         # Generate title, .txt file, and save to MIDI file
-        title = self.newTitle()
+        title1 = self.newTitle()
+        print("\nTitle:", title1)
+        title = title1 + '.mid'
         # fileName = self.newFileName(title)
-        if(mid.saveComposition(self, newTune, newChords, 'vn pno duet.mid') != -1):
-            print("\nPiece saved as", 'vn pno duet.mid.mid')
+        if(mid.saveComposition(self, newTune, newChords, title) != -1):
+            print("\nPiece saved as", title)
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
 
         # Save composition data to a .txt file
         fileName = 'violin & piano duet.txt'
-        self.saveInfo(data, fileName, title, newTune, newChords)
+        self.saveInfo(data, fileName, title1, newTune, newChords)
         return 0
