@@ -5,6 +5,7 @@
 '''
 
 # Import and new object
+import pretty_midi.constants as instruments
 from midi import midiStuff as mid
 from random import uniform
 from random import randint
@@ -74,17 +75,24 @@ def newData(dataType):
 
 #---------------------------------------------------------------------------#
 
-# New riff test
-print("\n***new riff test***")
-riff = create.newRiff()
+# Name generator test
+# print("\n***name generator test***")
+# ensemble = create.instruments[randint(0, len(create.instruments) - 1)]
+# name = create.newFileName(ensemble)
+# print("\nnew name:", name, "\n")
+
+
+# # New riff test
+# print("\n***new riff test***")
+# riff = create.newRiff()
 
 
 # Put together melody and harmony data and output as single MIDI file
-# print("\n***generating melody with harmony***")
-# dataType = randint(1, 4)
-# data = newData(dataType)
-# print("\ninputting:", data)
-# if(create.newComposition(data, dataType) != -1):
-#     print("\n...Here's some new music! :)")
-# else:
-#     print("\n... :(")
+print("\n***generating melody with harmony***")
+dataType = randint(1, 4)
+data = newData(dataType)
+print("\ninputting:", data)
+if(create.newComposition(data, dataType) != -1):
+    print("\n...Here's some new music! :)")
+else:
+    print("\n... :(")

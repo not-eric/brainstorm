@@ -218,27 +218,30 @@ class generate():
         Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
         
         Random word generation technique from:
-            https://stackoverflow.com/questions/18834636/random-word-generator-python
+        https://stackoverflow.com/questions/18834636/random-word-generator-python
         '''
         try:
-            # Get word list
+            # get word list
             url = "https://www.mit.edu/~ecprice/wordlist.10000"
             # response = requests.get(url)
             response = urllib.request.urlopen(url)
-            # words = response.content.splitlines()
+            # decode data to text string
             text = response.read().decode()
+            # separate words into list
             words = text.splitlines()
-            # Pick two random words
-            name = words[randint(0, len(words) - 1)] + '_' + words[randint(0, len(words) - 1)]
+            # pick two random words
+            name = words[randint(0, len(words) - 1)] + ' ' + words[randint(0, len(words) - 1)] + ' - '
         except urllib.error.URLError:
-            name = ensemble + ' - '
+            name = 'untitled - '
 
-        # Get date and time.
-        date = datetime.now()
-        # Convert to str d-m-y (hh:mm:ss)
-        dateStr = date.strftime("%d-%b-%y (%H:%M:%S.%f)")
+        # format ensemble str input
+        ensemble = ensemble + ' - '
+        # get date and time.
+        date = datetime.datetime.now()
+        # convert to str d-m-y (hh:mm:ss)
+        dateStr = date.strftime("%d-%b-%y %H:%M:%S")
 
-        # Name and date, and add file extension
+        # name, ensemble, and date, plus file extension
         fileName = '{}{}{}.mid'.format(name, ensemble, dateStr)
         return fileName
     
@@ -971,7 +974,7 @@ class generate():
             # If we reach the end of the pattern, reset to beginning
             if(r > len(pattern) - 1):
                 r = 0
-        # Check data
+        # Check for complete data
         if(riff.hasData() == False):
             print("\nERROR: Unable to generate riff!")
             return -1
@@ -1022,8 +1025,7 @@ class generate():
         #     return -1
 
         # Save to MIDI file
-        # fileName = self.newFileName(' - duet - ')
-        fileName = 'untitled duet.txt'
+        # fileName = self.newFileName('violin & piano duet')
         if(mid.saveComposition(self, newTune, newChords, 'duet.mid') != -1):
             print("\nPiece saved as", 'duet.mid')
         else:
@@ -1031,5 +1033,6 @@ class generate():
             return -1
 
         # Save composition data to a .txt file
+        fileName = 'violin & piano duet'
         self.saveInfo(data, fileName, newTune, newChords)
         return 0
