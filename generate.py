@@ -211,7 +211,7 @@ class generate():
     # Auto generate a composition title from two random words
     def newTitle(self):
         '''
-        Generate a composition title from two random words.
+        Generate a composition title from 1-4 random words.
 
         Random word generation technique from:
         https://stackoverflow.com/questions/18834636/random-word-generator-python
@@ -225,15 +225,21 @@ class generate():
             text = response.read().decode()
             # separate words into list
             words = text.splitlines()
-            # pick two random words
-            name = words[randint(0, len(words) - 1)] + ' ' + words[randint(0, len(words) - 1)] + ' - '
+            # pick 1-4 random words
+            t = 0
+            total = randint(1, 4)
+            while(t < total):
+                name = words[randint(0, len(words) - 1)] + ' '
+                t += 1
+            # format a bit
+            name = name + '- '
         except urllib.error.URLError:
             name = 'untitled - '
         return name
 
 
     # Auto generate a file/composition name (type - date:time)
-    def newFileName(self, ensemble):
+    def newFileName(self, title):
         '''
         Generates a title/file name by picking two random words
         then attaching the composition type (solo, duo, ensemble, etc..),
@@ -242,25 +248,24 @@ class generate():
         Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
         
         NOTE: Date format doesn't work as a file name. Probably need to 
-        remove parenthesies and colons.
+        remove colons?
         '''
-        # pick a name
-        title = self.newTitle()
-        # format ensemble str input
-        ensemble = ensemble + ' - '
         # get date and time.
         date = datetime.datetime.now()
-        # convert to str d-m-y (hh:mm:ss)
+        # convert to str d-m-y hh:mm:ss
         dateStr = date.strftime("%d-%b-%y %H:%M:%S")
         # combine name, ensemble, and date, plus add file extension
-        fileName = '{}{}{}.mid'.format(title, ensemble, dateStr)
+        fileName = '{}{}.mid'.format(title, dateStr)
         return fileName
     
     
-    # Generates a new file to save a new composition's meta-data to
-    def saveInfo(self, data, fileName, newMelody, newChords):
+    # Generates a new .txt file to save a new composition's meta-data to
+    def saveInfo(self, data, fileName, name, newMelody, newChords):
         '''
-        Generates a new file to save a new composition's meta-data to
+        Generates a new .txt file to save a new composition's data and meta-data to.
+
+        NOTE: Should take a music() object containing all data currently required by
+              this method. 
         '''
         # Create a new file opening object thing
         f = open(fileName, 'w')
@@ -274,9 +279,8 @@ class generate():
         f.write(header)
 
         # Generate piece title and save inputted data
-        ensemble = self.instruments[randint(0, len(self.instruments) - 1)]
-        name = self.newFileName(ensemble)
-        title = '\n\n\nTITLE: ' + name
+        instrument = self.instruments[randint(0, len(self.instruments) - 1)]
+        title = '\n\n\nTITLE: ' + name + 'for ' + instrument
         f.write(title)
 
         dataStr = ''.join([str(i) for i in data])
@@ -315,6 +319,9 @@ class generate():
         header = "\n\n\n----------------HARMONY DATA-------------------"
         f.write(header)
 
+        totalChords = '\n\nTotal chords:' + str(len(newChords))
+        f.write(totalChords)
+        
         for j in range(len(newChords)):
             noteStr = ''.join([str(i) for i in newChords[j].notes])
             notes = '\n\nNotes: ' + noteStr
@@ -1041,15 +1048,16 @@ class generate():
         #     print("\ERROR: unable to create music() object")
         #     return -1
 
-        # Save to MIDI file
-        # fileName = self.newFileName('violin & piano duet')
-        if(mid.saveComposition(self, newTune, newChords, 'duet.mid') != -1):
-            print("\nPiece saved as", 'duet.mid')
+        # Generate title, .txt file, and save to MIDI file
+        title = self.newTitle()
+        # fileName = self.newFileName(title)
+        if(mid.saveComposition(self, newTune, newChords, 'vn pno duet.mid') != -1):
+            print("\nPiece saved as", 'vn pno duet.mid.mid')
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
 
         # Save composition data to a .txt file
         fileName = 'violin & piano duet.txt'
-        self.saveInfo(data, fileName, newTune, newChords)
+        self.saveInfo(data, fileName, title, newTune, newChords)
         return 0
