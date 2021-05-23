@@ -76,10 +76,10 @@ def newData(dataType):
 #---------------------------------------------------------------------------#
 
 # Name generator test
-# print("\n***name generator test***")
-# ensemble = create.instruments[randint(0, len(create.instruments) - 1)]
-# name = create.newFileName(ensemble)
-# print("\nnew name:", name, "\n")
+print("\n***name generator test***")
+ensemble = create.instruments[randint(0, len(create.instruments) - 1)]
+name = create.newFileName(ensemble)
+print("\nnew name:", name, "\n")
 
 
 # # New riff test

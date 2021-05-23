@@ -262,8 +262,10 @@ class generate():
         header = '\n*****************************************************************'
         f.write(header)
 
-        # Save piece title and inputted data
-        title = '\n\n\nTITLE: ' + fileName
+        # Generate piece title and save inputted data
+        ensemble = self.instruments[randint(0, len(self.instruments) - 1)]
+        name = self.newFileName(ensemble)
+        title = '\n\n\nTITLE: ' + name
         f.write(title)
 
         dataStr = ''.join([str(i) for i in data])
@@ -303,7 +305,6 @@ class generate():
         f.write(header)
 
         for j in range(len(newChords)):
-            i = 0
             noteStr = ''.join([str(i) for i in newChords[j].notes])
             notes = '\n\nNotes: ' + noteStr
             f.write(notes)
@@ -311,7 +312,6 @@ class generate():
             rhythm = '\nRhythm: ' + str(newChords[j].rhythm)
             f.write(rhythm)
             
-            i = 0
             dynamicsStr = ''.join([str(i) for i in newChords[j].dynamics])
             dynamics = '\nDynamics: ' + dynamicsStr
             f.write(dynamics)
@@ -719,8 +719,8 @@ class generate():
         dynamics = []
         print("\nGenerating", total, "dynamics...")
         while(len(dynamics) < total):
-            # Pick dynamic    
-            dynamic = self.dynamics[randint(0, 9)]
+            # Pick dynamic (medium range for now)    
+            dynamic = self.dynamicsMed[randint(0, 8)]
             # Repeat this dynamic or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
                 # Limit reps to no more than 1/3 of the supplied total
@@ -770,7 +770,7 @@ class generate():
         '''
         # Create new chord() object
         newChord = chord()
-        # Total notes
+        # Total notes (2-9)
         total = randint(2, 9)
         while(len(newChord.notes) < total):
             newChord.notes.append(self.newRandNote())
@@ -785,12 +785,12 @@ class generate():
         if(len(scale) == 0):
             print("ERROR: no input!")
             return -1
-        # newchord object
+        # New chord() object
         newchord = chord()
-        # how many notes in this chord? 2 to 9 (for now)
+        # How many notes in this chord? 2 to 9 (for now)
         total = randint(2, 9)
         while(len(newchord.notes) < total):
-            # Pick note
+            # Pick note and add to list
             note = scale[randint(0, len(scale) - 1)]
             newchord.notes.append(note)
         if(len(newchord.notes) == 0):
@@ -990,12 +990,18 @@ class generate():
     # Outputs a single melody with chords in a MIDI file
     def newComposition(self, data, dataType):
         '''
-        Takes an array of ints of any length as an arg, plus the data type 
+        Takes an 0x-xxxxxx hex humber representing a color, or 
+        an array of ints, floats or chars of any length as arguments, 
+        plus the data type represented by a int 
         (int (1), float (2), char (3), or hex number (4)).
 
-        Outputs a single melody with chords in a MIDI file (hopefully).
-        Returns a music() object containing lists of melody() and chord()
-        objects
+        Outputs a single melody with chords in a MIDI file (hopefully), as
+        well as a .txt file with the compositions title, inputted data, 
+        auto-generated title, a random instrumentation, with the date and time
+        of generation. Also contains melody and harmony data.
+
+        NOTE: Will eventaully return a music() object containing lists of 
+        melody() and chord() objects.
         '''
         # newPiece = music()
 
@@ -1033,6 +1039,6 @@ class generate():
             return -1
 
         # Save composition data to a .txt file
-        fileName = 'violin & piano duet'
+        fileName = 'violin & piano duet.txt'
         self.saveInfo(data, fileName, newTune, newChords)
         return 0
