@@ -14,6 +14,7 @@ class melody():
             
         # Data
         self.tempo = 0.0
+        self.instrument = ""
         self.notes = []
         self.rhythms = []
         self.dynamics = []

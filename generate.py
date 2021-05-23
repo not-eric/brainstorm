@@ -37,6 +37,7 @@
 '''
 
 # IMPORTS
+import os
 import math
 import datetime
 import instruments
@@ -207,6 +208,17 @@ class generate():
     #-----------------------------------Utility Functions-------------------------------------#
     #-----------------------------------------------------------------------------------------#
 
+    # Find a file
+    def find(name, path):
+        '''
+        Finds the relevant file to the project.
+        
+        Technique from:
+        https://stackoverflow.com/questions/1724693/find-a-file-in-python
+        '''
+        for root, dirs, files in os.walk(path):
+            if name in files:
+                return os.path.join(root, name)
 
     # Auto generate a composition title from two random words
     def newTitle(self):
@@ -268,7 +280,10 @@ class generate():
               this method. 
         '''
         # Create a new file opening object thing
-        f = open(fileName, 'w')
+        try:
+            f = open(fileName, 'w')
+        except PermissionError:
+            f = open('new-music.txt', 'w')
         
         # Generate a header
         header = '\n\n*****************************************************************'
@@ -278,7 +293,7 @@ class generate():
         header = '\n*****************************************************************'
         f.write(header)
 
-        # Generate piece title and save inputted data
+        # Add title, instrument(s), and save inputted data
         instrument = self.instruments[randint(0, len(self.instruments) - 1)]
         title = '\n\n\nTITLE: ' + name + 'for ' + instrument
         f.write(title)
@@ -456,10 +471,33 @@ class generate():
             return 60.0
         return tempo
 
+    #--------------------------------------------------------------------------------#
+    #----------------------------------Instruments-----------------------------------#
+    #--------------------------------------------------------------------------------#
 
-    #-------------------------------------------------------------------------------#
-    #-------------------------------------Pitch-------------------------------------#
-    #-------------------------------------------------------------------------------#
+
+    # Picks an instrument
+    def newInstrument(self):
+        '''
+        Randomly picks an instrument from a given list. Returns a string.
+        '''
+        instrument = self.instruments[randint(0, 110)]
+        return instrument
+
+    # Picks a collection of instruments of n length.
+    def newInstruments(self, total):
+        '''
+        Generates a list of instruments of n length, where n is supplied from elsewhere.
+        Returns a list.
+        '''
+        instruments = []
+        while(len(instruments) < total):
+            instruments.append(self.newInstrument())
+        return instruments
+
+    #--------------------------------------------------------------------------------#
+    #-------------------------------------Pitch--------------------------------------#
+    #--------------------------------------------------------------------------------#
 
 
     # Converts a given integer to a pitch in a specified octave (ex C#6)
@@ -939,6 +977,7 @@ class generate():
 
         # Pick tempo
         newMelody.tempo = self.newTempo()
+        # Pick instrument 
         # Pick notes
         newMelody.notes = self.newNotes(data)
         # Pick rhythms
