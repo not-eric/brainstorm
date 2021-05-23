@@ -208,15 +208,11 @@ class generate():
     #-----------------------------------------------------------------------------------------#
 
 
-    # Auto generate a file/composition name (type - date:time)
-    def newFileName(self, ensemble):
+    # Auto generate a composition title from two random words
+    def newTitle(self):
         '''
-        Generates a title/file name by picking two random words
-        then attaching the composition type (solo, duo, ensemble, etc..),
-        followed by the date.
+        Generate a composition title from two random words.
 
-        Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
-        
         Random word generation technique from:
         https://stackoverflow.com/questions/18834636/random-word-generator-python
         '''
@@ -233,16 +229,31 @@ class generate():
             name = words[randint(0, len(words) - 1)] + ' ' + words[randint(0, len(words) - 1)] + ' - '
         except urllib.error.URLError:
             name = 'untitled - '
+        return name
 
+
+    # Auto generate a file/composition name (type - date:time)
+    def newFileName(self, ensemble):
+        '''
+        Generates a title/file name by picking two random words
+        then attaching the composition type (solo, duo, ensemble, etc..),
+        followed by the date.
+
+        Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
+        
+        NOTE: Date format doesn't work as a file name. Probably need to 
+        remove parenthesies and colons.
+        '''
+        # pick a name
+        title = self.newTitle()
         # format ensemble str input
         ensemble = ensemble + ' - '
         # get date and time.
         date = datetime.datetime.now()
         # convert to str d-m-y (hh:mm:ss)
         dateStr = date.strftime("%d-%b-%y %H:%M:%S")
-
-        # name, ensemble, and date, plus file extension
-        fileName = '{}{}{}.mid'.format(name, ensemble, dateStr)
+        # combine name, ensemble, and date, plus add file extension
+        fileName = '{}{}{}.mid'.format(title, ensemble, dateStr)
         return fileName
     
     
