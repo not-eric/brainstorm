@@ -76,7 +76,7 @@ class midiStuff():
         # Create PM object and single instrument. 
         # PM object is mainly used to just write out the file.
         mid = pm.PrettyMIDI(initial_tempo = newMelody.tempo)
-        instrument = pm.instrument_name_to_program('Acoustic Grand Piano')
+        instrument = pm.instrument_name_to_program(newMelody.instrument)
         '''
         Randomly choose an instrument? 
         instrument = pm.instrument_name_to_program(inst.INSTRUMENT_MAP[randint(0, 110))
@@ -190,7 +190,7 @@ class midiStuff():
         mid = pm.PrettyMIDI(initial_tempo = newMelody.tempo)
 
         # Create melody instrument (strings)
-        instrument = pm.instrument_name_to_program('String Ensemble 1')
+        instrument = pm.instrument_name_to_program(newMelody.instrument)
         melody = pm.Instrument(program = instrument)
 
         #----------------------------Add Melody----------------------------------#

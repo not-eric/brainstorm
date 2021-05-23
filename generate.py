@@ -208,17 +208,6 @@ class generate():
     #-----------------------------------Utility Functions-------------------------------------#
     #-----------------------------------------------------------------------------------------#
 
-    # Find a file
-    def find(name, path):
-        '''
-        Finds the relevant file to the project.
-        
-        Technique from:
-        https://stackoverflow.com/questions/1724693/find-a-file-in-python
-        '''
-        for root, dirs, files in os.walk(path):
-            if name in files:
-                return os.path.join(root, name)
 
     # Auto generate a composition title from two random words
     def newTitle(self):
@@ -471,6 +460,7 @@ class generate():
             return 60.0
         return tempo
 
+
     #--------------------------------------------------------------------------------#
     #----------------------------------Instruments-----------------------------------#
     #--------------------------------------------------------------------------------#
@@ -494,6 +484,7 @@ class generate():
         while(len(instruments) < total):
             instruments.append(self.newInstrument())
         return instruments
+
 
     #--------------------------------------------------------------------------------#
     #-------------------------------------Pitch--------------------------------------#
@@ -978,6 +969,7 @@ class generate():
         # Pick tempo
         newMelody.tempo = self.newTempo()
         # Pick instrument 
+        newMelody.instrument = self.newInstrument()
         # Pick notes
         newMelody.notes = self.newNotes(data)
         # Pick rhythms

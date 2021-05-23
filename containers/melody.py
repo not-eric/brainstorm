@@ -26,8 +26,18 @@ class melody():
         If True, all data fields have been used.
         '''
         if(self.tempo != 0.0 
+            and self.instrument != ""
             and len(self.notes) > 0
             and len(self.rhythms) > 0
             and len(self.dynamics) > 0):
             return True
-        return False
+        else:
+            if(self.instrument == ""):
+                print("\nERROR: no instrument selected!")
+            elif(len(self.notes) == 0):
+                print("\nERROR: no notes inputted!")
+            elif(len(self.rhythms) == 0):
+                print("\nERROR: no rhythms inputted!")
+            elif(len(self.dynamics) == 0):
+                print("\nERROR: no dynamics inputted!")
+            return False
