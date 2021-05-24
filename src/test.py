@@ -5,8 +5,6 @@
 '''
 
 # Import and new object
-import pretty_midi.constants as instruments
-from midi import midiStuff as mid
 from random import uniform
 from random import randint
 from generate import generate 
