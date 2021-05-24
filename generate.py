@@ -280,7 +280,7 @@ class generate():
         f.write(header)
 
         # Add title, instrument(s), and save inputted data
-        title = '\n\n\nTITLE: ' + name + 'for ' + newMelody.instrument + ' and piano'
+        title = '\n\n\nTITLE: ' + name
         f.write(title)
 
         # Add date and time.
@@ -1096,11 +1096,10 @@ class generate():
         #     return -1
 
         # Generate title, .txt file, and save to MIDI file
-        title1 = self.newTitle()
-        print("\nTitle:", title1)
-        title = title1 + '.mid'
+        title = self.newTitle()
+        title1 = title + '.mid'
         # Save to MIDI file
-        composition = mid.saveComposition(self, newTune, newChords, title)
+        composition = mid.saveComposition(self, newTune, newChords, title1)
         if(composition != -1):
             print("\nMIDI file saved as", title)
         else:
@@ -1108,10 +1107,12 @@ class generate():
             return -1
 
         # Save composition data to a .txt file (fileName)
-        fileName = "{}{}".format(newTune.instrument, ' and piano duet.txt')
+        fileName = "{}{}".format(title,'.txt')
         print("\nText file saved as:", fileName)
+        title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
         # Export composition data
-        self.saveInfo(data, fileName, title1, newTune, newChords)
+        print("\nTitle:", title2)
+        self.saveInfo(data, fileName, title2, newTune, newChords)
 
         # Return a PrettyMIDI() object
         return composition
