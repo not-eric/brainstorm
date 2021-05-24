@@ -7,7 +7,6 @@ class composition():
     This is a container for all things related to a stand-alone music composition. Data includes
     a global tempo, the piece's title, an array of melody() objects, and an array of chord() objects.
     '''
-
     # Constructor
     def __init__(self):
 

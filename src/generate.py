@@ -279,6 +279,8 @@ class generate():
         header = '\n*****************************************************************'
         f.write(header)
 
+        # ------------------------------Add Meta-Data---------------------------#
+
         # Add title, instrument(s), and save inputted data
         title = '\n\n\nTITLE: ' + name
         f.write(title)
@@ -293,6 +295,8 @@ class generate():
         dataStr = ''.join([str(i) for i in data])
         dataInfo = '\n\nInputted data:' + dataStr
         f.write(dataInfo)
+
+        #-------------------------Add Melody and Harmony Data--------------------#
 
         # Save melody data
         header = "\n\n\n----------------MELODY DATA-------------------"
@@ -1097,11 +1101,12 @@ class generate():
 
         # Generate title, .txt file, and save to MIDI file
         title = self.newTitle()
+        # Create MIDI file name
         title1 = title + '.mid'
         # Save to MIDI file
         composition = mid.saveComposition(self, newTune, newChords, title1)
         if(composition != -1):
-            print("\nMIDI file saved as", title)
+            print("\nMIDI file saved as", title1)
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
