@@ -37,7 +37,6 @@
 '''
 
 # IMPORTS
-import os
 import math
 import datetime
 import instruments
@@ -232,8 +231,6 @@ class generate():
             while(t < total):
                 name = words[randint(0, len(words) - 1)] + ' '
                 t += 1
-            # format a bit
-            name = name + '- '
         except urllib.error.URLError:
             name = 'untitled - '
         return name
@@ -283,10 +280,16 @@ class generate():
         f.write(header)
 
         # Add title, instrument(s), and save inputted data
-        instrument = self.instruments[randint(0, len(self.instruments) - 1)]
-        title = '\n\n\nTITLE: ' + name + 'for ' + instrument
+        title = '\n\n\nTITLE: ' + name + 'for ' + newMelody.instrument + ' and piano'
         f.write(title)
 
+        # Add date and time.
+        date = datetime.datetime.now()
+        # convert to str d-m-y hh:mm:ss
+        dateStr = date.strftime("%d-%b-%y %H:%M:%S")
+        f.write(dateStr)
+
+        # Add original source data
         dataStr = ''.join([str(i) for i in data])
         dataInfo = '\n\nInputted data:' + dataStr
         f.write(dataInfo)
@@ -931,19 +934,23 @@ class generate():
         '''
         # Melody container object
         newMelody = melody()
-
+    
         #------------------Process incoming data-----------------#
        
         print("\nProcessing incoming data...")
 
         # If ints, scale as necessary
         if(dataType == 1):
+            # Save original source data
+            newMelody.sourceData = data
             data = self.scaleTheScale(data)
             print("\nTotal elements:", len(data))
             print("Inputted data after processing:", data)
 
         # If floats then convert to ints and scale
         if(dataType == 2):
+            # Save original source data
+            newMelody.sourceData = data
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
             print("\nTotal elements:", len(data))
@@ -951,12 +958,20 @@ class generate():
 
         # If letters/chars then match letters to their corresponding index numbers.
         if(dataType == 3):
+            # Save original source data
+            newMelody.sourceData = data
             data = self.mapLettersToNumbers(data)
             print("\nTotal elements:", len(data))
             print("Inputted data after processing:", data)
 
         # If hex convert to array of ints and scale
         if(dataType == 4):
+            # Converts hex number to string, then saves
+            # that as the first item of a list. 
+            # It's silly, I know.
+            data = str(data)
+            # Save original source data
+            newMelody.sourceData.append(data)
             data = self.hexToIntArray(data)
             print("\nTotal elements:", len(data))
             print("Inputted data after processing:", data)
@@ -1052,7 +1067,8 @@ class generate():
         NOTE: Will eventaully return a music() object containing lists of 
         melody() and chord() objects.
         '''
-        # newPiece = music()
+        # New composition() object
+        # music = composition()
 
         # Check incoming data
         if(len(data) == 0):
@@ -1083,14 +1099,19 @@ class generate():
         title1 = self.newTitle()
         print("\nTitle:", title1)
         title = title1 + '.mid'
-        # fileName = self.newFileName(title)
-        if(mid.saveComposition(self, newTune, newChords, title) != -1):
-            print("\nPiece saved as", title)
+        # Save to MIDI file
+        composition = mid.saveComposition(self, newTune, newChords, title)
+        if(composition != -1):
+            print("\nMIDI file saved as", title)
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
 
-        # Save composition data to a .txt file
-        fileName = 'violin & piano duet.txt'
+        # Save composition data to a .txt file (fileName)
+        fileName = "{}{}".format(newTune.instrument, ' and piano duet.txt')
+        print("\nText file saved as:", fileName)
+        # Export composition data
         self.saveInfo(data, fileName, title1, newTune, newChords)
-        return 0
+
+        # Return a PrettyMIDI() object
+        return composition

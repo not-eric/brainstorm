@@ -87,7 +87,8 @@ print("\n***generating melody with harmony***")
 dataType = randint(1, 4)
 data = newData(dataType)
 print("\ninputting:", data)
-if(create.newComposition(data, dataType) != -1):
+result = create.newComposition(data, dataType)
+if(result != -1):
     print("\n...Here's some new music! :)")
 else:
     print("\n... :(")

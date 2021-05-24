@@ -16,7 +16,8 @@ class composition():
         # File name for associated .txt file. May need to store
         # individual user's file path here?
         self.fileName = ""
-        # Original inputted data (array of ints or chars)
+        # Original inputted data (array of ints or chars) for 
+        # each melody() or chord() object.
         '''NOTE:need way to store hex if that's the source'''
         self.sourceData = []
         '''
@@ -55,17 +56,17 @@ class composition():
             return True
         else:
             if(self.title == ""):
-                print("\nERROR: no title inputted!")
+                print("\ncomposition() - ERROR: no title inputted!")
             elif(self.fileName == ""):
-                print("\nERROR: no file name inputted!")
+                print("\ncomposition() - ERROR: no file name inputted!")
             elif(self.tempo == 0.0):
-                print("\nERROR: no tempo inputted!")
+                print("\ncomposition() - ERROR: no tempo inputted!")
             elif(len(self.sourceData) == 0):
-                print("\nERROR: no source data inputted!")
+                print("\ncomposition() - ERROR: no source data inputted!")
             elif(len(self.instruments) == 0):
-                print("\nERROR: no instruments inputted!")
+                print("\ncomposition() - ERROR: no instruments inputted!")
             elif(len(self.melodies) == 0):
-                print("\nERROR: no melodies inputted!")
+                print("\ncomposition() - ERROR: no melodies inputted!")
             elif(len(self.chords) == 0):
-                print("\nERROR: no harmonies inputted!")
+                print("\ncomposition() - ERROR: no harmonies inputted!")
             return False
