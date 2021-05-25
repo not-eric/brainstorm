@@ -854,7 +854,7 @@ class generate():
     def newChordsFromScale(self, scale, tempo):
         '''
         Generates a progression from the notes of a given scale.
-        Returns a list of chord objects (notes only).
+        Returns a list of chord().
         
         NOTE: Chords will be derived from the given scale ONLY! Could possibly
               add more randomly inserted chromatic tones to give progressions more
@@ -1003,10 +1003,6 @@ class generate():
 
         return newMelody
 
-    #-------------------------------------------------------------------------------------#
-    #-------------------------------COMPOSITION GENERATION--------------------------------#
-    #-------------------------------------------------------------------------------------#
-
     # Outputs a melody with lots of notes but using a short rhythmic pattern
     def newRiff(self):
         print("\nGenerating riff...")
@@ -1039,6 +1035,11 @@ class generate():
             print("\nUnable to save riff!")
             return -1
         return riff
+
+
+    #-------------------------------------------------------------------------------------#
+    #-------------------------------COMPOSITION GENERATION--------------------------------#
+    #-------------------------------------------------------------------------------------#
 
 
     # Outputs a single melody with chords in a MIDI file
