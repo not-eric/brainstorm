@@ -8,9 +8,6 @@
     This class handles all generative functions. It contains a set of resource data
     that is accessed by a variety of generative algorithms and mapping functions.  
 
-    TODO:
-        Create a way to export newMelody() metadata (console output) to a text file.
-
     NOTE:
         newMelody()
 
