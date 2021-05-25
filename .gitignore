@@ -21,3 +21,11 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# generator
+.env
+.vscode/
+images/
+test/
+test outputs/
+
