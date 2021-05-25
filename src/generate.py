@@ -225,11 +225,12 @@ class generate():
             text = response.read().decode()
             # separate words into list
             words = text.splitlines()
-            # pick 1-4 random words
+            # pick 1 to 4 random words
             t = 0
-            total = randint(1, 4)
+            total = randint(1, 3)
+            name = words[randint(0, len(words) - 1)]
             while(t < total):
-                name = words[randint(0, len(words) - 1)] + ' '
+                name = name + ' ' + words[randint(0, len(words) - 1)]
                 t += 1
         except urllib.error.URLError:
             name = 'untitled - '
@@ -702,6 +703,10 @@ class generate():
         '''
         Generates a series of rhythms of n length, where n is supplied
         from elsewhere. Uses infrequent repetition.
+
+        NOTE: Supply a smaller value for 'total' if a shorter pattern 
+              is needed. 'total' can be used to sync up with a given list or 
+              be hard-coded.
         '''
         rhythms = []
         print("\nGenerating", total, "rhythms...")
@@ -729,26 +734,6 @@ class generate():
             return -1
         return rhythms
 
-    # New rhythmic pattern
-    def newRhythmPattern(self, total):
-        '''
-        Generates a short rhythmic pattern of n length to be played t (total) times
-        '''
-        riff = []
-        # Pick 3 to 8 rhythms
-        riffLen = randint(3, 8)
-        # Stay within provided bounds
-        if(riffLen > total):
-            while(riffLen > math.floor(total/2)):
-                riff -= 1
-        # Generate pattern
-        while(len(riff) < riffLen):
-            riff.append(self.newRhythm())
-        if(len(riff) == 0):
-            print("\nERROR: unable to generate rhythmic pattern!")
-            return -1
-        return riff
-
 
     #--------------------------------------------------------------------------------#
     #-------------------------------------Dynamics-----------------------------------#
@@ -769,6 +754,10 @@ class generate():
         '''
         Generates a list of dynamics (MIDI velocites) of n length, 
         where n is supplied from elsewhere. Uses infrequent repetition.
+
+        NOTE: Supply a smaller value for 'total' if a shorter pattern 
+              is needed. 'total' can be used to sync up with a given list or 
+              be hard-coded.
         '''
         dynamics = []
         print("\nGenerating", total, "dynamics...")
