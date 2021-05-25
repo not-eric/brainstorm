@@ -7,7 +7,7 @@
 # Import and new object
 from random import uniform
 from random import randint
-from generate import generate 
+from generator.generate import generate 
 create = generate()
 
 #---------------------------test functions------------------------------#

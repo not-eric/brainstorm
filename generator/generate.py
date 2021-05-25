@@ -244,7 +244,7 @@ class generate():
         Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
         
         NOTE: Date format doesn't work as a file name. Probably need to 
-        remove colons?
+              remove colons?
         '''
         # get date and time.
         date = datetime.datetime.now()
