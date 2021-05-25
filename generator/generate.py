@@ -36,13 +36,13 @@
 # IMPORTS
 import math
 import datetime
-import generator.instruments
+import instruments
 import urllib.request
 from random import randint
-from generator.midi import midiStuff as mid
-from generator.containers.melody import melody
-from generator.containers.chord import chord
-from generator.containers.composition import composition as music
+from midi import midiStuff as mid
+from containers.melody import melody
+from containers.chord import chord
+from containers.composition import composition as music
 
 # Generative functions
 class generate():
