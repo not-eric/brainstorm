@@ -1058,7 +1058,7 @@ class generate():
         of generation. Also contains melody and harmony data.
 
         NOTE: Will eventaully return a music() object containing lists of 
-        melody() and chord() objects.
+              melody() and chord() objects.
         '''
         # New composition() object
         # music = composition()
