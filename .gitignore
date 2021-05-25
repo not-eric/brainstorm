@@ -1,5 +1,5 @@
 .env
-.vscode/
-images/
-test/
+.vscode
 test outputs/
+.vscode
+__pycache__
