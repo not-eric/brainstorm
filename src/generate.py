@@ -283,7 +283,7 @@ class generate():
         # ------------------------------Add Meta-Data---------------------------#
 
         # Add title, instrument(s), and save inputted data
-        title = '\n\n\nTITLE: ' + name
+        title = '\n\n\nTITLE: ' + name + ' - '
         f.write(title)
 
         # Add date and time.
@@ -1095,7 +1095,7 @@ class generate():
         # Save to MIDI file
         composition = mid.saveComposition(self, newTune, newChords, title1)
         if(composition != -1):
-            print("\nMIDI file saved as", title1)
+            print("\nMIDI file saved as:", title1)
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
