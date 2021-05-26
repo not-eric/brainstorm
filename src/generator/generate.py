@@ -8,9 +8,6 @@
     This class handles all generative functions. It contains a set of resource data
     that is accessed by a variety of generative algorithms and mapping functions.  
 
-    TODO:
-        Create a way to export newMelody() metadata (console output) to a text file.
-
     NOTE:
         newMelody()
 
@@ -86,7 +83,7 @@ class generate():
                        126.0, 132.0, 128.0, 144.0, 152.0, 160.0, 168.0, 176.0, #28-36 (27-35)
                        184.0, 200.0, 208.0] #37-39 (36-38)
 
-        #test
+
         #-----------------------Instrumentation------------------------------#
         # Ensemble size
         self.size = {1: 'solo',
@@ -233,6 +230,7 @@ class generate():
                 name = name + ' ' + words[randint(0, len(words) - 1)]
                 t += 1
         except urllib.error.URLError:
+            print("\nnewTitle() - ERROR: Unable to retrieve word list!")
             name = 'untitled - '
         return name
 
@@ -247,7 +245,7 @@ class generate():
         Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
         
         NOTE: Date format doesn't work as a file name. Probably need to 
-        remove colons?
+              remove colons?
         '''
         # get date and time.
         date = datetime.datetime.now()
@@ -857,7 +855,7 @@ class generate():
     def newChordsFromScale(self, scale, tempo):
         '''
         Generates a progression from the notes of a given scale.
-        Returns a list of chord objects (notes only).
+        Returns a list of chord().
         
         NOTE: Chords will be derived from the given scale ONLY! Could possibly
               add more randomly inserted chromatic tones to give progressions more
@@ -868,8 +866,8 @@ class generate():
             return -1
         # How many chords?
         chords = []
-        # Create between 3 and however many notes there are in the scale
-        total = randint(3, len(scale) - 1)
+        # Create between 5 and however many notes there are in the scale
+        total = randint(5, len(scale) - 1)
         print("\nGenerating", total, "chords...")
         # Pick notes
         while(len(chords) < total):
@@ -1006,10 +1004,6 @@ class generate():
 
         return newMelody
 
-    #-------------------------------------------------------------------------------------#
-    #-------------------------------COMPOSITION GENERATION--------------------------------#
-    #-------------------------------------------------------------------------------------#
-
     # Outputs a melody with lots of notes but using a short rhythmic pattern
     def newRiff(self):
         print("\nGenerating riff...")
@@ -1044,6 +1038,11 @@ class generate():
         return riff
 
 
+    #-------------------------------------------------------------------------------------#
+    #-------------------------------COMPOSITION GENERATION--------------------------------#
+    #-------------------------------------------------------------------------------------#
+
+
     # Outputs a single melody with chords in a MIDI file
     def newComposition(self, data, dataType):
         '''
@@ -1058,7 +1057,7 @@ class generate():
         of generation. Also contains melody and harmony data.
 
         NOTE: Will eventaully return a music() object containing lists of 
-        melody() and chord() objects.
+              melody() and chord() objects.
         '''
         # New composition() object
         # music = composition()
