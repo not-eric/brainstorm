@@ -273,7 +273,7 @@ class generate():
         # Generate a header
         header = '\n\n*****************************************************************'
         f.write(header)
-        header = '\n--------------------------NEW COMPOSITION----------------------------'
+        header = '\n--------------------------NEW COMPOSITION------------------------'
         f.write(header)
         header = '\n*****************************************************************'
         f.write(header)
@@ -281,7 +281,7 @@ class generate():
         # ------------------------------Add Meta-Data---------------------------#
 
         # Add title, instrument(s), and save inputted data
-        title = '\n\n\nTITLE: ' + name + ' - '
+        title = '\n\n\nTITLE: ' + name + ' - for ' + newMelody.instrument + ' and piano ' 
         f.write(title)
 
         # Add date and time.
@@ -308,21 +308,21 @@ class generate():
         totalNotes = '\n\nTotal Notes: ' + str(len(newMelody.notes))
         f.write(totalNotes)
 
-        noteStr = ' '.join(newMelody.notes)
+        noteStr = ', '.join(newMelody.notes)
         notes = '\nNotes: ' + noteStr
         f.write(notes)
 
         totalRhythms = '\n\nTotal rhythms:' + str(len(newMelody.rhythms))
         f.write(totalRhythms)
 
-        rhythmStr = ' '.join([str(i) for i in newMelody.rhythms])
+        rhythmStr = ', '.join([str(i) for i in newMelody.rhythms])
         rhythms = '\nRhythms: ' +  rhythmStr
         f.write(rhythms)
 
         totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
         f.write(totalDynamics)
 
-        dynamicStr = ' '.join([str(i) for i in newMelody.dynamics])
+        dynamicStr = ', '.join([str(i) for i in newMelody.dynamics])
         dynamics = '\nDynamics:' + dynamicStr
         f.write(dynamics)
         '''
@@ -330,15 +330,15 @@ class generate():
         '''
         # Input all
         # for j in range(len(newMusic.melodies)):
-        #     noteStr = ' '.join(newMusic.melodies[j].notes)
+        #     noteStr = ', '.join(newMusic.melodies[j].notes)
         #     notes = '\nNotes: ' + noteStr
         #     f.write(notes)
 
-        #     rhythmStr = ' '.join([str(i) for i in newMusic.melodies[j].rhythms])
+        #     rhythmStr = ', '.join([str(i) for i in newMusic.melodies[j].rhythms])
         #     rhythms = '\nRhythms: ' +  rhythmStr
         #     f.write(rhythms)
 
-        #     dynamicStr = ' '.join([str(i) for i in newMusic.melodies[j].dynamics])
+        #     dynamicStr = ', '.join([str(i) for i in newMusic.melodies[j].dynamics])
         #     dynamics = '\nDynamics:' + dynamicStr
         #     f.write(dynamics)
 
@@ -352,14 +352,14 @@ class generate():
             f.write(totalChords)
             
             for j in range(len(newChords)):
-                noteStr = ''.join([str(i) for i in newChords[j].notes])
+                noteStr = ', '.join([str(i) for i in newChords[j].notes])
                 notes = '\n\nNotes: ' + noteStr
                 f.write(notes)
 
                 rhythm = '\nRhythm: ' + str(newChords[j].rhythm)
                 f.write(rhythm)
                 
-                dynamicsStr = ''.join([str(i) for i in newChords[j].dynamics])
+                dynamicsStr = ', '.join([str(i) for i in newChords[j].dynamics])
                 dynamics = '\nDynamics: ' + dynamicsStr
                 f.write(dynamics)
 

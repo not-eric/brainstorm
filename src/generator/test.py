@@ -74,12 +74,13 @@ def newData(dataType):
 #---------------------------------------------------------------------------#
 
 
-# Put together melody and harmony data and output as single MIDI file
 print("\n***generating melody with harmony***")
-dataType = randint(1, 4)
-data = newData(dataType)
-print("\ninputting:", data)
-result = create.newComposition(data, dataType)
+# Get user's name
+name = input("\nplease enter your name: ")
+# Convert to array of chars
+name = list(name)
+print("\ninputting:", name)
+result = create.newComposition(name, 3)
 if(result != -1):
     print("\n...Here's some new music! :)\n")
 else:
