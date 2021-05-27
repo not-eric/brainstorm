@@ -25,6 +25,7 @@ yarn-error.log*
 # generator
 .env
 .vscode/
+libs/
 test outputs/
 __pycache__
 src/__pycache__

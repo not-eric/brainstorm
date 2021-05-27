@@ -252,7 +252,7 @@ class generate():
     
     
     # Generates a new .txt file to save a new composition's meta-data to
-    def saveInfo(self, name, data, fileName, newMelody, newChords):
+    def saveInfo(self, name, data, fileName, newMelody, newChords=None):
         '''
         Generates a new .txt file to save a new composition's data and meta-data to.
 
@@ -273,7 +273,7 @@ class generate():
         # Generate a header
         header = '\n\n*****************************************************************'
         f.write(header)
-        header = '\n------------------------NEW COMPOSITION--------------------------'
+        header = '\n--------------------------NEW COMPOSITION----------------------------'
         f.write(header)
         header = '\n*****************************************************************'
         f.write(header)
@@ -307,21 +307,22 @@ class generate():
         # Get totals and input
         totalNotes = '\n\nTotal Notes: ' + str(len(newMelody.notes))
         f.write(totalNotes)
-        noteStr = ''.join(newMelody.notes)
+
+        noteStr = ' '.join(newMelody.notes)
         notes = '\nNotes: ' + noteStr
         f.write(notes)
 
         totalRhythms = '\n\nTotal rhythms:' + str(len(newMelody.rhythms))
         f.write(totalRhythms)
 
-        rhythmStr = ''.join([str(i) for i in newMelody.rhythms])
+        rhythmStr = ' '.join([str(i) for i in newMelody.rhythms])
         rhythms = '\nRhythms: ' +  rhythmStr
         f.write(rhythms)
 
         totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
         f.write(totalDynamics)
 
-        dynamicStr = ''.join([str(i) for i in newMelody.dynamics])
+        dynamicStr = ' '.join([str(i) for i in newMelody.dynamics])
         dynamics = '\nDynamics:' + dynamicStr
         f.write(dynamics)
         '''
@@ -329,37 +330,38 @@ class generate():
         '''
         # Input all
         # for j in range(len(newMusic.melodies)):
-        #     noteStr = ''.join(newMusic.melodies[j].notes)
+        #     noteStr = ' '.join(newMusic.melodies[j].notes)
         #     notes = '\nNotes: ' + noteStr
         #     f.write(notes)
 
-        #     rhythmStr = ''.join([str(i) for i in newMusic.melodies[j].rhythms])
+        #     rhythmStr = ' '.join([str(i) for i in newMusic.melodies[j].rhythms])
         #     rhythms = '\nRhythms: ' +  rhythmStr
         #     f.write(rhythms)
 
-        #     dynamicStr = ''.join([str(i) for i in newMusic.melodies[j].dynamics])
+        #     dynamicStr = ' '.join([str(i) for i in newMusic.melodies[j].dynamics])
         #     dynamics = '\nDynamics:' + dynamicStr
         #     f.write(dynamics)
 
-        # Save harmony data
-        header = "\n\n\n----------------HARMONY DATA-------------------"
-        f.write(header)
+        if(newChords is not None):
+            # Save harmony data
+            header = "\n\n\n----------------HARMONY DATA-------------------"
+            f.write(header)
 
-        # Get totals
-        totalChords = '\n\nTotal chords:' + str(len(newChords))
-        f.write(totalChords)
-        
-        for j in range(len(newChords)):
-            noteStr = ''.join([str(i) for i in newChords[j].notes])
-            notes = '\n\nNotes: ' + noteStr
-            f.write(notes)
-
-            rhythm = '\nRhythm: ' + str(newChords[j].rhythm)
-            f.write(rhythm)
+            # Get totals
+            totalChords = '\n\nTotal chords:' + str(len(newChords))
+            f.write(totalChords)
             
-            dynamicsStr = ''.join([str(i) for i in newChords[j].dynamics])
-            dynamics = '\nDynamics: ' + dynamicsStr
-            f.write(dynamics)
+            for j in range(len(newChords)):
+                noteStr = ''.join([str(i) for i in newChords[j].notes])
+                notes = '\n\nNotes: ' + noteStr
+                f.write(notes)
+
+                rhythm = '\nRhythm: ' + str(newChords[j].rhythm)
+                f.write(rhythm)
+                
+                dynamicsStr = ''.join([str(i) for i in newChords[j].dynamics])
+                dynamics = '\nDynamics: ' + dynamicsStr
+                f.write(dynamics)
 
         # Close instance
         f.close()
@@ -1072,7 +1074,8 @@ class generate():
     def aNewMelody(self, data, dataType):
         '''
         Wrapper for newMelody() function. 
-        Exports MIDI file + generates title + .txt data file
+        Exports MIDI file + generates title + .txt data file. 
+        Returns 0 on succcess, -1 on failure.
         '''
         if(len(data) == 0):
             print("\nnewMelody() - ERROR: no data inputted!")
@@ -1089,8 +1092,7 @@ class generate():
             # Create MIDI file name
             title1 = title + '.mid'
             # Save to MIDI file
-            composition = mid.saveMelody(self, title1, newTune)
-            if(composition != -1):
+            if(mid.saveMelody(self, title1, newTune) != -1):
                 print("\nMIDI file saved as:", title1)
             else:
                 print("\nERROR:Unable to export piece to MIDI file!")
@@ -1115,7 +1117,7 @@ class generate():
         plus the data type represented by a int 
         (int (1), float (2), char (3), or hex number (4)).
 
-        Outputs a single melody with chords in a MIDI file (hopefully), as
+        Outputs a single melody with chords in a MIDI file, as
         well as a .txt file with the compositions title, inputted data, 
         auto-generated title, a random instrumentation, with the date and time
         of generation. Also contains melody and harmony data.

@@ -20,13 +20,8 @@ class midiStuff():
     This class is for handling MIDI I/O with generous help from the pretty_midi library.
     '''
 
-    def __init__(self):
-        super().__init__()
-
-
-    # Converts a MIDI file to a JSON file
-    # def midiToJSON(self, MIDI):
-
+    def __init__(self, alive=True):
+        self.alive = alive
 
     # Autogenerates a new filename
     def newFileName(self, ensemble):
