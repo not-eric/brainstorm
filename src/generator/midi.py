@@ -13,7 +13,6 @@ import urllib.request
 from random import randint
 from datetime import datetime
 import pretty_midi as pm
-from pretty_midi import constants as inst
 
 class midiStuff():
     '''

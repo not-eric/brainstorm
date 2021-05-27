@@ -772,8 +772,8 @@ class generate():
             rhythm = self.rhythms[randint(0, len(self.rhythms) - 1)]
             # Repeat this rhythm or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
-                # Limit reps to no more than 1/3 of the total no. of rhythms
-                limit = math.floor(len(rhythms)/3)
+                # Limit reps to no more than roughly 1/3 of the supplied total
+                limit = math.floor(total * 0.333333333333)
                 '''Note: This limit will increase rep levels w/longer list lengths
                          May need to scale for larger lists'''
                 if(limit == 0):
@@ -823,8 +823,8 @@ class generate():
             dynamic = self.dynamicsMed[randint(0, 8)]
             # Repeat this dynamic or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
-                # Limit reps to no more than 1/3 of the supplied total
-                limit = math.floor(total/3)
+                # Limit reps to no more than roughly 1/3 of the supplied total
+                limit = math.floor(total * 0.333333333333)
                 '''Note: This limit will increase rep levels w/longer totals
                          May need to scale for larger lists'''
                 if(limit == 0):
@@ -955,7 +955,7 @@ class generate():
     def newChordsFromScale(self, scale, tempo):
         '''
         Generates a progression from the notes of a given scale.
-        Returns a list of chord().
+        Returns a list of chord() objects.
         
         NOTE: Chords will be derived from the given scale ONLY! Could possibly
               add more randomly inserted chromatic tones to give progressions more
@@ -966,8 +966,18 @@ class generate():
             return -1
         # How many chords?
         chords = []
-        # Create between 1 and however many notes there are in the scale
-        total = randint(1, len(scale) - 1)
+        # Picks total number of chords based on number of notes in the given scale
+        total = 0
+        if(len(scale) > 1 and len(scale) < 4):
+            total = randint(1, len(scale))
+        elif(len(scale) > 5 and len(scale) < 10):
+            total = randint(4, len(scale))
+        elif(len(scale) > 11 and len(scale) < 20):
+            total = randint(6, len(scale))
+        elif(len(scale) > 20 and len(scale) < 40):
+            total = randint(8, len(scale))
+        elif(len(scale) > 40):
+            total = randint(10, math.floor(len(scale) * 0.8))
         print("\nGenerating", total, "chords...")
         # Pick notes
         while(len(chords) < total):
