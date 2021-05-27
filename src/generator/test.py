@@ -40,9 +40,13 @@ def newHex():
 def newChars():
     chars = []
     total = randint(10, 50)
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
+                'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
     for i in range(total):
         # Pick letter
-        char = create.alphabet[randint(0, 25)]
+        char = alphabet[randint(0, 25)]
         # Captitalize? 1 = yes, 2 = no
         if(randint(1, 2) == 1):
             char = char.upper()

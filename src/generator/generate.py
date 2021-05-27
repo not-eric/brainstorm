@@ -252,7 +252,7 @@ class generate():
     
     
     # Generates a new .txt file to save a new composition's meta-data to
-    def saveInfo(self, name, data, fileName, newMelody, newChords=None):
+    def saveInfo(self, name, data=None, fileName=None, newMelody=None, newChords=None, newMusic=None):
         '''
         Generates a new .txt file to save a new composition's data and meta-data to.
 
@@ -268,7 +268,8 @@ class generate():
         try:
             f = open(fileName, 'w')
         except PermissionError:
-            f = open('new-music.txt', 'w')
+            name = name + '.txt'
+            f = open(name, 'w')
         
         # Generate a header
         header = '\n\n*****************************************************************'
@@ -281,67 +282,91 @@ class generate():
         # ------------------------------Add Meta-Data---------------------------#
 
         # Add title, instrument(s), and save inputted data
-        title = '\n\n\nTITLE: ' + name + ' - for ' + newMelody.instrument + ' and piano ' 
-        f.write(title)
+        if(name is not None and newMelody is not None):
+            # Generate full title
+            title = '\n\n\nTITLE: ' + name 
+            f.write(title)
+ 
+            # Add instrument
+            instrument = '\n\n\Instrument(s): ' + newMelody.instrument + ' and piano'
+            f.write(instrument)
 
-        # Add date and time.
-        date = datetime.datetime.now()
-        # convert to str d-m-y hh:mm:ss
-        dateStr = date.strftime("%d-%b-%y %H:%M:%S")
-        dateStr = '\n\nDate: ' + dateStr 
-        f.write(dateStr)
+            # Add date and time.
+            date = datetime.datetime.now()
+            # convert to str d-m-y hh:mm:ss
+            dateStr = date.strftime("%d-%b-%y %H:%M:%S")
+            dateStr = '\n\nDate: ' + dateStr 
+            f.write(dateStr)
+
+        elif(name is not None):
+            # Generate title
+            title = '\n\n\nTITLE: ' + name
+            f.write(title)
+
+            # Add date and time.
+            date = datetime.datetime.now()
+            # convert to str d-m-y hh:mm:ss
+            dateStr = date.strftime("%d-%b-%y %H:%M:%S")
+            dateStr = '\n\nDate: ' + dateStr 
+            f.write(dateStr)
 
         # Add original source data
-        dataStr = ''.join([str(i) for i in data])
-        dataInfo = '\n\nInputted data:' + dataStr
-        f.write(dataInfo)
+        if(data is not None):
+            dataStr = ''.join([str(i) for i in data])
+            dataInfo = '\n\nInputted data:' + dataStr
+            f.write(dataInfo)
+        else:
+            dataInfo = '\n\nInputted data: None'
+            f.write(dataInfo)
 
         #-------------------------Add Melody and Harmony Data--------------------#
 
         # Save melody data
-        header = "\n\n\n----------------MELODY DATA-------------------"
-        f.write(header)
+        if(newMelody is not None):
+            header = "\n\n\n----------------MELODY DATA-------------------"
+            f.write(header)
 
-        tempo = '\n\nTempo: ' + str(newMelody.tempo) + 'bpm'
-        f.write(tempo)
+            tempo = '\n\nTempo: ' + str(newMelody.tempo) + 'bpm'
+            f.write(tempo)
 
-        # Get totals and input
-        totalNotes = '\n\nTotal Notes: ' + str(len(newMelody.notes))
-        f.write(totalNotes)
+            # Get totals and input
+            totalNotes = '\n\nTotal Notes: ' + str(len(newMelody.notes))
+            f.write(totalNotes)
 
-        noteStr = ', '.join(newMelody.notes)
-        notes = '\nNotes: ' + noteStr
-        f.write(notes)
+            noteStr = ', '.join(newMelody.notes)
+            notes = '\nNotes: ' + noteStr
+            f.write(notes)
 
-        totalRhythms = '\n\nTotal rhythms:' + str(len(newMelody.rhythms))
-        f.write(totalRhythms)
+            totalRhythms = '\n\nTotal rhythms:' + str(len(newMelody.rhythms))
+            f.write(totalRhythms)
 
-        rhythmStr = ', '.join([str(i) for i in newMelody.rhythms])
-        rhythms = '\nRhythms: ' +  rhythmStr
-        f.write(rhythms)
+            rhythmStr = ', '.join([str(i) for i in newMelody.rhythms])
+            rhythms = '\nRhythms: ' +  rhythmStr
+            f.write(rhythms)
 
-        totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
-        f.write(totalDynamics)
+            totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
+            f.write(totalDynamics)
 
-        dynamicStr = ', '.join([str(i) for i in newMelody.dynamics])
-        dynamics = '\nDynamics:' + dynamicStr
-        f.write(dynamics)
+            dynamicStr = ', '.join([str(i) for i in newMelody.dynamics])
+            dynamics = '\nDynamics:' + dynamicStr
+            f.write(dynamics)
         '''
         NOTE: Use this loop when composition() objects are functional
         '''
         # Input all
-        # for j in range(len(newMusic.melodies)):
-        #     noteStr = ', '.join(newMusic.melodies[j].notes)
-        #     notes = '\nNotes: ' + noteStr
-        #     f.write(notes)
+        if(newMusic is not None):
+            for j in range(len(newMusic.melodies)):
+                noteStr = ', '.join(newMusic.melodies[j].notes)
+                notes = '\nNotes: ' + noteStr
+                f.write(notes)
 
-        #     rhythmStr = ', '.join([str(i) for i in newMusic.melodies[j].rhythms])
-        #     rhythms = '\nRhythms: ' +  rhythmStr
-        #     f.write(rhythms)
+                rhythmStr = ', '.join([str(i) for i in newMusic.melodies[j].rhythms])
+                rhythms = '\nRhythms: ' +  rhythmStr
+                f.write(rhythms)
 
-        #     dynamicStr = ', '.join([str(i) for i in newMusic.melodies[j].dynamics])
-        #     dynamics = '\nDynamics:' + dynamicStr
-        #     f.write(dynamics)
+                dynamicStr = ', '.join([str(i) for i in newMusic.melodies[j].dynamics])
+                dynamics = '\nDynamics:' + dynamicStr
+                f.write(dynamics)
 
         if(newChords is not None):
             # Save harmony data
