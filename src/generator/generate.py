@@ -64,10 +64,8 @@ class generate():
 
         '''
         Used to search against and return an integer representing an 
-        Array index. The array will be used to generate a scale from
-        whos total is the len(alphabet) - 1
+        array index. 
         '''
-
         self.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
                          'h', 'i', 'j', 'k', 'l', 'm', 'n',
                          'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -242,10 +240,7 @@ class generate():
         then attaching the composition type (solo, duo, ensemble, etc..),
         followed by the date.
 
-        Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
-        
-        NOTE: Date format doesn't work as a file name. Probably need to 
-              remove colons?
+        Format: "<words> - <ensemble> - <date: d-m-y hh:mm:ss>"
         '''
         # get date and time.
         date = datetime.datetime.now()
@@ -804,6 +799,47 @@ class generate():
             print("ERROR: Unable to generate pattern!")
             return -1
         return dynamics
+
+    #--------------------------------------------------------------------------------#
+    #---------------------------------Rhythm/Dynamics--------------------------------#
+    #--------------------------------------------------------------------------------#
+
+    # Generate a list containing either a rhythmic pattern or series of dynamics
+    def newElements(self, total, dataType):
+        '''
+        Generates a series of rhythms or dynamics of n length, where n is supplied
+        from elsewhere. dataType (int - 1 or 2) determines which data set to use.
+        
+        Uses infrequent repetition.
+        '''
+        elements = []
+        print("\nGenerating", total, "elements...")
+        while(len(elements) < total):
+            # Pick rhythm (1) or dynamic(2)?
+            if(dataType == 1):
+                item = self.rhythms[randint(0, len(self.rhythms) - 1)]
+            else:
+                item = self.dynamics[randint(0, len(self.dynamics) - 1)]
+            # Repeat this rhythm or not? 1 = yes, 2 = no
+            if(randint(1, 2) == 1):
+                # Limit reps to no more than 1/3 of the total no. of rhythms
+                limit = math.floor(len(elements)/3)
+                '''Note: This limit will increase rep levels w/longer list lengths
+                         May need to scale for larger lists'''
+                if(limit == 0):
+                    limit += 2
+                reps = randint(1, limit) 
+                for i in range(reps):
+                    elements.append(item)
+                    if(len(elements) == total):
+                        break
+            else:
+                if(item not in elements):
+                    elements.append(item)
+        if(len(elements) == 0):
+            print("\nnewElements() - ERROR: Unable rhythms or dynamics!")
+            return -1
+        return elements
 
 
     #--------------------------------------------------------------------------------#
