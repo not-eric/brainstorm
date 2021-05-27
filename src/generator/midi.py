@@ -24,6 +24,10 @@ class midiStuff():
         super().__init__()
 
 
+    # Converts a MIDI file to a JSON file
+    # def midiToJSON(self, MIDI):
+
+
     # Autogenerates a new filename
     def newFileName(self, ensemble):
         '''
