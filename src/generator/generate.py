@@ -350,23 +350,6 @@ class generate():
             dynamicStr = ', '.join([str(i) for i in newMelody.dynamics])
             dynamics = '\nDynamics:' + dynamicStr
             f.write(dynamics)
-        '''
-        NOTE: Use this loop when composition() objects are functional
-        '''
-        # Input all
-        if(newMusic is not None):
-            for j in range(len(newMusic.melodies)):
-                noteStr = ', '.join(newMusic.melodies[j].notes)
-                notes = '\nNotes: ' + noteStr
-                f.write(notes)
-
-                rhythmStr = ', '.join([str(i) for i in newMusic.melodies[j].rhythms])
-                rhythms = '\nRhythms: ' +  rhythmStr
-                f.write(rhythms)
-
-                dynamicStr = ', '.join([str(i) for i in newMusic.melodies[j].dynamics])
-                dynamics = '\nDynamics:' + dynamicStr
-                f.write(dynamics)
 
         if(newChords is not None):
             # Save harmony data
@@ -387,6 +370,37 @@ class generate():
                 
                 dynamicsStr = ', '.join([str(i) for i in newChords[j].dynamics])
                 dynamics = '\nDynamics: ' + dynamicsStr
+                f.write(dynamics)
+
+        '''
+        NOTE: Use this loop when composition() objects are functional
+        '''
+        # Input all
+        if(newMusic is not None):
+            # Save composition data
+            header = "\n\n\n----------------COMPOSITION DATA-------------------"
+            f.write(header)
+
+            # Save global tempo
+            tempo = '\n\nTempo: ' + str(newMusic.tempo) + 'bpm'
+            f.write(tempo)
+
+            # Add melodies and harmonies
+            for j in range(len(newMusic.melodies)):
+                instStr = ', '.join(newMusic.instruments[j])
+                inst = '\n\nInstruments: ' + instStr
+                f.write(inst)
+
+                noteStr = ', '.join(newMusic.melodies[j].notes)
+                notes = '\n\nNotes: ' + noteStr
+                f.write(notes)
+
+                rhythmStr = ', '.join([str(i) for i in newMusic.melodies[j].rhythms])
+                rhythms = '\n\nRhythms: ' +  rhythmStr
+                f.write(rhythms)
+
+                dynamicStr = ', '.join([str(i) for i in newMusic.melodies[j].dynamics])
+                dynamics = '\n\nDynamics:' + dynamicStr
                 f.write(dynamics)
 
         # Close instance
