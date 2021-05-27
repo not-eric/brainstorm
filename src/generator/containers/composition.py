@@ -15,9 +15,8 @@ class composition():
         # File name for associated .txt file. May need to store
         # individual user's file path here?
         self.fileName = ""
-        # Original inputted data (array of ints or chars) for 
-        # each melody() or chord() object.
-        '''NOTE:need way to store hex if that's the source'''
+        # Original inputted data (array of ints, floats, chars, or str copy
+        # of hex number) for each melody() object.
         self.sourceData = []
         '''
         NOTE: Need a way to generate a single instrument list from the

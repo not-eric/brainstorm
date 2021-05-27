@@ -329,7 +329,6 @@ class generate():
         dynamicStr = ''.join([str(i) for i in newMelody.dynamics])
         dynamics = '\nDynamics:' + dynamicStr
         f.write(dynamics)
-
         '''
         NOTE: Use this loop when composition() objects are functional
         '''
