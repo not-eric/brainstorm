@@ -288,6 +288,7 @@ class generate():
         date = datetime.datetime.now()
         # convert to str d-m-y hh:mm:ss
         dateStr = date.strftime("%d-%b-%y %H:%M:%S")
+        dateStr = '\n\nDate: ' + dateStr 
         f.write(dateStr)
 
         # Add original source data
