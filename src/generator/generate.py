@@ -1042,6 +1042,42 @@ class generate():
     #-------------------------------COMPOSITION GENERATION--------------------------------#
     #-------------------------------------------------------------------------------------#
 
+    # Wrapper for newMelody() function. Exports MIDI file
+    def aNewMelody(self, data, dataType):
+        if(len(data) == 0):
+            print("\nnewMelody() - ERROR: no data inputted!")
+            return -1
+        if(dataType > 4 or dataType < 1):
+            print("\nnewMelody() - ERROR")
+            return -1
+        # New melody() object
+        newTune = melody()
+        # Generate melody
+        newTune = self.newMelody(data, dataType)
+        # If successfull, export
+        if(newTune.hasData() == True):
+            # Generate title, .txt file, and save to MIDI file
+            title = self.newTitle()
+            # Create MIDI file name
+            title1 = title + '.mid'
+            # Save to MIDI file
+            composition = mid.saveMelody(self, newTune, title1)
+            if(composition != -1):
+                print("\nMIDI file saved as:", title1)
+            else:
+                print("\nERROR:Unable to export piece to MIDI file!")
+                return -1
+            # Save composition data to a .txt file (fileName)
+            fileName = "{}{}".format(title,'.txt')
+            print("\nText file saved as:", fileName)
+            title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
+            # Export composition data
+            print("\nTitle:", title2)
+            self.saveInfo(data, fileName, title2, newTune)
+            return 0
+        else:
+            print("\naNewMelody() - ERROR: unable to generate melody!")
+            return -1
 
     # Outputs a single melody with chords in a MIDI file
     def newComposition(self, data, dataType):

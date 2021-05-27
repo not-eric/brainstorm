@@ -81,6 +81,6 @@ data = newData(dataType)
 print("\ninputting:", data)
 result = create.newComposition(data, dataType)
 if(result != -1):
-    print("\n...Here's some new music! :)")
+    print("\n...Here's some new music! :)\n")
 else:
-    print("\n... :(")
+    print("\n... :(\n")

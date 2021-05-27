@@ -60,7 +60,7 @@ class midiStuff():
 
 
     # Outputs a single melody/instrument to a MIDI file
-    def saveMelody(self, newMelody):
+    def saveMelody(self, fileName, title, newMelody):
         '''
         Outputs a single instrument MIDI file (ideally). Returns 0 on success, -1 on failure. 
         To be used with melody generation.
