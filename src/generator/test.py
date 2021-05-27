@@ -81,8 +81,6 @@ def newData(dataType):
 print("\n***generating melody with harmony***")
 # Get user's name
 name = input("\nplease enter your name: ")
-# Convert to array of chars
-name = list(name)
 print("\ninputting:", name)
 result = create.newComposition(name, 3)
 if(result != -1):

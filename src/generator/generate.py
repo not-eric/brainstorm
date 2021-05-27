@@ -288,7 +288,7 @@ class generate():
             f.write(title)
  
             # Add instrument
-            instrument = '\n\n\Instrument(s): ' + newMelody.instrument + ' and piano'
+            instrument = '\n\nInstrument(s): ' + newMelody.instrument + ' and piano'
             f.write(instrument)
 
             # Add date and time.
@@ -313,7 +313,7 @@ class generate():
         # Add original source data
         if(data is not None):
             dataStr = ''.join([str(i) for i in data])
-            dataInfo = '\n\nInputted data:' + dataStr
+            dataInfo = '\n\nInputted data: ' + dataStr
             f.write(dataInfo)
         else:
             dataInfo = '\n\nInputted data: None'
@@ -463,13 +463,13 @@ class generate():
     # Maps letters to index numbers
     def mapLettersToNumbers(self, letters):
         '''
-        Maps letters to index numbers, which will then be 
+        Takes a string of any length as an argument, 
+        then maps the letters to index numbers, which will then be 
         translated into notes (strings).
         '''
         print("\nMapping letters to index numbers...")
-        if(len(letters) == 0): 
-            print("ERROR: no data inputted!")
-            return -1
+        # Convert given string to array of chars
+        letters = list(letters)
         # Make all uppercase characters lowercase
         for i in range(len(letters) - 1):
             if(letters[i].isupper() == True):
@@ -966,8 +966,8 @@ class generate():
             return -1
         # How many chords?
         chords = []
-        # Create between 5 and however many notes there are in the scale
-        total = randint(5, len(scale) - 1)
+        # Create between 1 and however many notes there are in the scale
+        total = randint(1, len(scale) - 1)
         print("\nGenerating", total, "chords...")
         # Pick notes
         while(len(chords) < total):
