@@ -42,7 +42,7 @@ from random import randint
 from midi import midiStuff as mid
 from containers.melody import melody
 from containers.chord import chord
-from containers.composition import composition as music
+from containers.composition import composition
 
 # Generative functions
 class generate():
@@ -257,12 +257,17 @@ class generate():
     
     
     # Generates a new .txt file to save a new composition's meta-data to
-    def saveInfo(self, data, fileName, name, newMelody, newChords):
+    def saveInfo(self, name, data, fileName, newMelody, newChords):
         '''
         Generates a new .txt file to save a new composition's data and meta-data to.
 
         NOTE: Should take a music() object containing all data currently required by
-              this method. 
+              this method:
+              -Source data
+              -File name
+              -Title
+              -Melody/melodies
+              -Chord/chords 
         '''
         # Create a new file opening object thing
         try:
@@ -304,9 +309,9 @@ class generate():
         tempo = '\n\nTempo: ' + str(newMelody.tempo) + 'bpm'
         f.write(tempo)
 
+        # Get totals and input
         totalNotes = '\n\nTotal Notes: ' + str(len(newMelody.notes))
         f.write(totalNotes)
-
         noteStr = ''.join(newMelody.notes)
         notes = '\nNotes: ' + noteStr
         f.write(notes)
@@ -317,7 +322,7 @@ class generate():
         rhythmStr = ''.join([str(i) for i in newMelody.rhythms])
         rhythms = '\nRhythms: ' +  rhythmStr
         f.write(rhythms)
-        
+
         totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
         f.write(totalDynamics)
 
@@ -325,10 +330,28 @@ class generate():
         dynamics = '\nDynamics:' + dynamicStr
         f.write(dynamics)
 
+        '''
+        NOTE: Use this loop when composition() objects are functional
+        '''
+        # Input all
+        # for j in range(len(newMusic.melodies)):
+        #     noteStr = ''.join(newMusic.melodies[j].notes)
+        #     notes = '\nNotes: ' + noteStr
+        #     f.write(notes)
+
+        #     rhythmStr = ''.join([str(i) for i in newMusic.melodies[j].rhythms])
+        #     rhythms = '\nRhythms: ' +  rhythmStr
+        #     f.write(rhythms)
+
+        #     dynamicStr = ''.join([str(i) for i in newMusic.melodies[j].dynamics])
+        #     dynamics = '\nDynamics:' + dynamicStr
+        #     f.write(dynamics)
+
         # Save harmony data
         header = "\n\n\n----------------HARMONY DATA-------------------"
         f.write(header)
 
+        # Get totals
         totalChords = '\n\nTotal chords:' + str(len(newChords))
         f.write(totalChords)
         
@@ -1042,16 +1065,19 @@ class generate():
     #-------------------------------COMPOSITION GENERATION--------------------------------#
     #-------------------------------------------------------------------------------------#
 
-    # Wrapper for newMelody() function. Exports MIDI file
+
+    # Wrapper for newMelody() function. Exports MIDI file + generates title + .txt data file
     def aNewMelody(self, data, dataType):
+        '''
+        Wrapper for newMelody() function. 
+        Exports MIDI file + generates title + .txt data file
+        '''
         if(len(data) == 0):
             print("\nnewMelody() - ERROR: no data inputted!")
             return -1
         if(dataType > 4 or dataType < 1):
             print("\nnewMelody() - ERROR")
             return -1
-        # New melody() object
-        newTune = melody()
         # Generate melody
         newTune = self.newMelody(data, dataType)
         # If successfull, export
@@ -1061,7 +1087,7 @@ class generate():
             # Create MIDI file name
             title1 = title + '.mid'
             # Save to MIDI file
-            composition = mid.saveMelody(self, newTune, title1)
+            composition = mid.saveMelody(self, title1, newTune)
             if(composition != -1):
                 print("\nMIDI file saved as:", title1)
             else:
@@ -1073,7 +1099,7 @@ class generate():
             title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
             # Export composition data
             print("\nTitle:", title2)
-            self.saveInfo(data, fileName, title2, newTune)
+            self.saveInfo(title2, data, fileName, newTune)
             return 0
         else:
             print("\naNewMelody() - ERROR: unable to generate melody!")
@@ -1141,7 +1167,7 @@ class generate():
         title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
         # Export composition data
         print("\nTitle:", title2)
-        self.saveInfo(data, fileName, title2, newTune, newChords)
+        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
         # Return a PrettyMIDI() object
         return composition
