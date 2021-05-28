@@ -962,19 +962,18 @@ class generate():
               variance and color. 
         '''
         if(len(scale) == 0):
-            print("ERROR: no scale inputted!")
+            print("newChordsfromScale() - ERROR: no scale inputted!")
             return -1
         # How many chords?
         chords = []
         # Picks total number of chords based on number of notes in the given scale
-        total = 0
-        if(len(scale) > 1 and len(scale) < 4):
+        if(len(scale) > 1 or len(scale) < 4):
             total = randint(1, len(scale))
-        elif(len(scale) > 5 and len(scale) < 10):
+        elif(len(scale) > 5 or len(scale) < 10):
             total = randint(4, len(scale))
-        elif(len(scale) > 11 and len(scale) < 20):
+        elif(len(scale) > 11 or len(scale) < 20):
             total = randint(6, len(scale))
-        elif(len(scale) > 20 and len(scale) < 40):
+        elif(len(scale) > 20 or len(scale) < 40):
             total = randint(8, len(scale))
         elif(len(scale) > 40):
             total = randint(10, math.floor(len(scale) * 0.8))
@@ -984,7 +983,7 @@ class generate():
             newchord = self.newChordFromScale(scale, tempo)
             chords.append(newchord)
         if(len(chords) == 0):
-            print("ERROR: Unable to generate chords!")
+            print("newChordsfromScale() - ERROR: Unable to generate chords!")
             return -1
         # Test output
         # if(mid.saveChords(self, chords) != -1):
