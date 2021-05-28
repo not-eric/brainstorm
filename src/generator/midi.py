@@ -13,16 +13,14 @@ import urllib.request
 from random import randint
 from datetime import datetime
 import pretty_midi as pm
-from pretty_midi import constants as inst
 
 class midiStuff():
     '''
     This class is for handling MIDI I/O with generous help from the pretty_midi library.
     '''
 
-    def __init__(self):
-        super().__init__()
-
+    def __init__(self, alive=True):
+        self.alive = alive
 
     # Autogenerates a new filename
     def newFileName(self, ensemble):
@@ -60,7 +58,7 @@ class midiStuff():
 
 
     # Outputs a single melody/instrument to a MIDI file
-    def saveMelody(self, newMelody):
+    def saveMelody(self, fileName, newMelody):
         '''
         Outputs a single instrument MIDI file (ideally). Returns 0 on success, -1 on failure. 
         To be used with melody generation.
@@ -97,7 +95,7 @@ class midiStuff():
 
         # Write out file from MIDI object
         mid.instruments.append(melody)
-        mid.write('new-melody.mid')
+        mid.write(fileName)
         return 0
 
 

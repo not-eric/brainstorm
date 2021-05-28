@@ -40,9 +40,13 @@ def newHex():
 def newChars():
     chars = []
     total = randint(10, 50)
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
+                'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                'o', 'p', 'q', 'r', 's', 't', 'u',
+                'v', 'w', 'x', 'y', 'z']
     for i in range(total):
         # Pick letter
-        char = create.alphabet[randint(0, 25)]
+        char = alphabet[randint(0, 25)]
         # Captitalize? 1 = yes, 2 = no
         if(randint(1, 2) == 1):
             char = char.upper()
@@ -74,13 +78,12 @@ def newData(dataType):
 #---------------------------------------------------------------------------#
 
 
-# Put together melody and harmony data and output as single MIDI file
 print("\n***generating melody with harmony***")
-dataType = randint(1, 4)
-data = newData(dataType)
-print("\ninputting:", data)
-result = create.newComposition(data, dataType)
+# Get user's name
+name = input("\nplease enter your name: ")
+print("\ninputting:", name)
+result = create.newComposition(name, 3)
 if(result != -1):
-    print("\n...Here's some new music! :)")
+    print("\n...Here's some new music! :)\n")
 else:
-    print("\n... :(")
+    print("\n... :(\n")

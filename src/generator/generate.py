@@ -42,7 +42,7 @@ from random import randint
 from midi import midiStuff as mid
 from containers.melody import melody
 from containers.chord import chord
-from containers.composition import composition as music
+from containers.composition import composition
 
 # Generative functions
 class generate():
@@ -64,10 +64,8 @@ class generate():
 
         '''
         Used to search against and return an integer representing an 
-        Array index. The array will be used to generate a scale from
-        whos total is the len(alphabet) - 1
+        array index. 
         '''
-
         self.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
                          'h', 'i', 'j', 'k', 'l', 'm', 'n',
                          'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -242,10 +240,7 @@ class generate():
         then attaching the composition type (solo, duo, ensemble, etc..),
         followed by the date.
 
-        Format: "<words> - <type> - <date: d-m-y (hh:mm:ss)>"
-        
-        NOTE: Date format doesn't work as a file name. Probably need to 
-              remove colons?
+        Format: "<words> - <ensemble> - <date: d-m-y hh:mm:ss>"
         '''
         # get date and time.
         date = datetime.datetime.now()
@@ -257,23 +252,29 @@ class generate():
     
     
     # Generates a new .txt file to save a new composition's meta-data to
-    def saveInfo(self, data, fileName, name, newMelody, newChords):
+    def saveInfo(self, name, data=None, fileName=None, newMelody=None, newChords=None, newMusic=None):
         '''
         Generates a new .txt file to save a new composition's data and meta-data to.
 
         NOTE: Should take a music() object containing all data currently required by
-              this method. 
+              this method:
+              -Source data
+              -File name
+              -Title
+              -Melody/melodies
+              -Chord/chords 
         '''
         # Create a new file opening object thing
         try:
             f = open(fileName, 'w')
         except PermissionError:
-            f = open('new-music.txt', 'w')
+            name = name + '.txt'
+            f = open(name, 'w')
         
         # Generate a header
         header = '\n\n*****************************************************************'
         f.write(header)
-        header = '\n------------------------NEW COMPOSITION--------------------------'
+        header = '\n--------------------------NEW COMPOSITION------------------------'
         f.write(header)
         header = '\n*****************************************************************'
         f.write(header)
@@ -281,68 +282,126 @@ class generate():
         # ------------------------------Add Meta-Data---------------------------#
 
         # Add title, instrument(s), and save inputted data
-        title = '\n\n\nTITLE: ' + name + ' - '
-        f.write(title)
+        if(name is not None and newMelody is not None):
+            # Generate full title
+            title = '\n\n\nTITLE: ' + name 
+            f.write(title)
+ 
+            # Add instrument
+            instrument = '\n\nInstrument(s): ' + newMelody.instrument + ' and piano'
+            f.write(instrument)
 
-        # Add date and time.
-        date = datetime.datetime.now()
-        # convert to str d-m-y hh:mm:ss
-        dateStr = date.strftime("%d-%b-%y %H:%M:%S")
-        f.write(dateStr)
+            # Add date and time.
+            date = datetime.datetime.now()
+            # convert to str d-m-y hh:mm:ss
+            dateStr = date.strftime("%d-%b-%y %H:%M:%S")
+            dateStr = '\n\nDate: ' + dateStr 
+            f.write(dateStr)
+
+        elif(name is not None):
+            # Generate title
+            title = '\n\n\nTITLE: ' + name
+            f.write(title)
+
+            # Add date and time.
+            date = datetime.datetime.now()
+            # convert to str d-m-y hh:mm:ss
+            dateStr = date.strftime("%d-%b-%y %H:%M:%S")
+            dateStr = '\n\nDate: ' + dateStr 
+            f.write(dateStr)
 
         # Add original source data
-        dataStr = ''.join([str(i) for i in data])
-        dataInfo = '\n\nInputted data:' + dataStr
-        f.write(dataInfo)
+        if(data is not None):
+            dataStr = ''.join([str(i) for i in data])
+            dataInfo = '\n\nInputted data: ' + dataStr
+            f.write(dataInfo)
+        else:
+            dataInfo = '\n\nInputted data: None'
+            f.write(dataInfo)
 
         #-------------------------Add Melody and Harmony Data--------------------#
 
         # Save melody data
-        header = "\n\n\n----------------MELODY DATA-------------------"
-        f.write(header)
+        if(newMelody is not None):
+            header = "\n\n\n----------------MELODY DATA-------------------"
+            f.write(header)
 
-        tempo = '\n\nTempo: ' + str(newMelody.tempo) + 'bpm'
-        f.write(tempo)
+            tempo = '\n\nTempo: ' + str(newMelody.tempo) + 'bpm'
+            f.write(tempo)
 
-        totalNotes = '\n\nTotal Notes: ' + str(len(newMelody.notes))
-        f.write(totalNotes)
+            # Get totals and input
+            totalNotes = '\n\nTotal Notes: ' + str(len(newMelody.notes))
+            f.write(totalNotes)
 
-        noteStr = ''.join(newMelody.notes)
-        notes = '\nNotes: ' + noteStr
-        f.write(notes)
-
-        totalRhythms = '\n\nTotal rhythms:' + str(len(newMelody.rhythms))
-        f.write(totalRhythms)
-
-        rhythmStr = ''.join([str(i) for i in newMelody.rhythms])
-        rhythms = '\nRhythms: ' +  rhythmStr
-        f.write(rhythms)
-        
-        totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
-        f.write(totalDynamics)
-
-        dynamicStr = ''.join([str(i) for i in newMelody.dynamics])
-        dynamics = '\nDynamics:' + dynamicStr
-        f.write(dynamics)
-
-        # Save harmony data
-        header = "\n\n\n----------------HARMONY DATA-------------------"
-        f.write(header)
-
-        totalChords = '\n\nTotal chords:' + str(len(newChords))
-        f.write(totalChords)
-        
-        for j in range(len(newChords)):
-            noteStr = ''.join([str(i) for i in newChords[j].notes])
-            notes = '\n\nNotes: ' + noteStr
+            noteStr = ', '.join(newMelody.notes)
+            notes = '\nNotes: ' + noteStr
             f.write(notes)
 
-            rhythm = '\nRhythm: ' + str(newChords[j].rhythm)
-            f.write(rhythm)
-            
-            dynamicsStr = ''.join([str(i) for i in newChords[j].dynamics])
-            dynamics = '\nDynamics: ' + dynamicsStr
+            totalRhythms = '\n\nTotal rhythms:' + str(len(newMelody.rhythms))
+            f.write(totalRhythms)
+
+            rhythmStr = ', '.join([str(i) for i in newMelody.rhythms])
+            rhythms = '\nRhythms: ' +  rhythmStr
+            f.write(rhythms)
+
+            totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
+            f.write(totalDynamics)
+
+            dynamicStr = ', '.join([str(i) for i in newMelody.dynamics])
+            dynamics = '\nDynamics:' + dynamicStr
             f.write(dynamics)
+
+        if(newChords is not None):
+            # Save harmony data
+            header = "\n\n\n----------------HARMONY DATA-------------------"
+            f.write(header)
+
+            # Get totals
+            totalChords = '\n\nTotal chords:' + str(len(newChords))
+            f.write(totalChords)
+            
+            for j in range(len(newChords)):
+                noteStr = ', '.join([str(i) for i in newChords[j].notes])
+                notes = '\n\nNotes: ' + noteStr
+                f.write(notes)
+
+                rhythm = '\nRhythm: ' + str(newChords[j].rhythm)
+                f.write(rhythm)
+                
+                dynamicsStr = ', '.join([str(i) for i in newChords[j].dynamics])
+                dynamics = '\nDynamics: ' + dynamicsStr
+                f.write(dynamics)
+
+        '''
+        NOTE: Use this loop when composition() objects are functional
+        '''
+        # Input all
+        if(newMusic is not None):
+            # Save composition data
+            header = "\n\n\n----------------COMPOSITION DATA-------------------"
+            f.write(header)
+
+            # Save global tempo
+            tempo = '\n\nTempo: ' + str(newMusic.tempo) + 'bpm'
+            f.write(tempo)
+
+            # Add melodies and harmonies
+            for j in range(len(newMusic.melodies)):
+                instStr = ', '.join(newMusic.instruments[j])
+                inst = '\n\nInstruments: ' + instStr
+                f.write(inst)
+
+                noteStr = ', '.join(newMusic.melodies[j].notes)
+                notes = '\n\nNotes: ' + noteStr
+                f.write(notes)
+
+                rhythmStr = ', '.join([str(i) for i in newMusic.melodies[j].rhythms])
+                rhythms = '\n\nRhythms: ' +  rhythmStr
+                f.write(rhythms)
+
+                dynamicStr = ', '.join([str(i) for i in newMusic.melodies[j].dynamics])
+                dynamics = '\n\nDynamics:' + dynamicStr
+                f.write(dynamics)
 
         # Close instance
         f.close()
@@ -404,13 +463,13 @@ class generate():
     # Maps letters to index numbers
     def mapLettersToNumbers(self, letters):
         '''
-        Maps letters to index numbers, which will then be 
+        Takes a string of any length as an argument, 
+        then maps the letters to index numbers, which will then be 
         translated into notes (strings).
         '''
         print("\nMapping letters to index numbers...")
-        if(len(letters) == 0): 
-            print("ERROR: no data inputted!")
-            return -1
+        # Convert given string to array of chars
+        letters = list(letters)
         # Make all uppercase characters lowercase
         for i in range(len(letters) - 1):
             if(letters[i].isupper() == True):
@@ -713,8 +772,8 @@ class generate():
             rhythm = self.rhythms[randint(0, len(self.rhythms) - 1)]
             # Repeat this rhythm or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
-                # Limit reps to no more than 1/3 of the total no. of rhythms
-                limit = math.floor(len(rhythms)/3)
+                # Limit reps to no more than roughly 1/3 of the supplied total
+                limit = math.floor(total * 0.333333333333)
                 '''Note: This limit will increase rep levels w/longer list lengths
                          May need to scale for larger lists'''
                 if(limit == 0):
@@ -764,8 +823,8 @@ class generate():
             dynamic = self.dynamicsMed[randint(0, 8)]
             # Repeat this dynamic or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
-                # Limit reps to no more than 1/3 of the supplied total
-                limit = math.floor(total/3)
+                # Limit reps to no more than roughly 1/3 of the supplied total
+                limit = math.floor(total * 0.333333333333)
                 '''Note: This limit will increase rep levels w/longer totals
                          May need to scale for larger lists'''
                 if(limit == 0):
@@ -782,6 +841,47 @@ class generate():
             print("ERROR: Unable to generate pattern!")
             return -1
         return dynamics
+
+    #--------------------------------------------------------------------------------#
+    #---------------------------------Rhythm/Dynamics--------------------------------#
+    #--------------------------------------------------------------------------------#
+
+    # Generate a list containing either a rhythmic pattern or series of dynamics
+    def newElements(self, total, dataType):
+        '''
+        Generates a series of rhythms or dynamics of n length, where n is supplied
+        from elsewhere. dataType (int - 1 or 2) determines which data set to use.
+
+        Uses infrequent repetition.
+        '''
+        elements = []
+        print("\nGenerating", total, "elements...")
+        while(len(elements) < total):
+            # Pick rhythm (1) or dynamic(2)?
+            if(dataType == 1):
+                item = self.rhythms[randint(0, len(self.rhythms) - 1)]
+            else:
+                item = self.dynamics[randint(0, len(self.dynamics) - 1)]
+            # Repeat this rhythm or not? 1 = yes, 2 = no
+            if(randint(1, 2) == 1):
+                # Limit reps to no more than 1/3 of the total no. of rhythms
+                limit = math.floor(len(elements)/3)
+                '''Note: This limit will increase rep levels w/longer list lengths
+                         May need to scale for larger lists'''
+                if(limit == 0):
+                    limit += 2
+                reps = randint(1, limit) 
+                for i in range(reps):
+                    elements.append(item)
+                    if(len(elements) == total):
+                        break
+            else:
+                if(item not in elements):
+                    elements.append(item)
+        if(len(elements) == 0):
+            print("\nnewElements() - ERROR: Unable rhythms or dynamics!")
+            return -1
+        return elements
 
 
     #--------------------------------------------------------------------------------#
@@ -855,26 +955,35 @@ class generate():
     def newChordsFromScale(self, scale, tempo):
         '''
         Generates a progression from the notes of a given scale.
-        Returns a list of chord().
+        Returns a list of chord() objects.
         
         NOTE: Chords will be derived from the given scale ONLY! Could possibly
               add more randomly inserted chromatic tones to give progressions more
               variance and color. 
         '''
         if(len(scale) == 0):
-            print("ERROR: no scale inputted!")
+            print("newChordsfromScale() - ERROR: no scale inputted!")
             return -1
         # How many chords?
         chords = []
-        # Create between 5 and however many notes there are in the scale
-        total = randint(5, len(scale) - 1)
+        # Picks total number of chords based on number of notes in the given scale
+        if(len(scale) > 1 or len(scale) < 4):
+            total = randint(1, len(scale))
+        elif(len(scale) > 5 or len(scale) < 10):
+            total = randint(4, len(scale))
+        elif(len(scale) > 11 or len(scale) < 20):
+            total = randint(6, len(scale))
+        elif(len(scale) > 20 or len(scale) < 40):
+            total = randint(8, len(scale))
+        elif(len(scale) > 40):
+            total = randint(10, math.floor(len(scale) * 0.8))
         print("\nGenerating", total, "chords...")
         # Pick notes
         while(len(chords) < total):
             newchord = self.newChordFromScale(scale, tempo)
             chords.append(newchord)
         if(len(chords) == 0):
-            print("ERROR: Unable to generate chords!")
+            print("newChordsfromScale() - ERROR: Unable to generate chords!")
             return -1
         # Test output
         # if(mid.saveChords(self, chords) != -1):
@@ -1004,44 +1113,50 @@ class generate():
 
         return newMelody
 
-    # Outputs a melody with lots of notes but using a short rhythmic pattern
-    def newRiff(self):
-        print("\nGenerating riff...")
-        # New melody() object
-        riff = melody()
-        # Pick tempo
-        riff.tempo = self.newTempo()
-        # Use 8 to 20 notes
-        riffLen = randint(8, 20)
-        # Pick rhythmic pattern first
-        pattern = self.newRhythmPattern(riffLen)
-        # Pick notes and dynamics
-        r = 0
-        for i in range(riffLen):
-            riff.notes.append(self.newNote(randint(0, 11), randint(2, 5)))
-            riff.dynamics.append(self.newDynamic())
-            riff.rhythms.append(pattern[r])
-            r += 1
-            # If we reach the end of the pattern, reset to beginning
-            if(r > len(pattern) - 1):
-                r = 0
-        # Check for complete data
-        if(riff.hasData() == False):
-            print("\nERROR: Unable to generate riff!")
-            return -1
-        # Save to MIDI file
-        if(mid.saveMelody(self, riff) != -1):
-            print("\nRiff saved!")
-        else:
-            print("\nUnable to save riff!")
-            return -1
-        return riff
-
 
     #-------------------------------------------------------------------------------------#
     #-------------------------------COMPOSITION GENERATION--------------------------------#
     #-------------------------------------------------------------------------------------#
 
+
+    # Wrapper for newMelody() function. Exports MIDI file + generates title + .txt data file
+    def aNewMelody(self, data, dataType):
+        '''
+        Wrapper for newMelody() function. 
+        Exports MIDI file + generates title + .txt data file. 
+        Returns 0 on succcess, -1 on failure.
+        '''
+        if(len(data) == 0):
+            print("\nnewMelody() - ERROR: no data inputted!")
+            return -1
+        if(dataType > 4 or dataType < 1):
+            print("\nnewMelody() - ERROR")
+            return -1
+        # Generate melody
+        newTune = self.newMelody(data, dataType)
+        # If successfull, export
+        if(newTune.hasData() == True):
+            # Generate title, .txt file, and save to MIDI file
+            title = self.newTitle()
+            # Create MIDI file name
+            title1 = title + '.mid'
+            # Save to MIDI file
+            if(mid.saveMelody(self, title1, newTune) != -1):
+                print("\nMIDI file saved as:", title1)
+            else:
+                print("\nERROR:Unable to export piece to MIDI file!")
+                return -1
+            # Save composition data to a .txt file (fileName)
+            fileName = "{}{}".format(title,'.txt')
+            print("\nText file saved as:", fileName)
+            title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
+            # Export composition data
+            print("\nTitle:", title2)
+            self.saveInfo(title2, data, fileName, newTune)
+            return 0
+        else:
+            print("\naNewMelody() - ERROR: unable to generate melody!")
+            return -1
 
     # Outputs a single melody with chords in a MIDI file
     def newComposition(self, data, dataType):
@@ -1051,7 +1166,7 @@ class generate():
         plus the data type represented by a int 
         (int (1), float (2), char (3), or hex number (4)).
 
-        Outputs a single melody with chords in a MIDI file (hopefully), as
+        Outputs a single melody with chords in a MIDI file, as
         well as a .txt file with the compositions title, inputted data, 
         auto-generated title, a random instrumentation, with the date and time
         of generation. Also contains melody and harmony data.
@@ -1105,7 +1220,7 @@ class generate():
         title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
         # Export composition data
         print("\nTitle:", title2)
-        self.saveInfo(data, fileName, title2, newTune, newChords)
+        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
         # Return a PrettyMIDI() object
         return composition
