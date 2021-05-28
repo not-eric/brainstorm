@@ -13,7 +13,7 @@ def api():
     if request.method == 'POST':
         name = request.get_json().get('name')
         print("Request data: ", request.get_json().get('name'))
-        return f'Received name {name}'
+        return f'<h1>Received name {name}</h1>'
 
     # GET request (and others)
     return '<h1>This town ain\'t big enough for the two of us! Go on, git!</h1>'
