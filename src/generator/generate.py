@@ -595,14 +595,15 @@ class generate():
                 pick a new starting scale at random.
             5. Repeat steps 3-4 until we have as many notes as the highest single
                 integer from the supplied data set.
+
+        NOTE: Eventually implement a way to pick between using a pre-existing modal
+              scale, or generating a new one with newScale()
         '''
         if(len(data) == 0):
             print("ERROR: no data inputted!")
             return -1
-
         # Pick starting octave (1 - 3)
         octave = randint(1, 3)
-
         # Pick initial root/starting scale (major or minor)
         root = self.scales[randint(1, len(self.scales) - 1)]
         # Will this be a minor scale (0 = no, 1 = yes)?
@@ -610,15 +611,12 @@ class generate():
         if(randint(0, 1) == 1):
             isMinor = True
             root = self.convertToMinor(root)
-
         # Display choices
         if(isMinor == True):
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "minor")
         else:
             print("\nGenerating", len(data), "notes starting in the key of", root[0], "major")
-
-        #-----Generate notes to pick from-----#
-
+        #Generate notes to pick from
         n = 0
         scale = []
         total = max(data)
@@ -627,13 +625,13 @@ class generate():
             scale.append(note)
             n += 1
             '''NOTE: At most, the alphabet will map to 4 1/3 octaves.
-                        Still didn't want to exceed octave 6'''
+                     Still didn't want to exceed octave 6'''
             if(i % 7 == 0):
                 octave += 1
+                # Have we reached the octave limit?
                 if(octave > 6):
                     # Reset starting octave
                     octave = randint(1, 3)
-                    # Pick new root scale
                     root = self.scales[randint(1, len(self.scales) - 1)]
                     # Re-decide if we're using minor (1) or major (2) again
                     if(randint(1, 2) == 1):
@@ -975,7 +973,7 @@ class generate():
             total = randint(6, len(scale))
         elif(len(scale) > 20 or len(scale) < 40):
             total = randint(8, len(scale))
-        elif(len(scale) > 40):
+        else:
             total = randint(10, math.floor(len(scale) * 0.8))
         print("\nGenerating", total, "chords...")
         # Pick notes

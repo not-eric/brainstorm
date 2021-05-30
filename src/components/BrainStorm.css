@@ -5,8 +5,13 @@ body {
 }
 */
 .gen-container {
-  background: rgb(2, 16, 29);
-  height: 100vh;
+  /*background: rgb(2, 16, 29);*/
+  background: black;
+  /*height: 100vh;*/
+  height: 1000px;
+  /*height: 750px;*/
+  /*width: 100%;*/
+  /* background-color: black;*/
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -14,6 +19,10 @@ body {
   align-items: center;
   object-fit: contain;
   text-align: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  /*padding-top: 20px;*/
+  margin-top: -160px;
 }
 
 .genVideo {
@@ -21,24 +30,32 @@ body {
   width: 100%;
   height: 100%;
   position: fixed;
-  margin: -15px;
   z-index: -999;
-}
-.gen-container > h2 {
-  color: rgb(194, 6, 6);
-  margin-bottom: 20px;
   margin-top: -25px;
 }
 
-.modSynth {
-  height: 400px;
+.block-background {
+  height: 500px;
+  background-color: black;
+  color: black;
+  z-index: -998;
 }
+.gen-container > h2 {
+  /*color: rgb(223, 6, 6);*/
+  color: white;
+  margin-bottom: 20px;
+  margin-top: 70px;
+  /*margin-top: 280px;*/
+}
+
+.modSynth {
+  height: 475px;
+}
+
 .gen-form {
   align-items: center;
   place-content: center;
-  /*
-  text-align: left;
-  */
+  text-align: center;
 }
 DropdownMenu {
   align-items: center;
@@ -47,13 +64,16 @@ DropdownMenu {
 }
 .dropdown {
   background-color: black;
-  align-items: left;
+  align-items: center;
   place-content: center;
   text-align: center;
   margin-right: 20px;
 }
+.iconColor {
+  color: white;
+}
 .friends {
-  color: orange;
+  color: white;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -61,6 +81,7 @@ DropdownMenu {
   display: block;
   font-size: 20px;
   margin: -10px;
+  margin-top: 7px;
 }
 
 .submission {
@@ -68,11 +89,37 @@ DropdownMenu {
   align-items: center;
   text-align: center;
   place-content: center;
-  color: yellow;
-  background-color: blue;
-  padding: 7px;
+  justify-content: center;
+  color: black;
+  background-color: rgb(223, 6, 6);
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-bottom: 10px;
 }
 
 .genName {
   width: 600px;
+}
+
+@media screen and (max-width: 768px) {
+  .modSynth {
+    height: 400px;
+  }
+
+  .genName {
+    width: 500px;
+    background-color: blue;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .modSynth {
+    height: 300px;
+  }
+
+  .genName {
+    width: 400px;
+  }
 }

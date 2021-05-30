@@ -66,9 +66,6 @@
   font-family: "Times New Roman", Times, serif;
 }
 
-.links:active {
-  color: white;
-}
 .links:hover {
   border-bottom: 4px solid #fff;
   transition: all 0.2s ease-out;
@@ -105,6 +102,7 @@
     background: #01000c;
     left: 0;
     z-index: 1;
+    margin-top: -8px;
   }
 
   .links {
@@ -121,14 +119,16 @@
 
   .fa-bars {
     color: #fff;
-    margin-left: 450px;
+    /*margin-left: 450px;*/
+    margin-left: 350px;
     position: sticky;
     display: flex;
+    font-size: 20px;
   }
 
   .fa-times {
     color: #fff;
     font-size: 25px;
-    margin-left: 450px;
+    margin-left: 350px;
   }
 }
