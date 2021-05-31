@@ -557,24 +557,31 @@ class generate():
 
 
     # Converts a given integer to a pitch in a specified octave (ex C#6)
-    def newNote(self, num, octave):
+    def newNote(self, num=None, octave=None):
         '''
         Converts a given integer to a pitch in a specified octave (ex C#6).
         Requires an integer and the required octave. Returns a single string.
 
         NOTE: use randint(0, 11) and randint(2, 5) for num/octave args to get a 
-              randomly chosen note
+              randomly chosen note, or leave arg fields empty
         '''
-        if(num < 0 or num > 11 or 
-           octave > 6 or octave < 0):
-            return -1
-        # Sharps or flats
-        if(randint(1, 2) == 1):
-            note = self.chromaticScaleSharps[num]
+        # If we get supplied data, pick note
+        if(num is not None and octave is not None):
+            if(num < 0 or num > 11 or 
+            octave > 6 or octave < 0):
+                return -1
+            # Sharps or flats
+            if(randint(1, 2) == 1):
+                note = self.chromaticScaleSharps[num]
+            else:
+                note = self.chromaticScaleFlats[num]
+            # Add octave
+            note = "{}{}".format(note, octave)
+        # Otherwise, pick a random note
         else:
-            note = self.chromaticScaleFlats[num]
-        # Add octave
-        note = "{}{}".format(note, octave)
+            octave = randint(3, 5)
+            note = self.notes[randint(0, len(self.notes) - 1)]
+            note = "{}{}".format(note, octave)
         return note
 
     # Generate a series of notes based off an inputted array of integers
@@ -862,8 +869,8 @@ class generate():
                 item = self.dynamics[randint(0, len(self.dynamics) - 1)]
             # Repeat this rhythm or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
-                # Limit reps to no more than 1/3 of the total no. of rhythms
-                limit = math.floor(len(elements)/3)
+                # Limit reps to no more than  approx 1/3 of the total no. of rhythms
+                limit = math.floor(len(elements) * 0.3333333333333)
                 '''Note: This limit will increase rep levels w/longer list lengths
                          May need to scale for larger lists'''
                 if(limit == 0):
@@ -912,7 +919,7 @@ class generate():
         # Total notes (2-9)
         total = randint(2, 9)
         while(len(newChord.notes) < total):
-            newChord.notes.append(self.newRandNote())
+            newChord.notes.append(self.newNote())
         return newChord
 
     # Generates a single chord from a given scale
@@ -967,11 +974,11 @@ class generate():
         # Picks total number of chords based on number of notes in the given scale
         if(len(scale) > 1 or len(scale) < 4):
             total = randint(1, len(scale))
-        elif(len(scale) > 5 or len(scale) < 10):
+        elif(len(scale) >= 5 or len(scale) < 10):
             total = randint(4, len(scale))
-        elif(len(scale) > 11 or len(scale) < 20):
+        elif(len(scale) >= 10 or len(scale) < 20):
             total = randint(6, len(scale))
-        elif(len(scale) > 20 or len(scale) < 40):
+        elif(len(scale) >= 20 or len(scale) < 40):
             total = randint(8, len(scale))
         else:
             total = randint(10, math.floor(len(scale) * 0.8))
