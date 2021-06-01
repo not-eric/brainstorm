@@ -34,3 +34,6 @@ src/generator/containers/__pycache__
 venv/
 *.py[cod]
 midi/*.mid
+
+# Allow
+!midi/ERROR.mid

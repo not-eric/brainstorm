@@ -697,7 +697,7 @@ class generate():
         '''
         Picks one of twelve major scales.
         '''
-        print("\nPicking major scale...")
+        # print("\nPicking major scale...")
         finalScale = []
         # Pick scale
         scale = self.scales[randint(1, len(self.scales) - 1)]
@@ -713,7 +713,7 @@ class generate():
         '''
         Picks one of twelve melodic minor scales
         '''
-        print("\nPicking minor scale...")
+        # print("\nPicking minor scale...")
         # Pick major scale
         scale = self.newMajorScale()
         # Convert to minor
@@ -722,7 +722,7 @@ class generate():
 
     # Converts a major scale to its relative minor
     def convertToMinor(self, scale):
-        print("\nConverting major scale to relative minor...")
+        # print("\nConverting major scale to relative minor...")
         if(len(scale) == 0):
             print("ERROR: no scale inputted!")
             return -1
