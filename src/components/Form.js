@@ -8,7 +8,7 @@ export default class Form extends Component {
         this.state = {
             name: '',
             res: '',
-            dataReceived: 0,
+            dataReceived: false,
         };
     }
 
@@ -25,13 +25,13 @@ export default class Form extends Component {
             .then((result) => {
                 console.log(result);
                 this.setState( {res: result.data} );
-                this.setState( {dataReceived: 1} );
+                this.setState( {dataReceived: true} );
             });
     }
 
     render() {
-        const { name } = this.state;
-        const { res } = this.state;
+        const { name, res, dataReceived } = this.state;
+
         return (
             <form onSubmit={this.onSubmit}>
                 <input
@@ -43,7 +43,11 @@ export default class Form extends Component {
                 <button type="submit">Submit</button>
                 {/* very dangerous!! just a demo of displaying received data */}
                 <div dangerouslySetInnerHTML={{__html: res}}></div>
-                <Player filename={res}/>
+                {dataReceived &&
+                    <Player filename={res}/>
+                }
+                
+                
             </form>
         );
     }
