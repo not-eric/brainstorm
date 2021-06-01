@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Midi } from '@tonejs/midi';
 import * as Tone from 'tone';
+import "./Player.css";
 
 export default class Player extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ export default class Player extends Component {
             mid: null,
             buttonText: "Play",
             disabled: false,
+            songTitle: props.filename.substring(0, props.filename.indexOf(".mid")),
         };
 
         this.play = this.play.bind(this);
@@ -29,6 +31,7 @@ export default class Player extends Component {
         if(this.props.filename !== prevProps.filename) {
             this.setState({ 
                 filename: this.props.filename,
+                songTitle: this.props.filename.substring(0, this.props.filename.indexOf(".mid"))
             });
             this.loadMidi();
         }
@@ -56,7 +59,7 @@ export default class Player extends Component {
     play(e) {
         e.preventDefault();
 
-        let { mid, filename } = this.state;
+        let { mid } = this.state;
         
         // console.log(`Playing ${filename} now!\n`);
         // console.log(mid);
@@ -109,6 +112,7 @@ export default class Player extends Component {
         
         return (
             <div className="player">
+                <h1>{this.state.songTitle}</h1>
                 <button 
                 onClick={this.play} 
                 disabled={this.state.disabled}>

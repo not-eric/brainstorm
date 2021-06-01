@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Player from "./Player.js"
+import Player from "./Player.js";
+import "./Form.css";
 
 export default class Form extends Component {
     constructor() {
@@ -37,11 +38,14 @@ export default class Form extends Component {
                     type="text"
                     name="name"
                     value={name}
+                    placeholder="Name"
                     onChange={this.onChange}
                 />
-                <button type="submit">Submit</button>
-                {/* very dangerous!! just a demo of displaying received data */}
-                <div dangerouslySetInnerHTML={{__html: res}}></div>
+                <button 
+                    type="submit">
+                        Submit
+                </button>
+
                 {dataReceived &&
                     <Player filename={res}/>
                 }
