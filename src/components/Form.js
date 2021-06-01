@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Player from "./Player.js"
 
 export default class Form extends Component {
     constructor() {
@@ -7,6 +8,7 @@ export default class Form extends Component {
         this.state = {
             name: '',
             res: '',
+            dataReceived: 0,
         };
     }
 
@@ -23,6 +25,7 @@ export default class Form extends Component {
             .then((result) => {
                 console.log(result);
                 this.setState( {res: result.data} );
+                this.setState( {dataReceived: 1} );
             });
     }
 
@@ -31,15 +34,16 @@ export default class Form extends Component {
         const { res } = this.state;
         return (
             <form onSubmit={this.onSubmit}>
-            <input
-                type="text"
-                name="name"
-                value={name}
-                onChange={this.onChange}
-            />
-            <button type="submit">Submit</button>
-            {/* very dangerous!! just a demo of displaying received data */}
-            <div dangerouslySetInnerHTML={{__html: res}}></div>
+                <input
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={this.onChange}
+                />
+                <button type="submit">Submit</button>
+                {/* very dangerous!! just a demo of displaying received data */}
+                <div dangerouslySetInnerHTML={{__html: res}}></div>
+                <Player filename={res}/>
             </form>
         );
     }
