@@ -115,7 +115,6 @@ export default class Player extends Component {
                 disabled={this.state.disabled}>
                     {this.state.buttonText}
                 </button>
-                <p>{this.props.filename}</p>
             </div>
         );
     }
