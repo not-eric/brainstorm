@@ -39,7 +39,7 @@ export default class Player extends Component {
 
     loadMidi = async() => {
         let filename = this.props.filename;
-        console.log("Getting file " + filename);
+        // console.log("Getting file " + filename);
         
         await Midi.fromUrl(`http://localhost:5000/midi/${filename}`)
             .then((response) => 
@@ -58,9 +58,8 @@ export default class Player extends Component {
 
         let { mid, filename } = this.state;
         
-        console.log(`Playing ${filename} now!\n`);
-        
-        console.log(mid);
+        // console.log(`Playing ${filename} now!\n`);
+        // console.log(mid);
 
         this.setState( {disabled: true} );
         setInterval(() => { 
@@ -74,7 +73,7 @@ export default class Player extends Component {
         if (playing && mid) {
             const now = Tone.now() + 0.5;
             mid.tracks.forEach((track) => {
-                //create a synth for each track
+                // Create a synth for each MIDI track
                 const synth = new Tone.PolySynth(Tone.Synth, {
                     envelope: {
                         attack: 0.02,
@@ -84,7 +83,7 @@ export default class Player extends Component {
                     },
                 }).toDestination();
                 synths.push(synth);
-                //schedule all of the events
+                // Schedule events for playback
                 track.notes.forEach((note) => {
                     synth.triggerAttackRelease(
                         note.name,
@@ -96,7 +95,7 @@ export default class Player extends Component {
             });
 
         } else {
-            //dispose the synth and make a new one
+            // Delete synth, create new ones
             while (synths.length) {
                 const synth = synths.shift();
                 synth.disconnect();

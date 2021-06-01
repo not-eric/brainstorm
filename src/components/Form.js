@@ -23,7 +23,6 @@ export default class Form extends Component {
 
         axios.post('http://localhost:5000/api', { name })
             .then((result) => {
-                console.log(result);
                 this.setState( {res: result.data} );
                 this.setState( {dataReceived: true} );
             });
