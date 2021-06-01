@@ -2,7 +2,6 @@ import React from "react";
 import "../App.css";
 import "./BrainStorm.css";
 /*import "./HomeDesign.css";*/
-import { DropdownMenu, MenuItem } from "react-bootstrap-dropdown-menu";
 import Form from "./Form.js";
 
 function BrainStorm() {
