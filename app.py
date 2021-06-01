@@ -9,6 +9,8 @@ import os
 app = Flask(__name__, static_url_path='', static_folder='./')
 CORS(app)
 
+sys.path.append('./src/generator')
+
 
 @app.route('/api', methods=['GET', 'POST'])
 def api():
@@ -16,11 +18,13 @@ def api():
     if request.method == 'POST':
         name = request.get_json().get('name')
         print("Request data: ", request.get_json().get('name'))
-        sys.path.append(os.path.join(
-            os.path.dirname(__file__), './src/generator'))
-        import generate
-        exec(open('src/generator/test.py').read(), globals())
-        return f'<h1>Received name {name}</h1>'
+
+        from wrapper import gen
+        title = gen()
+        print(f'Received {title}')
+        #import generate
+        #exec(open('src/generator/test.py').read(), globals())
+        return title
 
     # GET request (and others)
     return '<h1>This town ain\'t big enough for the two of us! Go on, git!</h1>'

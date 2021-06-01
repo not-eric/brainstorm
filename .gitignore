@@ -30,5 +30,7 @@ test outputs/
 __pycache__
 src/__pycache__
 src/containers/__pycache__
+src/generator/containers/__pycache__
 venv/
 *.pyc
+midi/*.mid

@@ -87,38 +87,19 @@ def newData(dataType):
 
 #---------------------------------------------------------------------------#
 
-
-print("\n***generating melody with harmony***")
-<<<<<<< HEAD
-# Get user's name
-name = "testinput"  # input("\nplease enter your name: ")
-print("\ninputting:", name)
-result = create.newComposition(name, 3)
-if(result != -1):
-    print("\n...Here's some new music! :)\n")
-=======
-choice = 0
-# Get user's choice
-choice = int(input("\nUse your name or randomly generated data? 1 = name, 2 = random data\n"))
-# Run it accordingly        
-if(choice == 1):
+def gen():
+    print("\n***generating melody with harmony***")
     # Get user's name
-    name = input("\nplease enter your name: ")
+    name = "testinput"  # input("\nplease enter your name: ")
     print("\ninputting:", name)
     result = create.newComposition(name, 3)
     if(result != -1):
-        print("\n...Here's some new music! :)\n")
+        print(result.title1)
+        return result.title1
     else:
-        print("\n... :(\n")
-elif(choice == 2):
-    # Use random data
-    dataType = randint(1, 4)
-    data = newData(dataType)
-    result = create.newComposition(data, dataType)
-    if(result != -1):
-        print("\n...Here's some new music! :)\n")
-    else:
-        print("\n... :(\n")
->>>>>>> 40477d5580e6f61ec115019fa967eb140ca73e0d
-else:
-    print("")
+        print("ERROR")
+        return "ERROR"
+
+
+def msg():
+    return "hello!"
