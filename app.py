@@ -17,11 +17,11 @@ def api():
     # handle the POST request
     if request.method == 'POST':
         name = request.get_json().get('name')
-        print("Request data: ", request.get_json().get('name'))
+        # print("Request data: ", request.get_json().get('name'))
 
         from wrapper import gen
-        title = gen()
-        print(f'Received {title}')
+        title = gen(name)
+        print(f'Generated \"{title}\" for input {name}')
         #import generate
         #exec(open('src/generator/test.py').read(), globals())
         return title

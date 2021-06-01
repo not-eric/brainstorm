@@ -18,7 +18,7 @@ export default class Form extends Component {
         event.preventDefault();       //prevent page refresh
         
         const { name } = this.state;     //pull from state
-        console.log("Name is" + name);
+
         axios.post('http://localhost:5000/api', { name })
             .then((result) => {
                 console.log(result);
