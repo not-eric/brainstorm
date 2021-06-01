@@ -47,7 +47,6 @@ export default class Form extends Component {
                     <Player filename={res}/>
                 }
                 
-                
             </form>
         );
     }
