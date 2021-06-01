@@ -239,7 +239,7 @@ class midiStuff():
         # Add chord to instrument list
         mid.instruments.append(chord)
         # Write to MIDI file
-        print("\nSaving", fileName, "...")
+        # print("\nSaving", fileName, "...")
         mid.write(f'./midi/{fileName}')
         # Return PrettyMIDI() object
         return mid

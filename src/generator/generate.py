@@ -467,7 +467,7 @@ class generate():
         then maps the letters to index numbers, which will then be 
         translated into notes (strings).
         '''
-        print("\nMapping letters to index numbers...")
+        # print("\nMapping letters to index numbers...")
         # Convert given string to array of chars
         letters = list(letters)
         # Make all uppercase characters lowercase
@@ -517,7 +517,7 @@ class generate():
         Picks tempo between 40-208bpm.
         Returns a float upon success, 60.0 if fail.
         '''
-        print("\nPicking tempo...")
+        # print("\nPicking tempo...")
         tempo = 0.0
         tempo = self.tempos[randint(0, len(self.tempos) - 1)]
         if(tempo == 0.0):
@@ -609,12 +609,12 @@ class generate():
             isMinor = True
             root = self.convertToMinor(root)
         # Display choices
-        if(isMinor == True):
+        """ if(isMinor == True):
             print("\nGenerating", len(data),
                   "notes starting in the key of", root[0], "minor")
         else:
             print("\nGenerating", len(data),
-                  "notes starting in the key of", root[0], "major")
+                  "notes starting in the key of", root[0], "major")"""
         # Generate notes to pick from
         n = 0
         scale = []
@@ -762,7 +762,7 @@ class generate():
               be hard-coded.
         '''
         rhythms = []
-        print("\nGenerating", total, "rhythms...")
+        # print("\nGenerating", total, "rhythms...")
         while(len(rhythms) < total):
             # Pick rhythm and add to list
             rhythm = self.rhythms[randint(0, len(self.rhythms) - 1)]
@@ -812,7 +812,7 @@ class generate():
               be hard-coded.
         '''
         dynamics = []
-        print("\nGenerating", total, "dynamics...")
+        # print("\nGenerating", total, "dynamics...")
         while(len(dynamics) < total):
             # Pick dynamic (medium range for now)
             dynamic = self.dynamicsMed[randint(0, 8)]
@@ -971,7 +971,7 @@ class generate():
             total = randint(8, len(scale))
         else:
             total = randint(10, math.floor(len(scale) * 0.8))
-        print("\nGenerating", total, "chords...")
+        # print("\nGenerating", total, "chords...")
         # Pick notes
         while(len(chords) < total):
             newchord = self.newChordFromScale(scale, tempo)
@@ -986,7 +986,7 @@ class generate():
         #     print("unable to save chords!")
         #     return -1
         # Display chords
-        self.displayChords(chords)
+        # self.displayChords(chords)
         return chords
 
     #---------------------------------------------------------------------------------#
@@ -1030,15 +1030,15 @@ class generate():
 
         #------------------Process incoming data-----------------#
 
-        print("\nProcessing incoming data...")
+        # print("\nProcessing incoming data...")
 
         # If ints, scale as necessary
         if(dataType == 1):
             # Save original source data
             newMelody.sourceData = data
             data = self.scaleTheScale(data)
-            print("\nTotal elements:", len(data))
-            print("Inputted data after processing:", data)
+            # print("\nTotal elements:", len(data))
+            # print("Inputted data after processing:", data)
 
         # If floats then convert to ints and scale
         if(dataType == 2):
@@ -1046,16 +1046,16 @@ class generate():
             newMelody.sourceData = data
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
-            print("\nTotal elements:", len(data))
-            print("Inputted data after processing:", data)
+            # print("\nTotal elements:", len(data))
+            # print("Inputted data after processing:", data)
 
         # If letters/chars then match letters to their corresponding index numbers.
         if(dataType == 3):
             # Save original source data
             newMelody.sourceData = data
             data = self.mapLettersToNumbers(data)
-            print("\nTotal elements:", len(data))
-            print("Inputted data after processing:", data)
+            # print("\nTotal elements:", len(data))
+            # print("Inputted data after processing:", data)
 
         # If hex convert to array of ints and scale
         if(dataType == 4):
@@ -1066,12 +1066,12 @@ class generate():
             # Save original source data
             newMelody.sourceData.append(data)
             data = self.hexToIntArray(data)
-            print("\nTotal elements:", len(data))
-            print("Inputted data after processing:", data)
+            # print("\nTotal elements:", len(data))
+            # print("Inputted data after processing:", data)
 
         #-----------------------Generate!------------------------#
 
-        print("\nGenerating melody...")
+        # print("\nGenerating melody...")
 
         # Pick tempo
         newMelody.tempo = self.newTempo()
@@ -1086,7 +1086,7 @@ class generate():
 
         #------------Check data, display, and export-------------#
 
-        print("\nChecking results...")
+        # print("\nChecking results...")
 
         # Make sure all data was inputted
         if(newMelody.hasData() == False):
@@ -1094,7 +1094,7 @@ class generate():
             return -1
 
         # Display results
-        self.displayMelody(newMelody)
+        # self.displayMelody(newMelody)
 
         # # Write out to MIDI file
         # if(mid.saveMelody(self, newMelody, 'new-melody.mid') == -1):
@@ -1133,7 +1133,7 @@ class generate():
             title1 = title + '.mid'
             # Save to MIDI file
             if(mid.saveMelody(self, title1, newTune) != -1):
-                print("\nMIDI file saved as:", title1)
+                print('')  # print("\nMIDI file saved as:", title1)
             else:
                 print("\nERROR:Unable to export piece to MIDI file!")
                 return -1
@@ -1201,19 +1201,19 @@ class generate():
         # Save to MIDI file
         composition = mid.saveComposition(self, newTune, newChords, title1)
         if(composition != -1):
-            print("\nMIDI file saved as:", title1)
+            print('')  # print("\nMIDI file saved as:", title1)
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
 
         # Save composition data to a .txt file (fileName)
-        fileName = "{}{}".format(title, '.txt')
+        """ fileName = "{}{}".format(title, '.txt')
         print("\nText file saved as:", fileName)
         title2 = "{}{}{}{}".format(
             title, ' for ', newTune.instrument, ' and piano')
         # Export composition data
         print("\nTitle:", title2)
-        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
+        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords) """
 
         # Return a PrettyMIDI() object
         # return composition
