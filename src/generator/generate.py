@@ -45,6 +45,8 @@ from containers.chord import chord
 from containers.composition import composition
 
 # Generative functions
+
+
 class generate():
     '''
     This class handles all generative functions. It contains a set of resource data
@@ -54,14 +56,11 @@ class generate():
     # Constructor
     def __init__(self):
 
-
         #---------------------------------------------------------------------#
         #--------------------------Resource data------------------------------#
         #---------------------------------------------------------------------#
 
-
-        # ----------------------------Letters---------------------------------#  
-
+        # ----------------------------Letters---------------------------------#
         '''
         Used to search against and return an integer representing an 
         array index. 
@@ -71,21 +70,22 @@ class generate():
                          'o', 'p', 'q', 'r', 's', 't', 'u',
                          'v', 'w', 'x', 'y', 'z']
 
-
         #----------------------------Tempo-----------------------------------#
 
         # Tempos (indices: 0-38)
-        self.tempos = [40.0, 42.0, 44.0, 46.0, 50.0, 52.0, 54.0, 56.0, 58.0, #1-9 (0-8)
-                       60.0, 63.0, 66.0, 69.0, 72.0, 76.0, 80.0, 84.0, 88.0, #10-18 (9-17)
-                       92.0, 96.0, 100.0, 104.0, 108.0, 112.0, 116.0, 120.0, # 19-27 (18-26)
-                       126.0, 132.0, 128.0, 144.0, 152.0, 160.0, 168.0, 176.0, #28-36 (27-35)
-                       184.0, 200.0, 208.0] #37-39 (36-38)
-
+        self.tempos = [40.0, 42.0, 44.0, 46.0, 50.0, 52.0, 54.0, 56.0, 58.0,  # 1-9 (0-8)
+                       # 10-18 (9-17)
+                       60.0, 63.0, 66.0, 69.0, 72.0, 76.0, 80.0, 84.0, 88.0,
+                       # 19-27 (18-26)
+                       92.0, 96.0, 100.0, 104.0, 108.0, 112.0, 116.0, 120.0,
+                       # 28-36 (27-35)
+                       126.0, 132.0, 128.0, 144.0, 152.0, 160.0, 168.0, 176.0,
+                       184.0, 200.0, 208.0]  # 37-39 (36-38)
 
         #-----------------------Instrumentation------------------------------#
         # Ensemble size
         self.size = {1: 'solo',
-                     2: 'duo', 
+                     2: 'duo',
                      3: 'trio',
                      4: 'quartet',
                      5: 'quintet',
@@ -94,12 +94,11 @@ class generate():
                      8: 'octet',
                      9: 'nonet',
                      10: 'decet',
-                     11: 'large ensemble', 
+                     11: 'large ensemble',
                      12: 'open instrumentation'}
-        
+
         # Instrument list
         self.instruments = instruments.INSTRUMENT_MAP
-
 
         #-----------------------Notes and Scales------------------------------#
 
@@ -119,21 +118,21 @@ class generate():
             0 - 14       = minor 7th
             0 - 15 or 16 = major 7th
         '''
-        self.notes = ["C ", "C#", "Db", "D ", 
-                      "D#", "Eb", "E ", "F ", 
+        self.notes = ["C ", "C#", "Db", "D ",
+                      "D#", "Eb", "E ", "F ",
                       "F#", "Gb", "G ", "G#",
                       "Ab", "A ", "A#", "Bb", "B "]
 
         # Chormatic scale (using all sharps). Indicies 0 - 11.
         self.chromaticScaleSharps = ["C", "C#", "D", "D#", "E", "F",
-                                     "F#", "G", "G#", "A", "A#", "B"] 
+                                     "F#", "G", "G#", "A", "A#", "B"]
 
         # Chormatic scale (using all flats). Indicies 0 - 11.
         self.chromaticScaleFlats = ["C", "Db", "D", "Eb", "E", "F",
-                                    "Gb", "G", "Ab", "A", "Bb", "B"]        
+                                    "Gb", "G", "Ab", "A", "Bb", "B"]
 
         # Major Scales
-        self.scales = {1: ["C", "D", "E", "F", "G", "A", "B"], 
+        self.scales = {1: ["C", "D", "E", "F", "G", "A", "B"],
                        2: ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"],
                        3: ["D", "E", "F#", "G", "A", "B", "C#"],
                        4: ["Eb", "F", "G", "Ab", "Bb", "C", "D"],
@@ -142,11 +141,10 @@ class generate():
                        7: ["F#", "G#", "A#", "B", "C#", "D#", "E#"],
                        8: ["G", "A", "B", "C", "D", "E", "F#"],
                        9: ["Ab", "Bb", "C", "Db", "Eb", "F", "G"],
-                       10:["A", "B", "C#", "D", "E", "F#", "G#"],
-                       11:["Bb", "C", "D", "Eb", "F", "G", "A"],
-                       12:["B", "C#", "D#", "E", "F#", "G#", "A#"]}
+                       10: ["A", "B", "C#", "D", "E", "F#", "G#"],
+                       11: ["Bb", "C", "D", "Eb", "F", "G", "A"],
+                       12: ["B", "C#", "D#", "E", "F#", "G#", "A#"]}
 
-     
         #---------------------------Rhythm-----------------------------------#
 
         '''
@@ -165,20 +163,19 @@ class generate():
             [9] 0.125 = thirty-second
         '''
         # Rhythms (0-9)
-        self.rhythms = [4.0, 3.0, 2.0, 1.5, 1.0, 0.75, 0.5, 
+        self.rhythms = [4.0, 3.0, 2.0, 1.5, 1.0, 0.75, 0.5,
                         0.375, 0.25, 0.125]
 
         # Fast rhythms (0-8)
-        self.rhythmsFast = [0.375, 0.28125, 0.25, 0.1875, 0.125, 0.09375, 
+        self.rhythmsFast = [0.375, 0.28125, 0.25, 0.1875, 0.125, 0.09375,
                             0.0625, 0.046875, 0.03125]
 
         # Slow rhythms (0-7) - [n2 = n1 + (n1/2)]
-        self.rhythmsSlow = [8.0, 12.0, 18.0, 27.0, 
+        self.rhythmsSlow = [8.0, 12.0, 18.0, 27.0,
                             40.5, 60.75, 91.125, 136.6875]
 
-
         #--------------------------Dynamics---------------------------------#
-        
+
         '''
         MIDI velocity/dynamics range: 0 - 127
         '''
@@ -197,13 +194,12 @@ class generate():
         # Loud dynamics (0-8)
         self.dynamicsLoud = [92, 96, 100, 104, 108, 112, 116, 120, 124]
 
-
     #-----------------------------------------------------------------------------------------#
     #-----------------------------------Utility Functions-------------------------------------#
     #-----------------------------------------------------------------------------------------#
 
-
     # Auto generate a composition title from two random words
+
     def newTitle(self):
         '''
         Generate a composition title from 1-4 random words.
@@ -232,8 +228,8 @@ class generate():
             name = 'untitled - '
         return name
 
-
     # Auto generate a file/composition name (type - date:time)
+
     def newFileName(self, title):
         '''
         Generates a title/file name by picking two random words
@@ -249,9 +245,9 @@ class generate():
         # combine name, ensemble, and date, plus add file extension
         fileName = '{}{}.mid'.format(title, dateStr)
         return fileName
-    
-    
+
     # Generates a new .txt file to save a new composition's meta-data to
+
     def saveInfo(self, name, data=None, fileName=None, newMelody=None, newChords=None, newMusic=None):
         '''
         Generates a new .txt file to save a new composition's data and meta-data to.
@@ -270,7 +266,7 @@ class generate():
         except PermissionError:
             name = name + '.txt'
             f = open(name, 'w')
-        
+
         # Generate a header
         header = '\n\n*****************************************************************'
         f.write(header)
@@ -284,18 +280,19 @@ class generate():
         # Add title, instrument(s), and save inputted data
         if(name is not None and newMelody is not None):
             # Generate full title
-            title = '\n\n\nTITLE: ' + name 
+            title = '\n\n\nTITLE: ' + name
             f.write(title)
- 
+
             # Add instrument
-            instrument = '\n\nInstrument(s): ' + newMelody.instrument + ' and piano'
+            instrument = '\n\nInstrument(s): ' + \
+                newMelody.instrument + ' and piano'
             f.write(instrument)
 
             # Add date and time.
             date = datetime.datetime.now()
             # convert to str d-m-y hh:mm:ss
             dateStr = date.strftime("%d-%b-%y %H:%M:%S")
-            dateStr = '\n\nDate: ' + dateStr 
+            dateStr = '\n\nDate: ' + dateStr
             f.write(dateStr)
 
         elif(name is not None):
@@ -307,7 +304,7 @@ class generate():
             date = datetime.datetime.now()
             # convert to str d-m-y hh:mm:ss
             dateStr = date.strftime("%d-%b-%y %H:%M:%S")
-            dateStr = '\n\nDate: ' + dateStr 
+            dateStr = '\n\nDate: ' + dateStr
             f.write(dateStr)
 
         # Add original source data
@@ -341,10 +338,11 @@ class generate():
             f.write(totalRhythms)
 
             rhythmStr = ', '.join([str(i) for i in newMelody.rhythms])
-            rhythms = '\nRhythms: ' +  rhythmStr
+            rhythms = '\nRhythms: ' + rhythmStr
             f.write(rhythms)
 
-            totalDynamics = '\n\nTotal dynamics:' + str(len(newMelody.dynamics))
+            totalDynamics = '\n\nTotal dynamics:' + \
+                str(len(newMelody.dynamics))
             f.write(totalDynamics)
 
             dynamicStr = ', '.join([str(i) for i in newMelody.dynamics])
@@ -359,7 +357,7 @@ class generate():
             # Get totals
             totalChords = '\n\nTotal chords:' + str(len(newChords))
             f.write(totalChords)
-            
+
             for j in range(len(newChords)):
                 noteStr = ', '.join([str(i) for i in newChords[j].notes])
                 notes = '\n\nNotes: ' + noteStr
@@ -367,8 +365,9 @@ class generate():
 
                 rhythm = '\nRhythm: ' + str(newChords[j].rhythm)
                 f.write(rhythm)
-                
-                dynamicsStr = ', '.join([str(i) for i in newChords[j].dynamics])
+
+                dynamicsStr = ', '.join([str(i)
+                                        for i in newChords[j].dynamics])
                 dynamics = '\nDynamics: ' + dynamicsStr
                 f.write(dynamics)
 
@@ -395,11 +394,13 @@ class generate():
                 notes = '\n\nNotes: ' + noteStr
                 f.write(notes)
 
-                rhythmStr = ', '.join([str(i) for i in newMusic.melodies[j].rhythms])
-                rhythms = '\n\nRhythms: ' +  rhythmStr
+                rhythmStr = ', '.join([str(i)
+                                      for i in newMusic.melodies[j].rhythms])
+                rhythms = '\n\nRhythms: ' + rhythmStr
                 f.write(rhythms)
 
-                dynamicStr = ', '.join([str(i) for i in newMusic.melodies[j].dynamics])
+                dynamicStr = ', '.join([str(i)
+                                       for i in newMusic.melodies[j].dynamics])
                 dynamics = '\n\nDynamics:' + dynamicStr
                 f.write(dynamics)
 
@@ -407,13 +408,12 @@ class generate():
         f.close()
         return 0
 
-
     #-----------------------------------------------------------------------------------------#
     #----------------------------------Conversion Functions-----------------------------------#
     #-----------------------------------------------------------------------------------------#
 
-
     # Converts an array of floats to an array of ints
+
     def floatToInt(self, data):
         '''
         Converts an array of floats to an array of ints
@@ -441,7 +441,7 @@ class generate():
         '''
         print("\nScaling input...")
         if(len(data) == 0):
-            print("ERROR: no data inputted") 
+            print("ERROR: no data inputted")
             return -1
         for i in range(len(data)):
             if(data[i] > len(data) - 1):
@@ -450,11 +450,11 @@ class generate():
                 # Divide data[i] by len(data) - 1
                 if(s == 1):
                     data[i] = math.floor(data[i] / len(data) - 1)
-                # Subtract by len(data) - 1    
+                # Subtract by len(data) - 1
                 elif(s == 2):
                     while(data[i] > len(data) - 1):
                         data[i] -= len(data) - 1
-                # Subtract by 1                    
+                # Subtract by 1
                 else:
                     while(data[i] > len(data) - 1):
                         data[i] -= 1
@@ -467,7 +467,7 @@ class generate():
         then maps the letters to index numbers, which will then be 
         translated into notes (strings).
         '''
-        print("\nMapping letters to index numbers...")
+        # print("\nMapping letters to index numbers...")
         # Convert given string to array of chars
         letters = list(letters)
         # Make all uppercase characters lowercase
@@ -486,7 +486,7 @@ class generate():
             print("ERROR: no index numbers found!")
             return -1
         return numbers
-    
+
     # Convert a hex number representing a color to an array of integers
     def hexToIntArray(self, hex):
         '''
@@ -506,32 +506,30 @@ class generate():
         numArr = [int(x) for x in str(hexStr)]
         return numArr
 
-
     #--------------------------------------------------------------------------------#
     #-------------------------------------Tempo--------------------------------------#
     #--------------------------------------------------------------------------------#
 
-
     # Picks the tempo
+
     def newTempo(self):
         '''
         Picks tempo between 40-208bpm.
         Returns a float upon success, 60.0 if fail.
         '''
-        print("\nPicking tempo...")
+        # print("\nPicking tempo...")
         tempo = 0.0
         tempo = self.tempos[randint(0, len(self.tempos) - 1)]
         if(tempo == 0.0):
             return 60.0
         return tempo
 
-
     #--------------------------------------------------------------------------------#
     #----------------------------------Instruments-----------------------------------#
     #--------------------------------------------------------------------------------#
 
-
     # Picks an instrument
+
     def newInstrument(self):
         '''
         Randomly picks an instrument from a given list. Returns a string.
@@ -550,11 +548,9 @@ class generate():
             instruments.append(self.newInstrument())
         return instruments
 
-
     #--------------------------------------------------------------------------------#
     #-------------------------------------Pitch--------------------------------------#
     #--------------------------------------------------------------------------------#
-
 
     # Converts a given integer to a pitch in a specified octave (ex C#6)
     def newNote(self, num=None, octave=None):
@@ -567,8 +563,8 @@ class generate():
         '''
         # If we get supplied data, pick note
         if(num is not None and octave is not None):
-            if(num < 0 or num > 11 or 
-            octave > 6 or octave < 0):
+            if(num < 0 or num > 11 or
+               octave > 6 or octave < 0):
                 return -1
             # Sharps or flats
             if(randint(1, 2) == 1):
@@ -619,11 +615,13 @@ class generate():
             isMinor = True
             root = self.convertToMinor(root)
         # Display choices
-        if(isMinor == True):
-            print("\nGenerating", len(data), "notes starting in the key of", root[0], "minor")
+        """ if(isMinor == True):
+            print("\nGenerating", len(data),
+                  "notes starting in the key of", root[0], "minor")
         else:
-            print("\nGenerating", len(data), "notes starting in the key of", root[0], "major")
-        #Generate notes to pick from
+            print("\nGenerating", len(data),
+                  "notes starting in the key of", root[0], "major")"""
+        # Generate notes to pick from
         n = 0
         scale = []
         total = max(data)
@@ -677,9 +675,9 @@ class generate():
         pcs = []
         # Use sharps (1) or flats (2)?
         sof = randint(1, 2)
-        # generate an ascending set of 7 integers/note array indices 
+        # generate an ascending set of 7 integers/note array indices
         while(len(pcs) < 7):
-            # pick note 
+            # pick note
             n = randint(0, 11)
             if(n not in pcs):
                 pcs.append(n)
@@ -705,7 +703,7 @@ class generate():
         '''
         Picks one of twelve major scales.
         '''
-        print("\nPicking major scale...")
+        # print("\nPicking major scale...")
         finalScale = []
         # Pick scale
         scale = self.scales[randint(1, len(self.scales) - 1)]
@@ -721,7 +719,7 @@ class generate():
         '''
         Picks one of twelve melodic minor scales
         '''
-        print("\nPicking minor scale...")
+        # print("\nPicking minor scale...")
         # Pick major scale
         scale = self.newMajorScale()
         # Convert to minor
@@ -730,7 +728,7 @@ class generate():
 
     # Converts a major scale to its relative minor
     def convertToMinor(self, scale):
-        print("\nConverting major scale to relative minor...")
+        # print("\nConverting major scale to relative minor...")
         if(len(scale) == 0):
             print("ERROR: no scale inputted!")
             return -1
@@ -746,13 +744,12 @@ class generate():
             return -1
         return minorScale
 
-
     #-----------------------------------------------------------------------------------#
     #--------------------------------------Rhythm---------------------------------------#
     #-----------------------------------------------------------------------------------#
 
-
     # Pick a rhythm
+
     def newRhythm(self):
         '''
         Generates a single new rhythm
@@ -771,9 +768,9 @@ class generate():
               be hard-coded.
         '''
         rhythms = []
-        print("\nGenerating", total, "rhythms...")
+        # print("\nGenerating", total, "rhythms...")
         while(len(rhythms) < total):
-            # Pick rhythm and add to list    
+            # Pick rhythm and add to list
             rhythm = self.rhythms[randint(0, len(self.rhythms) - 1)]
             # Repeat this rhythm or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
@@ -783,7 +780,7 @@ class generate():
                          May need to scale for larger lists'''
                 if(limit == 0):
                     limit += 2
-                reps = randint(1, limit) 
+                reps = randint(1, limit)
                 for i in range(reps):
                     rhythms.append(rhythm)
                     if(len(rhythms) == total):
@@ -796,14 +793,13 @@ class generate():
             return -1
         return rhythms
 
-
     #--------------------------------------------------------------------------------#
     #-------------------------------------Dynamics-----------------------------------#
     #--------------------------------------------------------------------------------#
 
-
     # Generate a single dynamic (to be used such that a passage doesn't have consistenly
     # changing dynamics)
+
     def newDynamic(self):
         '''
         Generates a single dynamic/velocity between 20 - 124
@@ -811,7 +807,7 @@ class generate():
         dynamic = self.dynamics[randint(0, len(self.dynamics) - 1)]
         return dynamic
 
-    # Generate a list of dynamics. 
+    # Generate a list of dynamics.
     def newDynamics(self, total):
         '''
         Generates a list of dynamics (MIDI velocites) of n length, 
@@ -822,9 +818,9 @@ class generate():
               be hard-coded.
         '''
         dynamics = []
-        print("\nGenerating", total, "dynamics...")
+        # print("\nGenerating", total, "dynamics...")
         while(len(dynamics) < total):
-            # Pick dynamic (medium range for now)    
+            # Pick dynamic (medium range for now)
             dynamic = self.dynamicsMed[randint(0, 8)]
             # Repeat this dynamic or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
@@ -834,7 +830,7 @@ class generate():
                          May need to scale for larger lists'''
                 if(limit == 0):
                     limit += 2
-                reps = randint(1, limit) 
+                reps = randint(1, limit)
                 for i in range(reps):
                     dynamics.append(dynamic)
                     if(len(dynamics) == total):
@@ -875,7 +871,7 @@ class generate():
                          May need to scale for larger lists'''
                 if(limit == 0):
                     limit += 2
-                reps = randint(1, limit) 
+                reps = randint(1, limit)
                 for i in range(reps):
                     elements.append(item)
                     if(len(elements) == total):
@@ -888,13 +884,12 @@ class generate():
             return -1
         return elements
 
-
     #--------------------------------------------------------------------------------#
     #--------------------------------------Chords------------------------------------#
     #--------------------------------------------------------------------------------#
 
     # Display single chord
-    def displayChord(self, chord):      
+    def displayChord(self, chord):
         print("\n------------Chord:-------------")
         print("\nnotes:", chord.notes)
         print("rhythm:", chord.rhythm)
@@ -904,9 +899,9 @@ class generate():
     def displayChords(self, chords):
         print("\n----------------HARMONY DATA:-------------------")
         for i in range(len(chords)):
-            print('\n', i + 1,': ', 'Notes:', chords[i].notes)
+            print('\n', i + 1, ': ', 'Notes:', chords[i].notes)
             print('      Rhythm:', chords[i].rhythm)
-            print('      Dynamics:', chords[i].dynamics) 
+            print('      Dynamics:', chords[i].dynamics)
 
     # Generates a chord with randomly chosen notes
     def newRandChord(self):
@@ -946,7 +941,7 @@ class generate():
         '''NOTE: This is avoids getting the while loop stuck
                  if there's a lot of repeated notes in the melody '''
         newchord.notes = list(dict.fromkeys(newchord.notes))
-        # Use inputted tempo    
+        # Use inputted tempo
         newchord.tempo = tempo
         # Pick a rhythm
         newchord.rhythm = self.newRhythm()
@@ -961,7 +956,7 @@ class generate():
         '''
         Generates a progression from the notes of a given scale.
         Returns a list of chord() objects.
-        
+
         NOTE: Chords will be derived from the given scale ONLY! Could possibly
               add more randomly inserted chromatic tones to give progressions more
               variance and color. 
@@ -982,7 +977,7 @@ class generate():
             total = randint(8, len(scale))
         else:
             total = randint(10, math.floor(len(scale) * 0.8))
-        print("\nGenerating", total, "chords...")
+        # print("\nGenerating", total, "chords...")
         # Pick notes
         while(len(chords) < total):
             newchord = self.newChordFromScale(scale, tempo)
@@ -997,16 +992,15 @@ class generate():
         #     print("unable to save chords!")
         #     return -1
         # Display chords
-        self.displayChords(chords)
+        # self.displayChords(chords)
         return chords
-
 
     #---------------------------------------------------------------------------------#
     #-------------------------------MELODIC GENERATION--------------------------------#
     #---------------------------------------------------------------------------------#
 
-
     # Display newMelody() object data
+
     def displayMelody(self, newMelody):
         '''
         Displays newMelody() object data and exports to .txt file
@@ -1027,7 +1021,7 @@ class generate():
 
         return 0
 
-    #Generate a melody from an array of integers. 
+    # Generate a melody from an array of integers.
     def newMelody(self, data, dataType):
         '''
         Picks a tempo, notes, rhythms, and dynamics. Rhythms and dynamics are picked randomly (total
@@ -1039,18 +1033,18 @@ class generate():
         '''
         # Melody container object
         newMelody = melody()
-    
+
         #------------------Process incoming data-----------------#
-       
-        print("\nProcessing incoming data...")
+
+        # print("\nProcessing incoming data...")
 
         # If ints, scale as necessary
         if(dataType == 1):
             # Save original source data
             newMelody.sourceData = data
             data = self.scaleTheScale(data)
-            print("\nTotal elements:", len(data))
-            print("Inputted data after processing:", data)
+            # print("\nTotal elements:", len(data))
+            # print("Inputted data after processing:", data)
 
         # If floats then convert to ints and scale
         if(dataType == 2):
@@ -1058,37 +1052,36 @@ class generate():
             newMelody.sourceData = data
             data = self.floatToInt(data)
             data = self.scaleTheScale(data)
-            print("\nTotal elements:", len(data))
-            print("Inputted data after processing:", data)
+            # print("\nTotal elements:", len(data))
+            # print("Inputted data after processing:", data)
 
         # If letters/chars then match letters to their corresponding index numbers.
         if(dataType == 3):
             # Save original source data
             newMelody.sourceData = data
             data = self.mapLettersToNumbers(data)
-            print("\nTotal elements:", len(data))
-            print("Inputted data after processing:", data)
+            # print("\nTotal elements:", len(data))
+            # print("Inputted data after processing:", data)
 
         # If hex convert to array of ints and scale
         if(dataType == 4):
             # Converts hex number to string, then saves
-            # that as the first item of a list. 
+            # that as the first item of a list.
             # It's silly, I know.
             data = str(data)
             # Save original source data
             newMelody.sourceData.append(data)
             data = self.hexToIntArray(data)
-            print("\nTotal elements:", len(data))
-            print("Inputted data after processing:", data)
-
+            # print("\nTotal elements:", len(data))
+            # print("Inputted data after processing:", data)
 
         #-----------------------Generate!------------------------#
-        
-        print("\nGenerating melody...")
+
+        # print("\nGenerating melody...")
 
         # Pick tempo
         newMelody.tempo = self.newTempo()
-        # Pick instrument 
+        # Pick instrument
         newMelody.instrument = self.newInstrument()
         # Pick notes
         newMelody.notes = self.newNotes(data)
@@ -1099,7 +1092,7 @@ class generate():
 
         #------------Check data, display, and export-------------#
 
-        print("\nChecking results...")
+        # print("\nChecking results...")
 
         # Make sure all data was inputted
         if(newMelody.hasData() == False):
@@ -1107,7 +1100,7 @@ class generate():
             return -1
 
         # Display results
-        self.displayMelody(newMelody)
+        # self.displayMelody(newMelody)
 
         # # Write out to MIDI file
         # if(mid.saveMelody(self, newMelody, 'new-melody.mid') == -1):
@@ -1118,13 +1111,12 @@ class generate():
 
         return newMelody
 
-
     #-------------------------------------------------------------------------------------#
     #-------------------------------COMPOSITION GENERATION--------------------------------#
     #-------------------------------------------------------------------------------------#
 
-
     # Wrapper for newMelody() function. Exports MIDI file + generates title + .txt data file
+
     def aNewMelody(self, data, dataType):
         '''
         Wrapper for newMelody() function. 
@@ -1147,14 +1139,15 @@ class generate():
             title1 = title + '.mid'
             # Save to MIDI file
             if(mid.saveMelody(self, title1, newTune) != -1):
-                print("\nMIDI file saved as:", title1)
+                print('')  # print("\nMIDI file saved as:", title1)
             else:
                 print("\nERROR:Unable to export piece to MIDI file!")
                 return -1
             # Save composition data to a .txt file (fileName)
-            fileName = "{}{}".format(title,'.txt')
+            fileName = "{}{}".format(title, '.txt')
             print("\nText file saved as:", fileName)
-            title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
+            title2 = "{}{}{}{}".format(
+                title, ' for ', newTune.instrument, ' and piano')
             # Export composition data
             print("\nTitle:", title2)
             self.saveInfo(title2, data, fileName, newTune)
@@ -1189,7 +1182,7 @@ class generate():
         if(dataType < 1 or dataType > 4):
             print("\nERROR: bad data type!")
             return -1
-        
+
         '''NOTE: append at start or end of lists???'''
         # Generate melody
         newTune = self.newMelody(data, dataType)
@@ -1214,18 +1207,20 @@ class generate():
         # Save to MIDI file
         composition = mid.saveComposition(self, newTune, newChords, title1)
         if(composition != -1):
-            print("\nMIDI file saved as:", title1)
+            print('')  # print("\nMIDI file saved as:", title1)
         else:
             print("\nERROR:Unable to export piece to MIDI file!")
             return -1
 
         # Save composition data to a .txt file (fileName)
-        fileName = "{}{}".format(title,'.txt')
+        """ fileName = "{}{}".format(title, '.txt')
         print("\nText file saved as:", fileName)
-        title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
+        title2 = "{}{}{}{}".format(
+            title, ' for ', newTune.instrument, ' and piano')
         # Export composition data
         print("\nTitle:", title2)
-        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
+        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords) """
 
         # Return a PrettyMIDI() object
-        return composition
+        # return composition
+        return title1
