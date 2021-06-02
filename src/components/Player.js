@@ -74,7 +74,6 @@ export default class Player extends Component {
         this.setState( {disabled: true} );
         setTimeout(() => { 
             this.setState( {disabled: false});
-            console.log("Button is clickable again");
         }, mid.duration * 1200);
 
         let playing = e.detail;
@@ -105,7 +104,6 @@ export default class Player extends Component {
 
                 if(this.state.synth === 'duo') { // DuoSynth is REALLY LOUD
                     synth.volume.value = -12;
-                    console.log("Duo chosen");
                 }
 
                 synths.push(synth);
