@@ -16,7 +16,7 @@ function BrainStorm() {
       />
       */}
       <h2> .generator </h2>
-      <img className="modSynth" src="/images/photo2.jpg" alt="synthesizer" />
+      <img className="modSynth" src="/images/photo2.png" alt="synthesizer" />
       <br></br>
       <Form />
     </div>
