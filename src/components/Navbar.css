@@ -99,6 +99,7 @@
     opacity: 1;
     transition: all 0.5s ease;
     justify-content: flex-start;
+    margin-left: 0%;
   }
 
   .menu.active {
