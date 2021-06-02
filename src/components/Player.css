@@ -1,8 +1,10 @@
 .player {
-  background-color: white;
-  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
   width: 600px;
   height: 200px;
+  margin-top: 20px;
+
   transition: height 300ms;
   animation-name: openUp;
   animation-duration: 300ms;
@@ -11,23 +13,27 @@
 .player button {
   display: inline-block;
   padding: 0.5em 1.5em;
-  border: 0.15em solid black;
-  border-radius: 3px;
-  margin: auto;
+
+  border: 0.12em solid white;
+  border-radius: 7px;
+
+  margin: 0px;
   box-sizing: border-box;
+
   text-decoration: none;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   font-size: 1.3em;
-  color: #000000;
-  background-color: white;
+
+  color: #ffffff;
+  background-color: transparent;
   text-align: center;
   transition: all 0.2s;
 }
 
 .player button:hover {
   color: white;
-  background-color: navy;
+  background-color: rgb(228, 228, 228, 0.3);
 }
 
 @media all and (max-width: 30em) {
@@ -38,12 +44,14 @@
 }
 
 h1 {
+  color: rgb(228, 228, 228);
   text-transform: capitalize;
   padding: 10px;
   text-align: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: 200;
+  padding-top: 20px;
 }
 
 @keyframes openUp {
