@@ -8,7 +8,8 @@
 .homeVideo {
   height: auto;
   width: 100vw;
-  max-width: 1440px;
+  /*max-width: 1440px;*/
+  /*max-width: 1500px;*/
   top: 252px;
   bottom: 500px;
   margin-top: 200px;
