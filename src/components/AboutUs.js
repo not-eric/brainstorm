@@ -29,7 +29,7 @@ function AboutUs() {
           ></img>
           <img
             className="jayPic"
-            src="/images/jared2.jpg"
+            src="/images/jayBW.jpg"
             alt="just another cat"
           ></img>
         </div>
