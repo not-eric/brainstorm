@@ -32,6 +32,10 @@
   animation: fadeIn 1s;
 }
 
+button:disabled {
+  opacity: 0.3;
+}
+
 .player button:hover {
   color: white;
   background-color: rgb(228, 228, 228, 0.3);

@@ -65,8 +65,9 @@ export default class Player extends Component {
         // console.log(mid);
 
         this.setState( {disabled: true} );
-        setInterval(() => { 
-            this.setState( {disabled: false}) 
+        setTimeout(() => { 
+            this.setState( {disabled: false});
+            console.log("Button is clickable again");
         }, mid.duration * 1000);
 
         let playing = e.detail;
@@ -114,7 +115,7 @@ export default class Player extends Component {
             <div className="player">
                 <h1>{this.state.songTitle}</h1>
                 <button 
-                onClick={this.play} 
+                onClick={this.state.disabled ? null : this.play} 
                 disabled={this.state.disabled}>
                     {this.state.buttonText}
                 </button>
