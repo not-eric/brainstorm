@@ -13,7 +13,9 @@ export default class Player extends Component {
             buttonText: "Play",
             disabled: false,
             songTitle: props.filename.substring(0, props.filename.indexOf(".mid")),
-            synth: 'synth'
+            synth: 'synth',
+            playing: false,
+            synthz: []
         };
 
         this.play = this.play.bind(this);
@@ -78,12 +80,12 @@ export default class Player extends Component {
         // console.log(`Playing ${filename} now!\n`);
         // console.log(mid);
 
-        this.setState( {disabled: true} );
+       /*  this.setState( {disabled: true} );
         setTimeout(() => { 
             this.setState( {disabled: false});
-        }, mid.duration * 1200);
+        }, mid.duration * 1200); */
 
-        let playing = e.detail;
+        let playing = this.state.playing;
         
         let options = {
             'synth': Tone.Synth, 
@@ -94,9 +96,10 @@ export default class Player extends Component {
             'pluck': Tone.PluckSynth
         }
 
-        let synths = [];
+        let synths = [...this.state.synthz];
 
-        if (playing && mid) {
+        if (!playing && mid) {
+            this.setState({playing: true, buttonText: "Stop"});
             const now = Tone.now() + 0.5;
             mid.tracks.forEach((track) => {
                 // Create a synth for each MIDI track
@@ -114,6 +117,7 @@ export default class Player extends Component {
                 }
 
                 synths.push(synth);
+
                 // Schedule events for playback
                 track.notes.forEach((note) => {
                     synth.triggerAttackRelease(
@@ -123,9 +127,13 @@ export default class Player extends Component {
                         note.velocity
                     );
                 });
+
+                this.setState({synthz: [...synths]});
             });
 
         } else {
+            this.setState({playing: false, buttonText: "Play"});
+            
             // Delete synth, create new ones
             while (synths.length) {
                 const synth = synths.shift();
