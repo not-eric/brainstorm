@@ -41,6 +41,13 @@ export default class Player extends Component {
         }
     }
 
+    componentWillUnmount() {
+        // fixes "Warning: Can't perform a React state update on an unmounted component" error
+        this.setState = (state, callback) => {
+            return;
+        };
+    }
+
     onChange = (event) => {
         this.setState({ 
             [event.target.name]: event.target.value,
