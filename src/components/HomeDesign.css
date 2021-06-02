@@ -24,6 +24,7 @@
   margin-left: 200px;
   position: fixed;
   position: absolute;
+  top: 93px;
 }
 .home-container > h1 {
   color: #fff;
@@ -33,6 +34,7 @@
   padding-left: 300px;
   font-family: "Times New Roman", Times, serif;
   position: absolute;
+  text-transform: lowercase;
 }
 .description {
   font-size: 22px;
@@ -56,7 +58,8 @@
   font-size: 30px;
   position: absolute;
   padding-left: 250px;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
+  top: 115px;
   margin-left: 500px;
   margin-right: 50px;
   color: rgb(29, 6, 1);
@@ -80,11 +83,27 @@
   top: 325px;
   padding: 5px;
   color: white;
-  background: black;
+  /*background: black;*/
+
+  background: linear-gradient(-45deg, #000000, #2f0033, #004252, #00095c);
+  animation: gradient 12s ease infinite;
+
   border-color: black;
   border-style: ridge;
   border-radius: 20px;
   display: relative;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 .genlinks {
   color: white;
@@ -106,7 +125,7 @@
   .home-container > h1 {
     color: #fff;
     font-size: 100px;
-    top: 100px;
+    /*top: 100px;*/
     margin-left: 370px;
     padding-left: 300px;
     font-family: "Times New Roman", Times, serif;
@@ -184,6 +203,7 @@
     margin-left: 300px;
     margin-right: 50px;
     font-weight: bold;
+    top: 125px;
   }
   .home-container > h3 {
     margin-left: 555px;
@@ -205,6 +225,7 @@
   .catspace {
     height: 300px;
     margin-left: 40px;
+    top: 110px;
   }
   .home-container > h1 {
     margin-left: 130px;
@@ -214,6 +235,7 @@
     font-size: 22px;
     margin-left: 230px;
     margin-right: 50px;
+    top: 130px;
   }
   .home-container > h3 {
     font-size: 25px;
@@ -234,7 +256,7 @@
 }
 @media screen and (max-width: 728px) {
   .home-container {
-    height: 225vh;
+    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -244,7 +266,8 @@
     z-index: -11;
     background: black;
     margin-top: -20px;
-    margin-bottom: -300px;
+    /*margin-bottom: -300px;*/
+    padding-bottom: 700px;
   }
   .catspace {
     height: 340px;
@@ -265,13 +288,14 @@
   }
   .homeVideo {
     display: none;
-    height: 10px;
+    height: 0px;
+    width: 0px;
   }
   .home-container > h2 {
     font-size: 22px;
     color: white;
     margin-left: -160px;
-    top: 450px;
+    top: 475px;
     position: absolute;
   }
   .home-container > h3 {

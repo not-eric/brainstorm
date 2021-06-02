@@ -16,6 +16,7 @@ body {
   background: linear-gradient(-45deg, #000000, #2f0033, #004252, #00095c);
   background-size: 400% 400%;
   animation: gradient 12s ease infinite;
+  padding-bottom: 700px;
 }
 
 @keyframes gradient {
@@ -29,7 +30,7 @@ body {
     background-position: 0% 50%;
   }
 }
-
+/*
 .genVideo {
   object-fit: cover;
   width: 100%;
@@ -38,7 +39,7 @@ body {
   z-index: -999;
   margin-top: -25px;
 }
-
+*/
 .block-background {
   height: 500px;
   background-color: black;
@@ -48,8 +49,9 @@ body {
 .gen-container > h2 {
   /*color: rgb(223, 6, 6);*/
   color: white;
-  margin-bottom: 20px;
-  margin-top: 70px;
+  margin-bottom: 30px;
+  top: 55px;
+  /*margin-top: 70px;*/
   /*margin-top: 280px;*/
 }
 
