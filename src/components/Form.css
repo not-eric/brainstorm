@@ -1,29 +1,60 @@
+input,
+select,
+button {
+  font-family: "Montserrat", sans-serif;
+}
+
 input[type="text"] {
   padding: 10px;
   margin: 5px 30px;
   border-radius: 6px;
-  border-color: white;
+  border-color: transparent;
+  box-shadow: 0 0 5px 1px white;
   border-width: 0.13em;
   background-color: transparent;
   box-shadow: 0;
   transition: box-shadow 300ms;
-  font-family: sans-serif;
-  color: lightgray;
+  color: white;
+}
+::placeholder {
+  color: white;
 }
 
-input[type="text"]:focus {
-  border-color: white;
-  box-shadow: 0 0 20px 7px purple;
+input[type="text"]:focus,
+input[type="text"]:hover {
+  border-color: transparent;
+  box-shadow: 0 0 20px 3px white;
   outline: white;
   color: white;
+}
+
+select {
+  padding: 10px;
+  border-radius: 6px;
+  margin-right: 30px;
+  background: transparent;
+  color: white;
+  box-shadow: 0 0 5px 1px white;
+  border: 0.13em solid transparent;
+  transition: box-shadow 300ms;
+}
+
+select:focus,
+select:hover {
+  box-shadow: 0 0 20px 3px white;
 }
 
 button {
   background-color: transparent;
   padding: 10px;
   border-radius: 6px;
-  border-color: white;
+  border-color: transparent;
   border-width: 0.13em;
+  box-shadow: 0 0 5px 1px white;
   color: white;
-  font-family: sans-serif;
+  transition: box-shadow 300ms;
+}
+
+button:hover {
+  box-shadow: 0 0 15px 4px white;
 }
