@@ -14,7 +14,7 @@ function Navbar() {
           <NavLink to="/" className="logo">
             <img
               className="brainImage"
-              src="/images/storm.jpg"
+              src="/images/logo.png"
               alt="Electricity"
             ></img>
             BrainStorm

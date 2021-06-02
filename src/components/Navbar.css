@@ -29,7 +29,7 @@
   font-size: 3rem;
   display: flex;
   align-items: center;
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .logo:hover {
@@ -55,6 +55,7 @@
   width: 70vw;
   justify-content: flex-end;
   margin-right: 1rem;
+  margin-left: 10vw;
 }
 
 .links {
@@ -65,7 +66,7 @@
   text-decoration: none;
   padding: 0.5rem 1rem;
   height: 100%;
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .links:hover {
