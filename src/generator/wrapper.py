@@ -12,7 +12,7 @@ def gen(name):
 
     else:
         print("ERROR: composition not received in wrapper")
-        return "ERROR"
+        return "ERROR.mid"
 
 
 def msg():
