@@ -83,6 +83,7 @@ class generate():
                        184.0, 200.0, 208.0]  # 37-39 (36-38)
 
         #-----------------------Instrumentation------------------------------#
+
         # Ensemble size
         self.size = {1: 'solo',
                      2: 'duo',
@@ -605,8 +606,8 @@ class generate():
         if(len(data) == 0):
             print("ERROR: no data inputted!")
             return -1
-        # Pick starting octave (1 - 3)
-        octave = randint(1, 3)
+        # Pick starting octave (2 or 3)
+        octave = randint(2, 3)
         # Pick initial root/starting scale (major or minor)
         root = self.scales[randint(1, len(self.scales) - 1)]
         # Will this be a minor scale (0 = no, 1 = yes)?
@@ -634,9 +635,9 @@ class generate():
             if(i % 7 == 0):
                 octave += 1
                 # Have we reached the octave limit?
-                if(octave > 6):
+                if(octave > 5):
                     # Reset starting octave
-                    octave = randint(1, 3)
+                    octave = randint(2, 3)
                     root = self.scales[randint(1, len(self.scales) - 1)]
                     # Re-decide if we're using minor (1) or major (2) again
                     if(randint(1, 2) == 1):
@@ -789,7 +790,7 @@ class generate():
                 if(rhythm not in rhythms):
                     rhythms.append(rhythm)
         if(len(rhythms) == 0):
-            print("ERROR: Unable to generate pattern!")
+            print("ERROR: Unable to generate rhythms!")
             return -1
         return rhythms
 
@@ -839,7 +840,7 @@ class generate():
                 if(dynamic not in dynamics):
                     dynamics.append(dynamic)
         if(len(dynamics) == 0):
-            print("ERROR: Unable to generate pattern!")
+            print("ERROR: Unable to generate dynamics!")
             return -1
         return dynamics
 
@@ -863,9 +864,9 @@ class generate():
                 item = self.rhythms[randint(0, len(self.rhythms) - 1)]
             else:
                 item = self.dynamics[randint(0, len(self.dynamics) - 1)]
-            # Repeat this rhythm or not? 1 = yes, 2 = no
+            # Repeat this element or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
-                # Limit reps to no more than  approx 1/3 of the total no. of rhythms
+                # Limit reps to no more than  approx 1/3 of the total no. of elements
                 limit = math.floor(len(elements) * 0.3333333333333)
                 '''Note: This limit will increase rep levels w/longer list lengths
                          May need to scale for larger lists'''
@@ -880,7 +881,7 @@ class generate():
                 if(item not in elements):
                     elements.append(item)
         if(len(elements) == 0):
-            print("\nnewElements() - ERROR: Unable rhythms or dynamics!")
+            print("\nnewElements() - ERROR: Unable to generate rhythms or dynamics!")
             return -1
         return elements
 
@@ -1119,8 +1120,7 @@ class generate():
 
     def aNewMelody(self, data, dataType):
         '''
-        Wrapper for newMelody() function. 
-        Exports MIDI file + generates title + .txt data file. 
+        Generates a single melody with a title, then exports MIDI file + .txt data file. 
         Returns 0 on succcess, -1 on failure.
         '''
         if(len(data) == 0):
@@ -1159,15 +1159,16 @@ class generate():
     # Outputs a single melody with chords in a MIDI file
     def newComposition(self, data, dataType):
         '''
-        Takes an 0x-xxxxxx hex humber representing a color, or 
+        Takes either an 0x-xxxxxx hex humber representing a color, or
         an array of ints, floats or chars of any length as arguments, 
-        plus the data type represented by a int 
-        (int (1), float (2), char (3), or hex number (4)).
+        plus the data type represented by a int (int (1), float (2), 
+        char (3), or hex number (4)).
 
         Outputs a single melody with chords in a MIDI file, as
         well as a .txt file with the compositions title, inputted data, 
-        auto-generated title, a random instrumentation, with the date and time
-        of generation. Also contains melody and harmony data.
+        auto-generated title, and a randomly chosen instrument + piano 
+        with the date and time of generation. Also contains melody and 
+        harmony data.
 
         NOTE: Will eventaully return a music() object containing lists of 
               melody() and chord() objects.
