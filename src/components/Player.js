@@ -13,6 +13,7 @@ export default class Player extends Component {
             buttonText: "Play",
             disabled: false,
             songTitle: props.filename.substring(0, props.filename.indexOf(".mid")),
+            synth: 'synth'
         };
 
         this.play = this.play.bind(this);
@@ -38,6 +39,12 @@ export default class Player extends Component {
         if(this.state.disabled !== prevState.disabled) {
 
         }
+    }
+
+    onChange = (event) => {
+        this.setState({ 
+            [event.target.name]: event.target.value,
+        });
     }
 
     loadMidi = async() => {
@@ -68,17 +75,26 @@ export default class Player extends Component {
         setTimeout(() => { 
             this.setState( {disabled: false});
             console.log("Button is clickable again");
-        }, mid.duration * 1000);
+        }, mid.duration * 1200);
 
         let playing = e.detail;
         
+        let options = {
+            'synth': Tone.Synth, 
+            'am': Tone.AMSynth, 
+            'duo': Tone.DuoSynth, 
+            'mem': Tone.MembraneSynth, 
+            'mono': Tone.MonoSynth, 
+            'pluck': Tone.PluckSynth
+        }
+
         let synths = [];
 
         if (playing && mid) {
             const now = Tone.now() + 0.5;
             mid.tracks.forEach((track) => {
                 // Create a synth for each MIDI track
-                const synth = new Tone.PolySynth(Tone.Synth, {
+                const synth = new Tone.PolySynth(options[this.state.synth], {
                     envelope: {
                         attack: 0.02,
                         decay: 0.1,
@@ -86,6 +102,12 @@ export default class Player extends Component {
                         release: 1,
                     },
                 }).toDestination();
+
+                if(this.state.synth === 'duo') { // DuoSynth is REALLY LOUD
+                    synth.volume.value = -12;
+                    console.log("Duo chosen");
+                }
+
                 synths.push(synth);
                 // Schedule events for playback
                 track.notes.forEach((note) => {
@@ -119,6 +141,16 @@ export default class Player extends Component {
                 disabled={this.state.disabled}>
                     {this.state.buttonText}
                 </button>
+                <div className="synthChoice">
+                    <select name="synth" onChange={this.onChange}>
+                        <option value="synth">Default Synth</option>
+                        <option value="am">AMSynth</option>
+                        <option value="duo">DuoSynth</option>
+                        <option value="mem">MembraneSynth</option>
+                        <option value="mono">MonoSynth</option>
+                        <option value="pluck">PluckSynth</option>
+                    </select>
+                </div>
             </div>
         );
     }

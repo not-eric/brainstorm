@@ -1,9 +1,10 @@
 .player {
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
-  width: 600px;
-  height: 200px;
+  width: auto;
+  height: 250px;
   margin-top: 20px;
+  padding: 10px;
 
   transition: height 300ms;
   animation-name: openUp;
@@ -51,14 +52,19 @@ button:disabled {
 h1 {
   color: rgb(228, 228, 228);
   text-transform: capitalize;
+  font-size: 2.2em;
   padding: 10px;
   text-align: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: 200;
-  padding-top: 20px;
+  margin-top: 10px;
 
   animation: fadeIn 1s;
+}
+
+.synthChoice select {
+  margin: 40px 0 0;
 }
 
 @keyframes openUp {
@@ -66,7 +72,7 @@ h1 {
     height: 0px;
   }
   to {
-    height: 200px;
+    height: 250px;
   }
 }
 
