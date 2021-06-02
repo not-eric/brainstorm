@@ -5,6 +5,9 @@ create = generate()
 
 def gen(name):
 
+    if name == '':
+        return "ERROR.mid"
+
     result = create.newComposition(name, 3)
 
     if(result != -1):
