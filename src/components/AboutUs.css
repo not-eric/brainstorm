@@ -1,5 +1,5 @@
 .about-container {
-  height: 1700px;
+  height: 1750px;
   margin-top: -60px;
   align-items: center;
   text-align: center;
@@ -32,7 +32,7 @@
   margin-top: 185px;
 }
 .bottom {
-  height: 1100px;
+  height: 1150px;
   background: white;
   align-items: center;
   position: relative;
@@ -154,10 +154,46 @@
   color: black;
   top: 1050px;
   margin-top: 25px;
+  margin-bottom: 50px;
 }
 .copyRight {
   color: white;
   font-size: 15px;
+}
+
+.github {
+  font-size: 25px;
+  top: 325px;
+  padding: 5px;
+  color: white;
+  background: linear-gradient(-45deg, #000000, #2f0033, #004252, #00095c);
+  animation: gradient 12s ease infinite;
+
+  border-color: black;
+  border-style: ridge;
+  border-radius: 20px;
+  display: inline;
+  margin-top: 40px;
+}
+
+.gitlink:hover {
+  text-decoration: none;
+  color: white;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.gitlink {
+  color: white;
 }
 @media screen and (max-width: 810px) {
   .appDez {

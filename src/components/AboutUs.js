@@ -1,6 +1,8 @@
 import React from "react";
 import "../App.css";
 import "./AboutUs.css";
+import { Link } from "react-router-dom";
+
 function AboutUs() {
   return (
     <div className="about-container">
@@ -65,6 +67,11 @@ function AboutUs() {
           The string to tie it all together, working <br></br>both the front-end
           and the back-end
         </p>
+        <h4 className="github">
+          <a href="https://github.com/not-eric/brainstorm" className="gitlink">
+            Github
+          </a>
+        </h4>
       </div>
       <div className="bottombottom">
         <p className="copyRight">&copy; BrainStorm</p>
