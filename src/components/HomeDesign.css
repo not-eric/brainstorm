@@ -58,7 +58,6 @@
   font-size: 30px;
   position: absolute;
   padding-left: 250px;
-  /*margin-top: 50px;*/
   top: 115px;
   margin-left: 500px;
   margin-right: 50px;
@@ -83,7 +82,6 @@
   top: 325px;
   padding: 5px;
   color: white;
-  /*background: black;*/
 
   background: linear-gradient(-45deg, #000000, #2f0033, #004252, #00095c);
   animation: gradient 12s ease infinite;
@@ -125,7 +123,6 @@
   .home-container > h1 {
     color: #fff;
     font-size: 100px;
-    /*top: 100px;*/
     margin-left: 370px;
     padding-left: 300px;
     font-family: "Times New Roman", Times, serif;
@@ -266,7 +263,6 @@
     z-index: -11;
     background: black;
     margin-top: -20px;
-    /*margin-bottom: -300px;*/
     padding-bottom: 700px;
   }
   .catspace {
@@ -300,9 +296,9 @@
   }
   .home-container > h3 {
     font-size: 25px;
-    color: black;
-    background: white;
-    border-color: black;
+    color: white;
+    border-color: white;
+
     margin-left: -10px;
     top: 620px;
   }
@@ -335,7 +331,7 @@
     color: white;
   }
   .genlinks {
-    color: black;
+    color: white;
   }
   .genlinks:hover {
     text-decoration: none;
