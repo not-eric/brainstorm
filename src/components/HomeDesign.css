@@ -1,3 +1,7 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
 .home-container {
   height: 100vh;
   width: 100vw;
@@ -33,7 +37,6 @@
   margin-top: 360px;
   margin-left: 478px;
   padding-left: 300px;
-  font-family: "Times New Roman", Times, serif;
   position: absolute;
   text-transform: lowercase;
 }
@@ -45,7 +48,7 @@
 }
 .description2 {
   font-size: 22px;
-  margin-left: 725px;
+  margin-left: 720px;
   top: 225px;
   position: absolute;
 }
@@ -58,7 +61,7 @@
 .home-container > h2 {
   font-size: 30px;
   position: absolute;
-  padding-left: 250px;
+  padding-left: 190px;
   top: 115px;
   margin-left: 500px;
   margin-right: 50px;

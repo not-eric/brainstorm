@@ -19,21 +19,21 @@ function HomeDesign() {
         alt="synth cat in space"
       ></img>
       <h2 className="headDes">
-        &nbsp; BrainStorm Music App<br></br>
+        &nbsp; BrainStorm Music Generation<br></br>
         {/*Generate a melody
         based off your name and other inputs. Can be used for to inspire your
         own projects, or merely a good time.*/}
       </h2>
       <span className="description">
-        Generate a melody based off your name and
+        Generate a melody based off your
       </span>
       <br></br>
       <span className="description2">
-        other inputs. Can be used for amusement or to
+        name and other inputs. Give it a spin
       </span>
       <br></br>
       <span className="description3">
-        inspire your own project. Give it a spin
+        and inspire your next project!
       </span>
       <h3 className="linkGen">
         <Link to="/generator" className="genlinks">
