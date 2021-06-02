@@ -30,7 +30,7 @@
   background-color: transparent;
   text-align: center;
   transition: all 0.2s;
-  animation: fadeIn 1s;
+  animation: fadeIn 1.5s;
 }
 
 button:disabled {
@@ -60,11 +60,12 @@ h1 {
   font-weight: 200;
   margin-top: 10px;
 
-  animation: fadeIn 1s;
+  animation: fadeIn 1.5s;
 }
 
 .synthChoice select {
   margin: 40px 0 0;
+  animation: fadeIn 1.5s;
 }
 
 @keyframes openUp {
