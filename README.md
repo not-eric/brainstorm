@@ -17,12 +17,12 @@ From the main directory, you'll start Flask with:
 
 **Unix**
 
-    $ export FLASK_APP=hello  
+    $ export FLASK_APP=app  
     $ flask run
 
 **Windows**  
 
-    > set FLASK_APP=hello 
+    > set FLASK_APP=app 
     > flask run
 
 To launch the React instance, in the same directory as the Flask instance, run:
