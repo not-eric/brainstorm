@@ -3,13 +3,17 @@
 from flask import Flask, request
 # from flask_cors import CORS
 import sys
-import os
 
 
-app = Flask(__name__, static_url_path='', static_folder='./')
+app = Flask(__name__, static_url_path='/', static_folder='./build')
 # CORS(app)
 
 sys.path.append('./src/generator')
+
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 
 @app.route('/api', methods=['GET', 'POST'])
