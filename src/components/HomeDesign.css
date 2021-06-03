@@ -40,34 +40,61 @@
   position: absolute;
   text-transform: lowercase;
 }
+.topRight {
+  display: inline;
+  align-items: center;
+  text-align: center;
+  margin-left: 720px;
+  top: 130px;
+  position: absolute;
+}
+.headDes {
+  font-size: 28px;
+  /*position: absolute;
+  padding-left: 180px;
+  top: 115px;
+  margin-left: 500px;
+  margin-right: 40px;
+  */
+  color: rgb(29, 6, 1);
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.descriptions {
+  /*display: inline;
+  align-items: center;
+  text-align: center;
+  */
+  font-size: 20px;
+  /*
+  margin-left: 720px;
+  top: 185px;
+  position: absolute;
+  */
+  margin-bottom: 50px;
+}
+/*
 .description {
-  font-size: 22px;
+  font-size: 20px;
   margin-left: 730px;
   top: 185px;
   position: absolute;
 }
 .description2 {
-  font-size: 22px;
+  font-size: 20px;
   margin-left: 720px;
   top: 225px;
   position: absolute;
 }
 .description3 {
-  font-size: 22px;
+  font-size: 20px;
   margin-left: 735px;
   top: 265px;
   position: absolute;
 }
-.home-container > h2 {
-  font-size: 30px;
-  position: absolute;
-  padding-left: 190px;
-  top: 115px;
-  margin-left: 500px;
-  margin-right: 50px;
-  color: rgb(29, 6, 1);
-  font-weight: bold;
-}
+*/
+
+/*
 .home-container > p {
   font-size: 23px;
   position: fixed;
@@ -78,12 +105,14 @@
   color: black;
   display: absolute;
 }
+*/
 
-.home-container > h3 {
+.linkGen {
   font-size: 25px;
-  position: absolute;
-  margin-left: 840px;
+  /*position: absolute;
+  margin-left: 795px;
   top: 325px;
+  */
   padding: 5px;
   color: white;
 
@@ -93,7 +122,9 @@
   border-color: black;
   border-style: ridge;
   border-radius: 20px;
-  display: relative;
+  display: inline;
+  margin-top: 20px;
+  /*display: relative;*/
 }
 
 @keyframes gradient {
@@ -113,13 +144,14 @@
 .genlinks:hover {
   text-decoration: none;
   color: black;
-  margin-top: -865px;
+  /*margin-top: -865px;*/
   background: red;
 }
-.home-container > h3:hover {
+.linkGen:hover {
   background: red;
   color: black;
 }
+
 @media screen and (max-width: 1150px) {
   .catspace {
     margin-left: 150px;
@@ -131,30 +163,36 @@
     padding-left: 300px;
     font-family: "Times New Roman", Times, serif;
   }
+  .topRight {
+    margin-left: 590px;
+  }
+  /*
   .home-container > h2 {
-    font-size: 30px;
+    font-size: 26px;
     padding-left: 250px;
-    margin-left: 380px;
+    margin-left: 320px;
     margin-right: 50px;
     color: rgb(29, 6, 1);
     font-weight: bold;
+    top: 125px;
   }
   .home-container > h3 {
-    font-size: 25px;
-    margin-left: 720px;
+    font-size: 24px;
+    margin-left: 680px;
   }
   .description {
-    font-size: 22px;
-    margin-left: 600px;
+    font-size: 20px;
+    margin-left: 590px;
   }
   .description2 {
-    font-size: 22px;
-    margin-left: 595px;
+    font-size: 20px;
+    margin-left: 585px;
   }
   .description3 {
-    font-size: 22px;
-    margin-left: 605px;
+    font-size: 20px;
+    margin-left: 595px;
   }
+  */
 }
 @media screen and (max-width: 1024px) {
   .catspace {
@@ -167,6 +205,20 @@
     padding-left: 300px;
     font-family: "Times New Roman", Times, serif;
   }
+  .topRight {
+    margin-left: 500px;
+  }
+  .headDes {
+    font-size: 25px;
+  }
+  .descriptions {
+    font-size: 19px;
+    margin-bottom: 60px;
+  }
+  .linkGen {
+    font-size: 22px;
+  }
+  /*
   .home-container > h2 {
     font-size: 30px;
     padding-left: 250px;
@@ -189,15 +241,22 @@
     font-size: 22px;
     margin-left: 525px;
   }
+  */
 }
 @media screen and (max-width: 924px) {
   .catspace {
     margin-left: 40px;
   }
   .home-container > h1 {
-    margin-left: 200px;
+    margin-left: 170px;
     padding-left: 300px;
+    font-size: 90px;
   }
+  .topRight {
+    margin-left: 400px;
+  }
+
+  /*
   .home-container > h2 {
     font-size: 25px;
     padding-left: 200px;
@@ -221,6 +280,7 @@
     font-size: 18px;
     margin-left: 485px;
   }
+  */
 }
 @media screen and (max-width: 812px) {
   .catspace {
@@ -232,6 +292,13 @@
     margin-left: 130px;
     padding-left: 300px;
   }
+  .topRight {
+    margin-left: 350px;
+  }
+  .headDes {
+    font-size: 23px;
+  }
+  /*
   .home-container > h2 {
     font-size: 22px;
     margin-left: 230px;
@@ -254,6 +321,7 @@
     font-size: 18px;
     margin-left: 405px;
   }
+  */
 }
 @media screen and (max-width: 728px) {
   .home-container {
@@ -284,13 +352,14 @@
     margin-left: -300px;
     top: -255px;
     position: absolute;
-    font-family: "Times New Roman", Times, serif;
+    /*font-family: "Times New Roman", Times, serif;*/
   }
   .homeVideo {
     display: none;
     height: 0px;
     width: 0px;
   }
+  /*
   .home-container > h2 {
     font-size: 22px;
     color: white;
@@ -334,16 +403,34 @@
     position: absolute;
     color: white;
   }
+  */
+  .linkGen {
+    border-color: white;
+  }
+  .topRight {
+    margin-left: -10px;
+    top: 480px;
+  }
+  .headDes {
+    color: white;
+    margin-bottom: 10px;
+    text-decoration: bold;
+  }
+  .descriptions {
+    color: white;
+    margin-bottom: 30px;
+    font-size: 17px;
+  }
   .genlinks {
     color: white;
   }
   .genlinks:hover {
     text-decoration: none;
     color: black;
-    margin-top: -865px;
+    /*margin-top: -865px;*/
     background: red;
   }
-  .home-container > h3:hover {
+  .linkGen:hover {
     background: red;
     color: black;
   }
