@@ -1,13 +1,13 @@
 # Flask backend start
 
 from flask import Flask, request
-from flask_cors import CORS
+# from flask_cors import CORS
 import sys
 import os
 
 
 app = Flask(__name__, static_url_path='', static_folder='./')
-CORS(app)
+# CORS(app)
 
 sys.path.append('./src/generator')
 

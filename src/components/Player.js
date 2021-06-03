@@ -60,7 +60,7 @@ export default class Player extends Component {
         let filename = this.props.filename;
         // console.log("Getting file " + filename);
         
-        await Midi.fromUrl(`http://localhost:5000/midi/${filename}`)
+        await Midi.fromUrl(`http://brainstorm-it.herokuapp.com/midi/${filename}`)
             .then((response) => 
             { 
                 console.log("Successfully received file.");
