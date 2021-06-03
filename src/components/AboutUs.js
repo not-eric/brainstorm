@@ -26,12 +26,12 @@ function AboutUs() {
           <img
             className="jayFake"
             src="/images/einstein.jpeg"
-            alt="synth cat in space"
+            alt="jays alter ego"
           ></img>
           <img
             className="jayPic"
             src="/images/jayBW.jpg"
-            alt="just another cat"
+            alt="jay chillin in the wind"
           ></img>
         </div>
         <p className="jayDez">Backend composer and fearless leader</p>
@@ -40,12 +40,12 @@ function AboutUs() {
           <img
             className="jaredFake"
             src="/images/einstein.jpeg"
-            alt="synth cat in space"
+            alt="some really smart guy"
           ></img>
           <img
             className="jaredPic"
             src="/images/jared2.jpg"
-            alt="just another cat"
+            alt="jared looking orwellian"
           ></img>
         </div>
         <p className="jaredDez">Frontend Reactionary and CSS laborer</p>
@@ -63,8 +63,8 @@ function AboutUs() {
           ></img>
         </div>
         <p className="ericDez">
-          The monkey putting together the Legos, <br></br>connecting both the frontend
-          and the backend
+          The monkey putting together the Legos, <br></br>connecting both the
+          frontend and the backend
         </p>
         <h4 className="github">
           <a href="https://github.com/not-eric/brainstorm" className="gitlink">
