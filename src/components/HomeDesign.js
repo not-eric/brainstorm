@@ -36,7 +36,7 @@ function HomeDesign() {
           </Link>
         </h3>
       </div>
-      <h1>.home</h1>
+      <h1 className="homeSymbol">.home</h1>
     </div>
   );
 }
