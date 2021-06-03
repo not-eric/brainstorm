@@ -1,6 +1,6 @@
 # Flask backend start
 
-from flask import Flask, request
+from flask import Flask, request, redirect
 # from flask_cors import CORS
 import sys
 
@@ -9,6 +9,14 @@ app = Flask(__name__, static_url_path='/', static_folder='./build')
 # CORS(app)
 
 sys.path.append('./src/generator')
+
+
+@app.before_request
+def before_request():
+    if not request.is_secure:
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
 
 
 @app.route('/')
