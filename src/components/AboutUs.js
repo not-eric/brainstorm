@@ -35,7 +35,7 @@ function AboutUs() {
             alt="just another cat"
           ></img>
         </div>
-        <p className="jayDez">Back-end composer and fearless leader</p>
+        <p className="jayDez">Backend composer and fearless leader</p>
         <h3 className="jaredName">Jared Goldsmith</h3>
         <div className="about-wrapper">
           <img
@@ -49,23 +49,23 @@ function AboutUs() {
             alt="just another cat"
           ></img>
         </div>
-        <p className="jaredDez">Front-end Reactionary and CSS laborer</p>
+        <p className="jaredDez">Frontend Reactionary and CSS laborer</p>
         <h3 className="ericName">Eric Dale</h3>
         <div className="about-wrapper">
           <img
             className="ericFake"
             src="/images/einstein.jpeg"
-            alt="synth cat in space"
+            alt="a baboon trapeze artist"
           ></img>
           <img
             className="ericPic"
-            src="/images/jared2.jpg"
-            alt="just another cat"
+            src="/images/eric.jpg"
+            alt="thirty gorillas in a trenchcoat"
           ></img>
         </div>
         <p className="ericDez">
-          The string to tie it all together, working <br></br>both the front-end
-          and the back-end
+          The monkey putting together the Legos, <br></br>connecting both the frontend
+          and the backend
         </p>
         <h4 className="github">
           <a href="https://github.com/not-eric/brainstorm" className="gitlink">

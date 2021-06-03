@@ -23,13 +23,14 @@
   text-align: center;
   letter-spacing: 2px;
   line-height: 1.8;
+  margin-top: 80px;
 }
 .webDev {
   color: white;
   padding: 2px;
   text-align: center;
   align-items: center;
-  margin-top: 185px;
+  margin-top: 105px;
 }
 .bottom {
   height: 1150px;
