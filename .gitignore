@@ -38,3 +38,4 @@ midi/*.mid
 
 # Allow
 !midi/ERROR.mid
+brainstorm-it/

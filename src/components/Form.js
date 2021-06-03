@@ -28,7 +28,7 @@ export default class Form extends Component {
         
         name += this.state.planet;
 
-        axios.post('http://brainstorm-it.herokuapp.com/api', { name })
+        axios.post('https://brainstorm-it.herokuapp.com/api', { name })
             .then((result) => {
                 this.setState( {res: result.data} );
                 this.setState( {dataReceived: true} );
