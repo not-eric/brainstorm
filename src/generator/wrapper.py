@@ -8,7 +8,10 @@ def gen(name):
     if name == '':
         return "ERROR.mid"
 
+    print("\n===================================================")
+    print("Generating music for user:", name)
     result = create.newComposition(name, 3)
+    print("===================================================\n")
 
     if(result != -1):
         return result
