@@ -838,7 +838,7 @@ class generate():
         '''
         Generates a single dynamic/velocity between 20 - 124
         '''
-        dynamic = self.dynamicsMed[randint(0, len(self.dynamics) - 1)]
+        dynamic = self.dynamics[randint(0, len(self.dynamics) - 1)]
         return dynamic
 
     # Generate a list of dynamics.
