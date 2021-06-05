@@ -1282,12 +1282,12 @@ class generate():
             return -1
 
         # Save composition data to a .txt file (fileName)
-        fileName = "{}{}".format(title, '.txt')
-        print("\nText file saved as:", fileName)
-        title2 = "{}{}{}{}".format(
-            title, ' for ', newTune.instrument, ' and piano')
-        print("\nTitle:", title2)
-        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
+        # fileName = "{}{}".format(title, '.txt')
+        # print("\nText file saved as:", fileName)
+        # title2 = "{}{}{}{}".format(
+        #     title, ' for ', newTune.instrument, ' and piano')
+        # print("\nTitle:", title2)
+        # self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
         print("\nABC:\n" + toabc.abc(title, newTune.tempo, newTune, newChords))
 
