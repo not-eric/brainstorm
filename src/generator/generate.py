@@ -32,6 +32,7 @@ from midi import midiStuff as mid
 from containers.melody import melody
 from containers.chord import chord
 from containers.composition import composition
+import toabc
 
 # Generative functions
 
@@ -1266,4 +1267,4 @@ class generate():
         # print("\nTitle:", title2)
         # self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
-        return title1
+        return title1, toabc.abc(title, newTune.tempo, newTune, newChords)
