@@ -687,10 +687,12 @@ class generate():
         within one octave to be used as a 'root'. Returns -1 on failure.
         '''
         print("\nGenerating new root scale...")
-        if(octave is not None and
-           octave < 1 or octave > 6):
-            print("\nERROR: octave out of range!")
-            return -1
+        if(octave is not None):
+            if(octave < 1 or octave > 6):
+                print("\nERROR: octave out of range!")
+                return -1
+        elif(octave is None):
+            octave = 4
         pcs = []
         # Use sharps (1) or flats (2)?
         sof = randint(1, 2)
@@ -713,7 +715,7 @@ class generate():
         if(len(scale) == 0):
             print("ERROR: unable to generate scale!")
             return -1
-        # print("new scale:", scale, "\n")
+        print("new scale:", scale, "\n")
         return scale
 
     # Picks one of twelve major scales
