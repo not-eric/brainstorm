@@ -963,17 +963,33 @@ class generate():
             print('      Dynamics:', chords[i].dynamics)
 
     # Generates a chord with randomly chosen notes
-    def newRandChord(self):
+    def newRandChord(self, tempo=None):
         '''
-        Generates a chord with randomly chosen notes. 
+        Generates a chord with randomly chosen notes.  
         Returns a chord() object (has no tempo or dynamics data!)
         '''
         # Create new chord() object
         newChord = chord()
         # Total notes (2-9)
         total = randint(2, 9)
+        # Add tempo if one is provided, otherwise pick a new one
+        if(tempo is not None):
+            newChord.tempo = tempo
+        else:
+            newChord.tempo = self.newTempo()
+        # Pick notes
         while(len(newChord.notes) < total):
             newChord.notes.append(self.newNote())
+        # Add dynamics 
+        dynamic = self.newDynamic()
+        for i in range(len(newChord.notes)):
+            newChord.dynamics.append(dynamic)
+        # Pick rhythm
+        newChord.rhythm = self.newRhythm()
+        # Make sure it worked
+        if(newChord.hasData() == False):
+            print("\nnewRandChord() - ERROR: no chord generated!")
+            return -1
         return newChord
 
     # Generates a single chord from a given scale
@@ -1015,7 +1031,7 @@ class generate():
         return newchord
 
     # Generates a chord progression from the notes of a given scale
-    def newChordsFromScale(self, scale=None, tempo=None):
+    def newChordsFromScale(self, scale, tempo):
         '''
         Generates a progression from the notes of a given scale.
         Returns a list of chord() objects.
@@ -1275,10 +1291,10 @@ class generate():
             return -1
 
         # Save composition data to a .txt file (fileName)
-        # fileName = "{}{}".format(title, '.txt')
-        # print("\nText file saved as:", fileName)
-        # title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
-        # print("\nTitle:", title2)
-        # self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
+        fileName = "{}{}".format(title, '.txt')
+        print("\nText file saved as:", fileName)
+        title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
+        print("\nTitle:", title2)
+        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
         return title1
