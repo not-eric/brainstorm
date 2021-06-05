@@ -1148,13 +1148,13 @@ class generate():
         # Pick notes
         if(data is not None):
             # Use existing scale (0) or generate a new one (1)?
-            if(randint(0, 1) == 1):
+            if(randint(0, 1) == 0):
                 newMelody.notes = self.newNotes(data)
             else:
                 newMelody.notes = self.newNotes(data, newScale=True)
         else:
             # Use existing scale (0) or generate a new one (1)?
-            if(randint(0, 1) == 1):
+            if(randint(0, 1) == 0):
                 newMelody.notes = self.newNotes()
             else:
                 newMelody.notes = self.newNotes(newScale=True)
