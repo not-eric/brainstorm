@@ -695,8 +695,6 @@ class generate():
            octave < 1 or octave > 6):
             print("\nERROR: octave out of range!")
             return -1
-        else:
-            octave = randint(3, 5)
         pcs = []
         # Use sharps (1) or flats (2)?
         sof = randint(1, 2)
@@ -719,6 +717,7 @@ class generate():
         if(len(scale) == 0):
             print("ERROR: unable to generate scale!")
             return -1
+        print("new scale:", scale, "\n")
         return scale
 
     # Picks one of twelve major scales
