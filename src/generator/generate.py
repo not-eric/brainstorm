@@ -604,7 +604,7 @@ class generate():
             # Generate a new one
             root = self.newScale(octave)
             print("\nGenerated new root scale:", root)
-        else:
+        elif(newScale == False):
             # Pick initial root/starting scale (major or minor)
             root = self.scales[randint(1, len(self.scales) - 1)]
             # Will this be a minor scale (0 = no, 1 = yes)?
@@ -612,21 +612,6 @@ class generate():
             if(randint(0, 1) == 1):
                 isMinor = True
                 root = self.convertToMinor(root)
-            # Display choices
-            if(data is not None):
-                if(isMinor == True):
-                    print("\nGenerating", len(data),
-                          "notes starting in the key of", root[0], "minor")
-                else:
-                    print("\nGenerating", len(data),
-                          "notes starting in the key of", root[0], "major")
-            else:
-                if(isMinor == True):
-                    print("\nGenerating new source scale starting with ",
-                          root[0], "minor")
-                else:
-                    print("\nGenerating new source scale starting with ",
-                          root[0], "minor")
 
         # Use either the max value of the supplied data set...
         if(data is not None):
@@ -635,7 +620,7 @@ class generate():
         else:
             # Note that the main loop uses total + 1!
             total = randint(2, 49)
-
+        
         # Main loop
         n = 0
         scale = []
@@ -677,13 +662,13 @@ class generate():
         # Pick notes according to integers in data array
         notes = []
         if(data is not None):
-            # Total number of notes is equivalent to the
+            # Total number of notes is equivalent to the 
             # number of elements in the data set
             for i in range(len(data)):
                 notes.append(scale[data[i]])
         # Randomly pick notes from the generated scale
         else:
-            # Total notes in melody will be between 3 and
+            # Total notes in melody will be between 3 and 
             # however many notes are in the source scale
             total = randint(3, len(scale))
             for i in range(total):
