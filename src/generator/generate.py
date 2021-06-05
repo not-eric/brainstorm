@@ -988,9 +988,8 @@ class generate():
         # New chord() object
         newchord = chord()
         # If we dont get any data...
-        if(scale is None):
+        if(scale is None and tempo is None):
             scale = self.newScale()
-        if(tempo is None):
             tempo = self.newTempo()
         # How many notes in this chord? 2 to 9 (for now)
         total = randint(2, 9)
@@ -1016,7 +1015,7 @@ class generate():
         return newchord
 
     # Generates a chord progression from the notes of a given scale
-    def newChordsFromScale(self, scale, tempo):
+    def newChordsFromScale(self, scale=None, tempo=None):
         '''
         Generates a progression from the notes of a given scale.
         Returns a list of chord() objects.
