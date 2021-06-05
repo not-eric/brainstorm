@@ -6,16 +6,16 @@ create = generate()
 def gen(name):
 
     if name == '':
-        return "ERROR.mid"
+        return "ERROR.mid", ''
 
-    result = create.newComposition(name, 3)
+    result, abc = create.newComposition(name, 3)
 
     if(result != -1):
-        return result
+        return result, abc
 
     else:
         print("ERROR: composition not received in wrapper")
-        return "ERROR.mid"
+        return "ERROR.mid", ''
 
 
 def msg():

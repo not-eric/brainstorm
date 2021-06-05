@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Midi } from '@tonejs/midi';
 import * as Tone from 'tone';
 import "./Player.css";
+import abcjs from 'abcjs';
 
 export default class Player extends Component {
     constructor(props) {
@@ -68,6 +69,8 @@ export default class Player extends Component {
                 {
                     mid: response,
                 })
+
+                abcjs.renderAbc("paper", this.props.sheetmusic, {  staffwidth: 400 });
             });
         
     } 
@@ -164,6 +167,7 @@ export default class Player extends Component {
                         <option value="pluck">PluckSynth</option>
                     </select>
                 </div>
+                <div id="paper"></div>
             </div>
         );
     }

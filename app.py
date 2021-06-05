@@ -1,6 +1,6 @@
 # Flask backend start
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sys
 import os
@@ -20,11 +20,14 @@ def api():
         # print("Request data: ", request.get_json().get('name'))
 
         from wrapper import gen
-        title = gen(name)
+        title, abc = gen(name)
         print(f'Generated \"{title}\" for input {name}')
         #import generate
         #exec(open('src/generator/test.py').read(), globals())
-        return title
+        return jsonify(
+            midititle=title,
+            sheetmusic=abc
+        )
 
     # GET request (and others)
     return '<h1>This town ain\'t big enough for the two of us! Go on, git!</h1>'
