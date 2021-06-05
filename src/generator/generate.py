@@ -585,14 +585,11 @@ class generate():
             2. Generate a starting key/scale, and a starting octave.
             3. Cycle through this scale appending each note to a list
                 of available notes until we reach the last note in the scale
-                in octave 6.
+                in octave 5.
             4. If we reach this note, reset octave to a new starting point, and 
                 pick a new starting scale at random.
             5. Repeat steps 3-4 until we have as many notes as the highest single
                 integer from the supplied data set.
-
-        NOTE: Eventually implement a way to pick between using a pre-existing modal
-              scale, or generating a new one with newScale()
         '''
         # Check incoming data
         if(data is not None and len(data) == 0):
@@ -623,19 +620,17 @@ class generate():
                 print("\nGenerating", len(data),
                       "notes starting in the key of", root[0], "major")
 
-        # Generate notes to pick from
-        n = 0
-        scale = []
         # Use either the max value of the supplied data set...
         if(data is not None):
             total = max(data)
         # ...Or 3 - 50 if we're generating random notes
         else:
-            # Note that the main loop u
-            # ses total + 1!
+            # Note that the main loop uses total + 1!
             total = randint(2, 49)
 
         # Main loop
+        n = 0
+        scale = []
         for i in range(total + 1):
             note = "{}{}".format(root[n], octave)
             scale.append(note)
@@ -648,27 +643,34 @@ class generate():
                 if(octave > 5):
                     # Reset starting octave
                     octave = randint(2, 3)
-                    root = self.scales[randint(1, len(self.scales) - 1)]
-                    # Re-decide if we're using minor (1) or major (2) again
-                    if(randint(1, 2) == 1):
-                        isMinor = True
-                        print("Switching to a minor key!")
+                    # Generate another new scale, if that's what we want
+                    if(newScale == True):
+                        # Generate a new one
+                        root = self.newScale(octave)
+                        print("\nGenerated new root scale:", root)
+                    # Otherwise pick a new pre-existing scale
                     else:
-                        isMinor = False
-                        print("Choosing another a major key!")
-                    if(isMinor == True):
-                        root = self.convertToMinor(root)
-                        print("Key-change! Now using", root[0], "minor")
-                    else:
-                        print("Key-change! Now using", root[0], "major")
+                        root = self.scales[randint(1, len(self.scales) - 1)]
+                        # Re-decide if we're using minor (1) or major (2) again
+                        if(randint(1, 2) == 1):
+                            isMinor = True
+                            print("Switching to a minor key!")
+                        else:
+                            isMinor = False
+                            print("Choosing another a major key!")
+                        if(isMinor == True):
+                            root = self.convertToMinor(root)
+                            print("Key-change! Now using", root[0], "minor")
+                        else:
+                            print("Key-change! Now using", root[0], "major")
                 # Reset n to stay within len(root)
                 n = 0
 
         # Pick notes according to integers in data array
         notes = []
         if(data is not None):
-            # Total number of notes is equivalent to the number of
-            # elements in the data set
+            # Total number of notes is equivalent to the
+            # number of elements in the data set
             for i in range(len(data)):
                 notes.append(scale[data[i]])
         # Randomly pick notes from the generated scale
@@ -696,8 +698,6 @@ class generate():
            octave < 1 or octave > 6):
             print("\nERROR: octave out of range!")
             return -1
-        else:
-            octave = randint(3, 5)
         pcs = []
         # Use sharps (1) or flats (2)?
         sof = randint(1, 2)
@@ -720,6 +720,7 @@ class generate():
         if(len(scale) == 0):
             print("ERROR: unable to generate scale!")
             return -1
+        # print("new scale:", scale, "\n")
         return scale
 
     # Picks one of twelve major scales
@@ -828,7 +829,6 @@ class generate():
 
     # Generate a single dynamic (to be used such that a passage doesn't have consistenly
     # changing dynamics)
-
     def newDynamic(self):
         '''
         Generates a single dynamic/velocity between 20 - 124
@@ -855,7 +855,7 @@ class generate():
         print("\nGenerating", total, "dynamics...")
         while(len(dynamics) < total):
             # Pick dynamic (medium range for now)
-            dynamic = self.dynamicsMed[randint(0, 8)]
+            dynamic = self.dynamics[randint(0, 8)]
             # Repeat this dynamic or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
                 # Limit reps to no more than roughly 1/3 of the supplied total
@@ -1010,8 +1010,7 @@ class generate():
             return -1
         # How many chords?
         chords = []
-        # Picks total where total number of chords is equivalent
-        # to no more than 50-90% of total number of notes
+        # Picks total equivalent to between 30-100% of total elements in the scale
         total = randint(math.floor(len(scale) * 0.3), len(scale))
         if(total == 0):
             total = randint(1, len(scale))
@@ -1159,23 +1158,27 @@ class generate():
            dataType > 4 or dataType < 1):
             print("\nnewMelody() - ERROR")
             return -1
+
         # Generate melody
         if(data is not None and dataType is not None):
             newTune = self.newMelody(data, dataType)
         else:
             newTune = self.newMelody()
+
         # If successfull, export
         if(newTune.hasData() == True):
-            # Generate title, .txt file, and save to MIDI file
+            # Generate title
             title = self.newTitle()
             # Create MIDI file name
             title1 = title + '.mid'
+
             # Save to MIDI file
             if(mid.saveMelody(self, title1, newTune) != -1):
                 print('')  # print("\nMIDI file saved as:", title1)
             else:
                 print("\nERROR:Unable to export piece to MIDI file!")
                 return -1
+
             # Save composition data to a .txt file (fileName)
             fileName = "{}{}".format(title, '.txt')
             # print("\nText file saved as:", fileName)
@@ -1184,6 +1187,7 @@ class generate():
             # Export composition data
             print("\nTitle:", title2)
             self.saveInfo(title2, data, fileName, newTune)
+
             return 0
         else:
             print("\naNewMelody() - ERROR: unable to generate melody!")
@@ -1243,20 +1247,18 @@ class generate():
         # Create MIDI file name
         title1 = title + '.mid'
         # Save to MIDI file
-        composition = mid.saveComposition(self, newTune, newChords, title1)
-        if(composition != -1):
+        if(mid.saveComposition(self, newTune, newChords, title1) != -1):
             print("\nMIDI file saved as:", title1)
         else:
             print("\nnewComposition() - ERROR:Unable to export piece to MIDI file!")
             return -1
 
         # Save composition data to a .txt file (fileName)
-        fileName = "{}{}".format(title, '.txt')
-        print("\nText file saved as:", fileName)
-        title2 = "{}{}{}{}".format(
-            title, ' for ', newTune.instrument, ' and piano')
-        print("\nTitle:", title2)
-        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
+        # fileName = "{}{}".format(title, '.txt')
+        # print("\nText file saved as:", fileName)
+        # title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
+        # print("\nTitle:", title2)
+        # self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
         print("\nABC:\n" + toabc.abc(title, newTune.tempo, newTune, newChords))
 
