@@ -587,14 +587,11 @@ class generate():
             2. Generate a starting key/scale, and a starting octave.
             3. Cycle through this scale appending each note to a list
                 of available notes until we reach the last note in the scale
-                in octave 6.
+                in octave 5.
             4. If we reach this note, reset octave to a new starting point, and 
                 pick a new starting scale at random.
             5. Repeat steps 3-4 until we have as many notes as the highest single
                 integer from the supplied data set.
-
-        NOTE: Eventually implement a way to pick between using a pre-existing modal
-              scale, or generating a new one with newScale()
         '''
         # Check incoming data
         if(data is not None and len(data) == 0):
@@ -1260,10 +1257,10 @@ class generate():
             return -1
 
         # Save composition data to a .txt file (fileName)
-        fileName = "{}{}".format(title, '.txt')
-        print("\nText file saved as:", fileName)
-        title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
-        print("\nTitle:", title2)
-        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
+        # fileName = "{}{}".format(title, '.txt')
+        # print("\nText file saved as:", fileName)
+        # title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
+        # print("\nTitle:", title2)
+        # self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
         return title1
