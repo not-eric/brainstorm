@@ -615,12 +615,20 @@ class generate():
                 isMinor = True
                 root = self.convertToMinor(root)
             # Display choices
-            if(isMinor == True):
-                print("\nGenerating", len(data),
-                    "notes starting in the key of", root[0], "minor")
+            if(data is not None):
+                if(isMinor == True):
+                    print("\nGenerating", len(data),
+                        "notes starting in the key of", root[0], "minor")
+                else:
+                    print("\nGenerating", len(data),
+                        "notes starting in the key of", root[0], "major")
             else:
-                print("\nGenerating", len(data),
-                    "notes starting in the key of", root[0], "major")
+                if(isMinor == True):
+                    print("\nGenerating new source scale starting with ", 
+                          root[0], "minor")
+                else:
+                    print("\nGenerating new source scale starting with ", 
+                          root[0], "minor")
 
         # Use either the max value of the supplied data set...
         if(data is not None):
