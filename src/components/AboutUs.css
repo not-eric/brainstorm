@@ -1,5 +1,5 @@
 .about-container {
-  height: 1750px;
+  height: 1950px;
   margin-top: -60px;
   align-items: center;
   text-align: center;
@@ -37,7 +37,7 @@
 }
 
 .bottom {
-  height: 1150px;
+  height: 1350px;
   background: white;
   align-items: center;
   position: relative;
@@ -219,6 +219,33 @@
 
 .gitlink {
   color: white;
+}
+.mediaCredits:hover > a {
+  text-decoration: none;
+}
+.thankYou {
+  font-size: 20px;
+  margin-top: 60px;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+.mediaCredits {
+  color: black;
+  margin-top: 5px;
+}
+.catThanks {
+  color: black;
+  margin-top: 5px;
+}
+.videoThanks {
+  color: black;
+  margin-top: 5px;
+}
+.synthThanks {
+  color: black;
+}
+.einsteinThanks {
+  color: black;
 }
 
 @media screen and (max-width: 958px) {

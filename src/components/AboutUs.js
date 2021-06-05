@@ -71,6 +71,36 @@ function AboutUs() {
             Github
           </a>
         </h4>
+        <div className="mediaCredits">
+          <h5 className="thankYou">Special Media Props</h5>
+          <a
+            href="https://www.catsonsynthesizersinspace.com/?fbclid=IwAR2uPsMVh2uXl00w6hpYKK24dZHAV0wwqwnfGEOmqlAAilTzPWpofu_wyCo"
+            className="catThanks"
+          >
+            Cats on synthesizers in space
+          </a>
+          <br></br>
+          <a
+            href="https://www.instagram.com/m.a_films/"
+            className="videoThanks"
+          >
+            Home page video by m.a_films
+          </a>
+          <br></br>
+          <a
+            href="https://www.instagram.com/saylorvoid/"
+            className="synthThanks"
+          >
+            Generator Synthesizer by Devan Cole
+          </a>
+          <br></br>
+          <a
+            href="https://images2.minutemediacdn.com/image/upload/c_crop,h_1614,w_2400,x_0,y_0/v1615997665/shape/mentalfloss/gettyimages-544750041.jpg?itok=UHXGSqwM"
+            className="einsteinThanks"
+          >
+            Albert Einstein
+          </a>
+        </div>
       </div>
       <div className="bottombottom">
         <p className="copyRight">&copy; BrainStorm</p>
