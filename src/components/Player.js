@@ -109,7 +109,7 @@ export default class Player extends Component {
 
             this.setState({playing: true, buttonText: "Stop"});
             const now = Tone.now() + 0.5;
-            
+
             mid.tracks.forEach((track) => {
                 // Create a synth for each MIDI track
                 const synth = new Tone.PolySynth(options[this.state.synth], {
@@ -121,9 +121,14 @@ export default class Player extends Component {
                     },
                 }).toDestination();
 
-                if(this.state.synth === 'duo') { // DuoSynth is REALLY LOUD
+                if(this.state.synth === 'duo' || this.state.synth === 'mem') { // these are REALLY LOUD
                     synth.volume.value = -12;
                 }
+
+                /* if(this.state.synth === 'pluck') {
+                    const pitchShift = new Tone.PitchShift(-10).toDestination();
+                    synth.connect(pitchShift);
+                } */
 
                 synths.push(synth);
 
