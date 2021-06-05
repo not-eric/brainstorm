@@ -70,7 +70,7 @@ export default class Player extends Component {
                     mid: response,
                 })
 
-                abcjs.renderAbc("paper", this.props.sheetmusic, {  staffwidth: 400 });
+                abcjs.renderAbc("paper", this.props.sheetmusic, {  staffwidth: 500 });
             });
         
     } 
