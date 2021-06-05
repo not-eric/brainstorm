@@ -860,7 +860,7 @@ class generate():
         print("\nGenerating", total, "dynamics...")
         while(len(dynamics) < total):
             # Pick dynamic (medium range for now)
-            dynamic = self.dynamicsMed[randint(0, 8)]
+            dynamic = self.dynamics[randint(0, 8)]
             # Repeat this dynamic or not? 1 = yes, 2 = no
             if(randint(1, 2) == 1):
                 # Limit reps to no more than roughly 1/3 of the supplied total
