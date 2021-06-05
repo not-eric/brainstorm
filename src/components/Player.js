@@ -148,7 +148,7 @@ export default class Player extends Component {
         
         return (
             <div className="player">
-                <h1>{this.state.songTitle}</h1>
+                <h1>Title: {this.state.songTitle}</h1>
                 <button 
                 onClick={this.state.disabled ? null : this.play} 
                 disabled={this.state.disabled}>

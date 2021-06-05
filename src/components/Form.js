@@ -66,7 +66,7 @@ export default class Form extends Component {
                     type="submit">
                         Submit
                 </button>
-
+                {/* Warning label here for potentially offensive titles? */}
                 {dataReceived &&
                     <Player key={this.state.key} filename={res}/>
                 }
