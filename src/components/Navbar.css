@@ -1,11 +1,6 @@
 .navbar {
   background: rgb(39, 39, 39);
-  height: 75px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
-  font-family: "Times New Roman", Times, serif;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -15,19 +10,17 @@
 
 .container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 80px;
+  height: 75px;
   max-width: 1500px;
+  font-family: "Montserrat", sans-serif;
 }
 
 .logo {
-  color: #fff;
-  justify-self: start;
-  margin-left: 30px;
+  color: white;
   text-decoration: none;
-  font-size: 3rem;
-  display: flex;
+  font-size: 30px;
   align-items: center;
   font-family: "Montserrat", sans-serif;
 }
@@ -37,102 +30,252 @@
   text-decoration: none;
 }
 
+.logo:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.logo:focus {
+  color: white;
+  text-decoration: none;
+}
+
 .brainImage {
   height: 40px;
-  width: auto;
   margin-right: 20px;
   margin-left: 20px;
-  display: block;
-  justify-content: flex-start;
 }
 
 .menu {
-  display: grid;
-  grid-template-columns: repeat(5, auto);
-  grid-gap: 25px;
-  list-style: none;
-  text-align: center;
-  width: 70vw;
-  justify-content: flex-end;
-  margin-right: 1rem;
-  margin-left: 10vw;
+  display: block;
+  margin-left: 450px;
+  margin-top: 8px;
+}
+
+.menu > li {
+  display: inline-block;
+  margin: 10px 30px;
+}
+
+.menu:active > li {
+  display: inline-block;
+  margin: 10px 30px;
+  text-decoration: none;
 }
 
 .links {
-  color: #fff;
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
+  color: white;
+  font-size: 20px;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  height: 100%;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  position: relative;
+  top: 0;
   font-family: "Montserrat", sans-serif;
 }
 
 .links:hover {
-  border-bottom: 4px solid #fff;
+  border-bottom: 4px solid white;
+  margin-bottom: -20px;
   transition: all 0.2s ease-out;
   text-decoration: none;
   color: white;
+  top: -2px;
+}
+
+.links:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.links:focus {
+  text-decoration: none;
 }
 
 .fa-bars {
   display: none;
 }
 
+.fa-times {
+  display: none;
+}
+
+@media screen and (max-width: 1199px) {
+  .container {
+    justify-content: flex-end;
+  }
+
+  .logo {
+    margin-left: 0px;
+    margin-right: 150px;
+  }
+
+  .menu {
+    margin-left: 100px;
+  }
+
+  .links {
+    margin-left: 0px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .container {
+    justify-content: center;
+  }
+
+  .brain {
+    margin-left: 5px;
+  }
+
+  .logo {
+    margin-right: 160px;
+    margin-left: -100px;
+  }
+
+  .menu {
+    margin-left: 70px;
+    font-size: 20px;
+    margin-right: -150px;
+  }
+
+  .links {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .menu {
+    margin-right: -80px;
+    margin-left: -30px;
+  }
+
+  .logo {
+    margin-left: -30px;
+  }
+
+  .menu > li {
+    margin: 10px 30px;
+  }
+
+  .links {
+    font-size: 18px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .logo {
     position: absolute;
     top: 0;
-    left: 0;
+    margin-left: -400px;
     transform: translate(20%, 40%);
     margin-right: 10px;
   }
+
   .menu {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 90vh;
+    height: 100vh;
     position: absolute;
-    top: 80px;
-    left: -80%;
-    opacity: 1;
-    transition: all 0.5s ease;
-    justify-content: flex-start;
-    margin-left: 0%;
+    top: 70px;
+    left: -200%;
+    transition: all 0.6s ease;
+    padding: 0;
+    margin-left: 0px;
+    text-align: center;
+    margin-top: 5px;
   }
 
   .menu.active {
-    background: #01000c;
+    background: black;
+    display: flex;
     left: 0;
     z-index: 1;
-    margin-top: -8px;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    width: 100vw;
+    padding-top: -20px;
   }
 
   .links {
     text-align: center;
-    padding: 2rem;
     width: 100%;
     display: table;
+    padding: 20px 400px 20px 400px;
   }
 
   .links:hover {
-    background-color: #fff;
-    color: #242424;
+    display: flex;
+    background-color: white;
+    color: black;
+    margin: 0px;
+    padding: 20px 400px 20px 400px;
+    text-align: center;
+    align-items: center;
+    border-radius: 0;
+    text-decoration: none;
   }
 
   .fa-bars {
-    color: #fff;
-    /*margin-left: 450px;*/
-    margin-left: 350px;
+    color: white;
+    margin-left: 550px;
     position: sticky;
     display: flex;
     font-size: 20px;
   }
 
   .fa-times {
-    color: #fff;
+    color: white;
     font-size: 25px;
-    margin-left: 350px;
+    margin-left: 550px;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .fa-bars {
+    margin-left: 400px;
+  }
+
+  .fa-times {
+    margin-left: 400px;
+  }
+
+  .logo {
+    margin-left: -360px;
+    font: 28px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .fa-bars {
+    margin-left: 375px;
+  }
+
+  .fa-times {
+    margin-left: 375px;
+  }
+
+  .logo {
+    margin-left: -300px;
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .fa-bars {
+    margin-left: 300px;
+  }
+
+  .fa-times {
+    margin-left: 300px;
+  }
+
+  .logo {
+    margin-right: -40px;
+    font-size: 27px;
+    margin-top: 2px;
   }
 }

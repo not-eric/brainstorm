@@ -613,12 +613,20 @@ class generate():
                 isMinor = True
                 root = self.convertToMinor(root)
             # Display choices
-            if(isMinor == True):
-                print("\nGenerating", len(data),
-                      "notes starting in the key of", root[0], "minor")
+            if(data is not None):
+                if(isMinor == True):
+                    print("\nGenerating", len(data),
+                          "notes starting in the key of", root[0], "minor")
+                else:
+                    print("\nGenerating", len(data),
+                          "notes starting in the key of", root[0], "major")
             else:
-                print("\nGenerating", len(data),
-                      "notes starting in the key of", root[0], "major")
+                if(isMinor == True):
+                    print("\nGenerating new source scale starting with ",
+                          root[0], "minor")
+                else:
+                    print("\nGenerating new source scale starting with ",
+                          root[0], "minor")
 
         # Use either the max value of the supplied data set...
         if(data is not None):
@@ -948,21 +956,37 @@ class generate():
             print('      Dynamics:', chords[i].dynamics)
 
     # Generates a chord with randomly chosen notes
-    def newRandChord(self):
+    def newRandChord(self, tempo=None):
         '''
-        Generates a chord with randomly chosen notes. 
+        Generates a chord with randomly chosen notes.  
         Returns a chord() object (has no tempo or dynamics data!)
         '''
         # Create new chord() object
         newChord = chord()
         # Total notes (2-9)
         total = randint(2, 9)
+        # Add tempo if one is provided, otherwise pick a new one
+        if(tempo is not None):
+            newChord.tempo = tempo
+        else:
+            newChord.tempo = self.newTempo()
+        # Pick notes
         while(len(newChord.notes) < total):
             newChord.notes.append(self.newNote())
+        # Add dynamics
+        dynamic = self.newDynamic()
+        for i in range(len(newChord.notes)):
+            newChord.dynamics.append(dynamic)
+        # Pick rhythm
+        newChord.rhythm = self.newRhythm()
+        # Make sure it worked
+        if(newChord.hasData() == False):
+            print("\nnewRandChord() - ERROR: no chord generated!")
+            return -1
         return newChord
 
     # Generates a single chord from a given scale
-    def newChordFromScale(self, scale, tempo):
+    def newChordFromScale(self, scale=None, tempo=None):
         '''
         Generates a single new chord from the notes in a given scale and
         rhythm returns a chord() object. Does not double/repeat notes!
@@ -972,6 +996,10 @@ class generate():
             return -1
         # New chord() object
         newchord = chord()
+        # If we dont get any data...
+        if(scale is None and tempo is None):
+            scale = self.newScale()
+            tempo = self.newTempo()
         # How many notes in this chord? 2 to 9 (for now)
         total = randint(2, 9)
         while(len(newchord.notes) < total):
@@ -1216,10 +1244,10 @@ class generate():
         if(data is not None and len(data) == 0):
             print("\nnewComposition() - ERROR: no data inputted!")
             return -1
-        if(dataType is not None and
-           dataType < 1 or dataType > 4):
-            print("\nnewComposition() - ERROR: bad data type!")
-            return -1
+        if(dataType is not None):
+            if(dataType < 1 or dataType > 4):
+                print("\nnewComposition() - ERROR: bad data type!")
+                return -1
 
         '''NOTE: append at start or end of lists???'''
         # Generate melody
@@ -1254,11 +1282,12 @@ class generate():
             return -1
 
         # Save composition data to a .txt file (fileName)
-        # fileName = "{}{}".format(title, '.txt')
-        # print("\nText file saved as:", fileName)
-        # title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
-        # print("\nTitle:", title2)
-        # self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
+        fileName = "{}{}".format(title, '.txt')
+        print("\nText file saved as:", fileName)
+        title2 = "{}{}{}{}".format(
+            title, ' for ', newTune.instrument, ' and piano')
+        print("\nTitle:", title2)
+        self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
         print("\nABC:\n" + toabc.abc(title, newTune.tempo, newTune, newChords))
 
