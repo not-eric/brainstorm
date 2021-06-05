@@ -240,6 +240,6 @@ class midiStuff():
         mid.instruments.append(chord)
         # Write to MIDI file
         # print("\nSaving", fileName, "...")
-        mid.write(f'./midi/{fileName}')
+        mid.write(f'/midi/{fileName}')
         # Return PrettyMIDI() object
         return mid
