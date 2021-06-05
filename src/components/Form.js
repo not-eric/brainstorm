@@ -10,6 +10,7 @@ export default class Form extends Component {
             name: '',
             res: '',
             planet: '',
+            abc: '',
             dataReceived: false,
             key: 0,
         };
@@ -30,15 +31,21 @@ export default class Form extends Component {
 
         axios.post('http://localhost:5000/api', { name })
             .then((result) => {
-                this.setState( {res: result.data} );
-                this.setState( {dataReceived: true} );
-                this.setState({ key: Math.random() }); // re-render player
+                let json = result.data;
+                this.setState( 
+                    {
+                        res: json.midititle, 
+                        abc: json.sheetmusic,
+                        dataReceived: true, 
+                        key: Math.random()
+                    } 
+                );
             });
         
     }
 
     render() {
-        const { name, res, dataReceived } = this.state;
+        const { name, res, dataReceived, abc} = this.state;
 
         return (
             <form onSubmit={this.onSubmit}>
@@ -68,7 +75,7 @@ export default class Form extends Component {
                 </button>
                 {/* Warning label here for potentially offensive titles? */}
                 {dataReceived &&
-                    <Player key={this.state.key} filename={res}/>
+                    <Player key={this.state.key} filename={res} sheetmusic={abc}/>
                 }
                 
             </form>

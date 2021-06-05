@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Midi } from '@tonejs/midi';
 import * as Tone from 'tone';
 import "./Player.css";
+import abcjs from 'abcjs';
 
 export default class Player extends Component {
     constructor(props) {
@@ -68,6 +69,8 @@ export default class Player extends Component {
                 {
                     mid: response,
                 })
+
+                abcjs.renderAbc("paper", this.props.sheetmusic, { staffwidth: 500 });
             });
         
     } 
@@ -80,10 +83,14 @@ export default class Player extends Component {
         // console.log(`Playing ${filename} now!\n`);
         // console.log(mid);
 
-       /*  this.setState( {disabled: true} );
+        // this.setState( {disabled: true} );
         setTimeout(() => { 
-            this.setState( {disabled: false});
-        }, mid.duration * 1200); */
+            this.setState( 
+                {buttonText: "Play"}
+                );
+        }, 
+            mid.duration * 1200
+        );
 
         let playing = this.state.playing;
         
@@ -99,8 +106,10 @@ export default class Player extends Component {
         let synths = [...this.state.synthz];
 
         if (!playing && mid) {
+
             this.setState({playing: true, buttonText: "Stop"});
             const now = Tone.now() + 0.5;
+
             mid.tracks.forEach((track) => {
                 // Create a synth for each MIDI track
                 const synth = new Tone.PolySynth(options[this.state.synth], {
@@ -112,9 +121,14 @@ export default class Player extends Component {
                     },
                 }).toDestination();
 
-                if(this.state.synth === 'duo') { // DuoSynth is REALLY LOUD
+                if(this.state.synth === 'duo' || this.state.synth === 'mem') { // these are REALLY LOUD
                     synth.volume.value = -12;
                 }
+
+                /* if(this.state.synth === 'pluck') {
+                    const pitchShift = new Tone.PitchShift(-10).toDestination();
+                    synth.connect(pitchShift);
+                } */
 
                 synths.push(synth);
 
@@ -128,7 +142,9 @@ export default class Player extends Component {
                     );
                 });
 
-                this.setState({synthz: [...synths]});
+                this.setState(
+                    {synthz: [...synths]}
+                );
             });
 
         } else {
@@ -164,6 +180,7 @@ export default class Player extends Component {
                         <option value="pluck">PluckSynth</option>
                     </select>
                 </div>
+                <div id="paper"></div>
             </div>
         );
     }

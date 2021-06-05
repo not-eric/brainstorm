@@ -32,6 +32,7 @@ from midi import midiStuff as mid
 from containers.melody import melody
 from containers.chord import chord
 from containers.composition import composition
+import toabc
 
 # Generative functions
 
@@ -492,13 +493,12 @@ class generate():
         numArr = [int(x) for x in str(hexStr)]
         return numArr
 
-
     #--------------------------------------------------------------------------------#
     #-------------------------------------Tempo--------------------------------------#
     #--------------------------------------------------------------------------------#
 
-
     # Picks the tempo
+
     def newTempo(self):
         '''
         Picks tempo between 40-208bpm.
@@ -511,13 +511,12 @@ class generate():
             return 60.0
         return tempo
 
-
     #--------------------------------------------------------------------------------#
     #----------------------------------Instruments-----------------------------------#
     #--------------------------------------------------------------------------------#
 
-
     # Picks an instrument
+
     def newInstrument(self):
         '''
         Randomly picks an instrument from a given list. Returns a string.
@@ -536,13 +535,12 @@ class generate():
             instruments.append(self.newInstrument())
         return instruments
 
-
     #--------------------------------------------------------------------------------#
     #-------------------------------------Pitch--------------------------------------#
     #--------------------------------------------------------------------------------#
 
-
     # Converts a given integer to a pitch in a specified octave (ex C#6)
+
     def newNote(self, num=None, octave=None):
         '''
         Converts a given integer to a pitch in a specified octave (ex C#6).
@@ -618,16 +616,16 @@ class generate():
             if(data is not None):
                 if(isMinor == True):
                     print("\nGenerating", len(data),
-                        "notes starting in the key of", root[0], "minor")
+                          "notes starting in the key of", root[0], "minor")
                 else:
                     print("\nGenerating", len(data),
-                        "notes starting in the key of", root[0], "major")
+                          "notes starting in the key of", root[0], "major")
             else:
                 if(isMinor == True):
-                    print("\nGenerating new source scale starting with ", 
+                    print("\nGenerating new source scale starting with ",
                           root[0], "minor")
                 else:
-                    print("\nGenerating new source scale starting with ", 
+                    print("\nGenerating new source scale starting with ",
                           root[0], "minor")
 
         # Use either the max value of the supplied data set...
@@ -637,7 +635,7 @@ class generate():
         else:
             # Note that the main loop uses total + 1!
             total = randint(2, 49)
-        
+
         # Main loop
         n = 0
         scale = []
@@ -679,13 +677,13 @@ class generate():
         # Pick notes according to integers in data array
         notes = []
         if(data is not None):
-            # Total number of notes is equivalent to the 
+            # Total number of notes is equivalent to the
             # number of elements in the data set
             for i in range(len(data)):
                 notes.append(scale[data[i]])
         # Randomly pick notes from the generated scale
         else:
-            # Total notes in melody will be between 3 and 
+            # Total notes in melody will be between 3 and
             # however many notes are in the source scale
             total = randint(3, len(scale))
             for i in range(total):
@@ -704,7 +702,7 @@ class generate():
         within one octave to be used as a 'root'. Returns -1 on failure.
         '''
         print("\nGenerating new root scale...")
-        if(octave is not None and 
+        if(octave is not None and
            octave < 1 or octave > 6):
             print("\nERROR: octave out of range!")
             return -1
@@ -779,13 +777,12 @@ class generate():
             return -1
         return minorScale
 
-
     #-----------------------------------------------------------------------------------#
     #--------------------------------------Rhythm---------------------------------------#
     #-----------------------------------------------------------------------------------#
 
-
     # Pick a rhythm
+
     def newRhythm(self):
         '''
         Generates a single new rhythm
@@ -799,7 +796,7 @@ class generate():
         Generates a series of rhythms of n length, where n is supplied
         from elsewhere. Can also decide to pick 3 and 30 rhythms
         if no desired total is supplied. 
-        
+
         Uses infrequent repetition.
 
         NOTE: Supply a smaller value for 'total' if a shorter pattern 
@@ -834,11 +831,9 @@ class generate():
             return -1
         return rhythms
 
-
     #--------------------------------------------------------------------------------#
     #-------------------------------------Dynamics-----------------------------------#
     #--------------------------------------------------------------------------------#
-
 
     # Generate a single dynamic (to be used such that a passage doesn't have consistenly
     # changing dynamics)
@@ -890,13 +885,12 @@ class generate():
             return -1
         return dynamics
 
-
     #--------------------------------------------------------------------------------#
     #---------------------------------Rhythm/Dynamics--------------------------------#
     #--------------------------------------------------------------------------------#
 
-
     # Generate a list containing either a rhythmic pattern or series of dynamics
+
     def newElements(self, dataType, total=None):
         '''
         Generates a series of rhythms or dynamics of n length, where n is supplied
@@ -941,13 +935,12 @@ class generate():
             return -1
         return elements
 
-
     #--------------------------------------------------------------------------------#
     #--------------------------------------Chords------------------------------------#
     #--------------------------------------------------------------------------------#
 
-
     # Display single chord
+
     def displayChord(self, chord):
         print("\n------------Chord:-------------")
         print("\nnotes:", chord.notes)
@@ -980,7 +973,7 @@ class generate():
         # Pick notes
         while(len(newChord.notes) < total):
             newChord.notes.append(self.newNote())
-        # Add dynamics 
+        # Add dynamics
         dynamic = self.newDynamic()
         for i in range(len(newChord.notes)):
             newChord.dynamics.append(dynamic)
@@ -1062,13 +1055,12 @@ class generate():
         # self.displayChords(chords)
         return chords
 
-
     #---------------------------------------------------------------------------------#
     #-------------------------------MELODIC GENERATION--------------------------------#
     #---------------------------------------------------------------------------------#
 
-
     # Display newMelody() object data
+
     def displayMelody(self, newMelody):
         '''
         Displays newMelody() object data and exports to .txt file
@@ -1162,7 +1154,6 @@ class generate():
         newMelody.rhythms = self.newRhythms(len(newMelody.notes))
         # Pick dynamics
         newMelody.dynamics = self.newDynamics(len(newMelody.notes))
-        
 
         #------------Check data, display, and export-------------#
 
@@ -1180,7 +1171,7 @@ class generate():
     #-------------------------------COMPOSITION GENERATION--------------------------------#
     #-------------------------------------------------------------------------------------#
 
-    # Wrapper for newMelody() function. 
+    # Wrapper for newMelody() function.
     # Exports MIDI file + generates title + .txt data file
     def aNewMelody(self, data=None, dataType=None):
         '''
@@ -1191,7 +1182,7 @@ class generate():
         if(data is not None and len(data) == 0):
             print("\nnewMelody() - ERROR: no data inputted!")
             return -1
-        if(dataType is not None and 
+        if(dataType is not None and
            dataType > 4 or dataType < 1):
             print("\nnewMelody() - ERROR")
             return -1
@@ -1257,7 +1248,7 @@ class generate():
             if(dataType < 1 or dataType > 4):
                 print("\nnewComposition() - ERROR: bad data type!")
                 return -1
-        
+
         '''NOTE: append at start or end of lists???'''
         # Generate melody
         if(data is not None and dataType is not None):
@@ -1293,8 +1284,11 @@ class generate():
         # Save composition data to a .txt file (fileName)
         fileName = "{}{}".format(title, '.txt')
         print("\nText file saved as:", fileName)
-        title2 = "{}{}{}{}".format(title, ' for ', newTune.instrument, ' and piano')
+        title2 = "{}{}{}{}".format(
+            title, ' for ', newTune.instrument, ' and piano')
         print("\nTitle:", title2)
         self.saveInfo(title, newTune.sourceData, fileName, newTune, newChords)
 
-        return title1
+        print("\nABC:\n" + toabc.abc(title, newTune.tempo, newTune, newChords))
+
+        return title1, toabc.abc(title, newTune.tempo, newTune, newChords)
