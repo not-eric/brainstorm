@@ -645,27 +645,34 @@ class generate():
                 if(octave > 5):
                     # Reset starting octave
                     octave = randint(2, 3)
-                    root = self.scales[randint(1, len(self.scales) - 1)]
-                    # Re-decide if we're using minor (1) or major (2) again
-                    if(randint(1, 2) == 1):
-                        isMinor = True
-                        print("Switching to a minor key!")
+                    # Generate another new scale, if that's what we want
+                    if(newScale == True):
+                        # Generate a new one
+                        root = self.newScale(octave)
+                        print("\nGenerated new root scale:", root)
+                    # Otherwise pick a new pre-existing scale
                     else:
-                        isMinor = False
-                        print("Choosing another a major key!")
-                    if(isMinor == True):
-                        root = self.convertToMinor(root)
-                        print("Key-change! Now using", root[0], "minor")
-                    else:
-                        print("Key-change! Now using", root[0], "major")
+                        root = self.scales[randint(1, len(self.scales) - 1)]
+                        # Re-decide if we're using minor (1) or major (2) again
+                        if(randint(1, 2) == 1):
+                            isMinor = True
+                            print("Switching to a minor key!")
+                        else:
+                            isMinor = False
+                            print("Choosing another a major key!")
+                        if(isMinor == True):
+                            root = self.convertToMinor(root)
+                            print("Key-change! Now using", root[0], "minor")
+                        else:
+                            print("Key-change! Now using", root[0], "major")
                 # Reset n to stay within len(root)
                 n = 0
 
         # Pick notes according to integers in data array
         notes = []
         if(data is not None):
-            # Total number of notes is equivalent to the number of 
-            # elements in the data set
+            # Total number of notes is equivalent to the 
+            # number of elements in the data set
             for i in range(len(data)):
                 notes.append(scale[data[i]])
         # Randomly pick notes from the generated scale
@@ -1010,8 +1017,7 @@ class generate():
             return -1
         # How many chords?
         chords = []
-        # Picks total where total number of chords is equivalent 
-        # to no more than 50-90% of total number of notes
+        # Picks total equivalent to between 30-100% of total elements in the scale
         total = randint(math.floor(len(scale) * 0.3), len(scale))
         if(total == 0):
             total = randint(1, len(scale))
@@ -1161,23 +1167,27 @@ class generate():
            dataType > 4 or dataType < 1):
             print("\nnewMelody() - ERROR")
             return -1
+
         # Generate melody
         if(data is not None and dataType is not None):
             newTune = self.newMelody(data, dataType)
         else:
             newTune = self.newMelody()
+
         # If successfull, export
         if(newTune.hasData() == True):
-            # Generate title, .txt file, and save to MIDI file
+            # Generate title
             title = self.newTitle()
             # Create MIDI file name
             title1 = title + '.mid'
+
             # Save to MIDI file
             if(mid.saveMelody(self, title1, newTune) != -1):
                 print('')  # print("\nMIDI file saved as:", title1)
             else:
                 print("\nERROR:Unable to export piece to MIDI file!")
                 return -1
+
             # Save composition data to a .txt file (fileName)
             fileName = "{}{}".format(title, '.txt')
             # print("\nText file saved as:", fileName)
@@ -1186,6 +1196,7 @@ class generate():
             # Export composition data
             print("\nTitle:", title2)
             self.saveInfo(title2, data, fileName, newTune)
+
             return 0
         else:
             print("\naNewMelody() - ERROR: unable to generate melody!")
@@ -1245,8 +1256,7 @@ class generate():
         # Create MIDI file name
         title1 = title + '.mid'
         # Save to MIDI file
-        composition = mid.saveComposition(self, newTune, newChords, title1)
-        if(composition != -1):
+        if(mid.saveComposition(self, newTune, newChords, title1) != -1):
             print("\nMIDI file saved as:", title1)
         else:
             print("\nnewComposition() - ERROR:Unable to export piece to MIDI file!")
