@@ -1233,10 +1233,10 @@ class generate():
         if(data is not None and len(data) == 0):
             print("\nnewComposition() - ERROR: no data inputted!")
             return -1
-        if(dataType is not None and 
-           dataType < 1 or dataType > 4):
-            print("\nnewComposition() - ERROR: bad data type!")
-            return -1
+        if(dataType is not None):
+            if(dataType < 1 or dataType > 4):
+                print("\nnewComposition() - ERROR: bad data type!")
+                return -1
         
         '''NOTE: append at start or end of lists???'''
         # Generate melody
