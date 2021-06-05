@@ -1,6 +1,6 @@
 .gen-container {
   min-height: calc(100vh - 77px);
-  height: auto;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
   background: linear-gradient(-45deg, #000000, #2f0033, #004252, #00095c);
   background-size: 400% 400%;
   animation: gradient 30s ease infinite;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
 
 .gen-container > h1 {

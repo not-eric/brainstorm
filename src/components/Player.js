@@ -70,7 +70,13 @@ export default class Player extends Component {
                     mid: response,
                 })
 
-                abcjs.renderAbc("paper", this.props.sheetmusic, { staffwidth: 500 });
+                abcjs.renderAbc("paper", 
+                    this.props.sheetmusic, 
+                    { 
+                        staffwidth: 500,
+                        responsive: "resize" 
+                    }
+                );
             });
         
     } 
@@ -84,7 +90,7 @@ export default class Player extends Component {
         // console.log(mid);
 
         // this.setState( {disabled: true} );
-        setTimeout(() => { 
+        var timeout = setTimeout(() => { 
             this.setState( 
                 {buttonText: "Play"}
                 );
@@ -100,7 +106,6 @@ export default class Player extends Component {
             'duo': Tone.DuoSynth, 
             'mem': Tone.MembraneSynth, 
             'mono': Tone.MonoSynth, 
-            'pluck': Tone.PluckSynth
         }
 
         let synths = [...this.state.synthz];
@@ -121,14 +126,15 @@ export default class Player extends Component {
                     },
                 }).toDestination();
 
-                if(this.state.synth === 'duo' || this.state.synth === 'mem') { // these are REALLY LOUD
+                if(this.state.synth === 'duo' 
+                || this.state.synth === 'mem'
+                || this.state.synth === 'synth') { // these are REALLY LOUD
                     synth.volume.value = -12;
                 }
 
-                /* if(this.state.synth === 'pluck') {
-                    const pitchShift = new Tone.PitchShift(-10).toDestination();
-                    synth.connect(pitchShift);
-                } */
+                if(this.state.synth === 'am') {
+                    synth.volume.value = 2;
+                }
 
                 synths.push(synth);
 
@@ -149,7 +155,8 @@ export default class Player extends Component {
 
         } else {
             this.setState({playing: false, buttonText: "Play"});
-            
+            clearTimeout(timeout);
+
             // Delete synth, create new ones
             while (synths.length) {
                 const synth = synths.shift();
@@ -177,7 +184,6 @@ export default class Player extends Component {
                         <option value="duo">DuoSynth</option>
                         <option value="mem">MembraneSynth</option>
                         <option value="mono">MonoSynth</option>
-                        <option value="pluck">PluckSynth</option>
                     </select>
                 </div>
                 <div id="paper"></div>
