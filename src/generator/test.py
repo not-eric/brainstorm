@@ -62,8 +62,6 @@ def newChars():
     return chars
 
 # Generate new data
-
-
 def newData(dataType):
     # Generate ints
     if(dataType == 1):
@@ -84,9 +82,7 @@ def newData(dataType):
     print("\ntotal elements:", len(data))
     return data
 
-
-#---------------------------------------------------------------------------#
-
+# generate a new tune
 def gen():
     print("\n***generating melody with harmony***")
     # Get user's name
@@ -94,8 +90,13 @@ def gen():
     print("\ninputting:", name)
     result = create.newComposition(name, 3)
     if(result != -1):
-        print(result.title1)
-        return result.title1
+        print("New piece:", result)
+        return result
     else:
         print("ERROR")
         return "ERROR"
+
+#---------------------------------------------------------------------------#
+
+# run it bruh
+gen()
