@@ -465,7 +465,7 @@ class generate():
         # Pick a letter
         for i in range(len(letters)):
             # Search alphabet letter by letter
-            for j in range(len(self.alphabet) - 1):
+            for j in range(len(self.alphabet)):
                 # If we get a match, store that index number
                 if(letters[i] == self.alphabet[j]):
                     numbers.append(j)
