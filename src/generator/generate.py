@@ -622,19 +622,17 @@ class generate():
                 print("\nGenerating", len(data),
                     "notes starting in the key of", root[0], "major")
 
-        # Generate notes to pick from
-        n = 0
-        scale = []
         # Use either the max value of the supplied data set...
         if(data is not None):
             total = max(data)
         # ...Or 3 - 50 if we're generating random notes
         else:
-            # Note that the main loop u
-            # ses total + 1!
+            # Note that the main loop uses total + 1!
             total = randint(2, 49)
-
+        
         # Main loop
+        n = 0
+        scale = []
         for i in range(total + 1):
             note = "{}{}".format(root[n], octave)
             scale.append(note)
@@ -717,7 +715,7 @@ class generate():
         if(len(scale) == 0):
             print("ERROR: unable to generate scale!")
             return -1
-        print("new scale:", scale, "\n")
+        # print("new scale:", scale, "\n")
         return scale
 
     # Picks one of twelve major scales
@@ -829,12 +827,11 @@ class generate():
 
     # Generate a single dynamic (to be used such that a passage doesn't have consistenly
     # changing dynamics)
-
     def newDynamic(self):
         '''
         Generates a single dynamic/velocity between 20 - 124
         '''
-        dynamic = self.dynamics[randint(0, len(self.dynamics) - 1)]
+        dynamic = self.dynamicsMed[randint(0, len(self.dynamics) - 1)]
         return dynamic
 
     # Generate a list of dynamics.
