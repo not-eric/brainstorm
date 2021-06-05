@@ -70,7 +70,7 @@ export default class Player extends Component {
                     mid: response,
                 })
 
-                abcjs.renderAbc("paper", this.props.sheetmusic, {  staffwidth: 500 });
+                abcjs.renderAbc("paper", this.props.sheetmusic, { staffwidth: 500 });
             });
         
     } 
@@ -83,10 +83,14 @@ export default class Player extends Component {
         // console.log(`Playing ${filename} now!\n`);
         // console.log(mid);
 
-       /*  this.setState( {disabled: true} );
+        // this.setState( {disabled: true} );
         setTimeout(() => { 
-            this.setState( {disabled: false});
-        }, mid.duration * 1200); */
+            this.setState( 
+                {buttonText: "Play"}
+                );
+        }, 
+            mid.duration * 1200
+        );
 
         let playing = this.state.playing;
         
@@ -102,8 +106,10 @@ export default class Player extends Component {
         let synths = [...this.state.synthz];
 
         if (!playing && mid) {
+
             this.setState({playing: true, buttonText: "Stop"});
             const now = Tone.now() + 0.5;
+            
             mid.tracks.forEach((track) => {
                 // Create a synth for each MIDI track
                 const synth = new Tone.PolySynth(options[this.state.synth], {
@@ -131,7 +137,9 @@ export default class Player extends Component {
                     );
                 });
 
-                this.setState({synthz: [...synths]});
+                this.setState(
+                    {synthz: [...synths]}
+                );
             });
 
         } else {
