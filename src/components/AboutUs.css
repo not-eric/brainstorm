@@ -371,15 +371,18 @@
     position: relative;
     display: inline-block;
     margin-left: -80px;
+    height: 150px;
+    width: 225px;
   }
 
   .about-wrapper:hover {
     position: relative;
     display: inline-block;
+    border: none;
   }
 
   .bottom > p {
-    font-size: 17px;
+    font-size: 18px;
     color: black;
     top: 1050px;
     margin-top: 70px;
@@ -388,5 +391,36 @@
 
   .bottom > h3 {
     font-size: 22px;
+  }
+
+  .jayFake {
+    height: 150px;
+    width: 225px;
+    margin-left: 35px;
+  }
+  .about-wrapper .jayPic {
+    height: 150px;
+    width: 225px;
+    margin-left: 35px;
+  }
+  .jaredFake {
+    height: 150px;
+    width: 225px;
+    margin-left: 35px;
+  }
+  .about-wrapper .jaredPic {
+    height: 150px;
+    width: 225px;
+    margin-left: 35px;
+  }
+  .ericFake {
+    height: 150px;
+    width: 225px;
+    margin-left: 35px;
+  }
+  .about-wrapper .ericPic {
+    height: 150px;
+    width: 225px;
+    margin-left: 35px;
   }
 }
