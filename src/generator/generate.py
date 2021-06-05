@@ -987,6 +987,11 @@ class generate():
             return -1
         # New chord() object
         newchord = chord()
+        # If we dont get any data...
+        if(scale is None):
+            scale = self.newScale()
+        if(tempo is None):
+            tempo = self.newTempo()
         # How many notes in this chord? 2 to 9 (for now)
         total = randint(2, 9)
         while(len(newchord.notes) < total):
