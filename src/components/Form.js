@@ -28,7 +28,7 @@ export default class Form extends Component {
         
         var { name } = this.state;     //pull from state
 
-        axios.get('https://thingproxy.freeboard.io/fetch/http://api.astrolin.org/now')
+        axios.get('https://brain-cors.herokuapp.com/http://api.astrolin.org/now')
             .then((result) => {
                 
                 this.setState({
