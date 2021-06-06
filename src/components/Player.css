@@ -2,9 +2,10 @@
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   width: 700px;
-  height: 600px;
+  height: auto;
   margin-top: 20px;
   padding: 10px;
+  min-width: 30vw;
   max-width: calc(100vw - 20px);
 
   transition: height 300ms;
@@ -12,14 +13,17 @@
   animation-duration: 300ms;
 }
 
-.player button {
+.player button,
+.player a {
   display: inline-block;
   padding: 0.5em 1.5em;
 
   border: 0.12em solid white;
   border-radius: 7px;
+  box-shadow: 0 0 5px 1px white;
 
-  margin: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
   box-sizing: border-box;
 
   text-decoration: none;
@@ -38,9 +42,11 @@ button:disabled {
   opacity: 0.3;
 }
 
-.player button:hover {
+.player button:hover,
+.player a:hover {
   color: white;
   background-color: rgb(228, 228, 228, 0.3);
+  box-shadow: 0 0 15px 4px white;
 }
 
 @media all and (max-width: 30em) {
@@ -65,7 +71,7 @@ h1 {
 }
 
 .synthChoice select {
-  margin: 40px 0 0;
+  margin: 20px 0 0;
   animation: fadeIn 1.5s;
 }
 
