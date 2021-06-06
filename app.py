@@ -1,6 +1,6 @@
 # Flask backend start
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, redirect, jsonify, url_for
 from flask_cors import CORS
 import sys
 import os
@@ -31,3 +31,8 @@ def api():
 
     # GET request (and others)
     return '<h1>This town ain\'t big enough for the two of us! Go on, git!</h1>'
+
+
+@app.errorhandler(404)
+def internal_error(error):
+    return redirect(url_for('index'))

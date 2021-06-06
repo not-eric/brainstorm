@@ -199,7 +199,7 @@ class generate():
         '''
         try:
             # get word list
-            url = "https://www.mit.edu/~ecprice/wordlist.10000"
+            url = "http://localhost:5000/wordlist.txt"
             # response = requests.get(url)
             response = urllib.request.urlopen(url)
             # decode data to text string
