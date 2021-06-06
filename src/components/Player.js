@@ -4,6 +4,10 @@ import * as Tone from 'tone';
 import "./Player.css";
 import abcjs from 'abcjs';
 
+/*
+    Player component, renders underneath the form. Receives user data,
+    and makes outbound requests depending on user choices.
+*/
 export default class Player extends Component {
     constructor(props) {
         super(props);
@@ -52,6 +56,7 @@ export default class Player extends Component {
     }
 
     onChange = (event) => {
+        // Updates the state as inputs are changed by the user
         this.setState({ 
             [event.target.name]: event.target.value,
         });
@@ -59,17 +64,21 @@ export default class Player extends Component {
 
     loadMidi = async() => {
         let filename = this.props.filename;
-        // console.log("Getting file " + filename);
         
+        // Asynchronously fetch the generated MIDI from the server
         await Midi.fromUrl(`http://localhost:5000/midi/${filename}`)
             .then((response) => 
             { 
                 console.log("Successfully received file.");
+
+                // Update the state with the received and parsed MIDI data
                 this.setState(
                 {
                     mid: response,
                 })
 
+                // Renders the received notation as sheet music on the page,
+                // and the options ensure the music is resized properly
                 abcjs.renderAbc("paper", 
                     this.props.sheetmusic, 
                     { 
@@ -82,18 +91,16 @@ export default class Player extends Component {
     } 
 
     play(e) {
+        // Prevent clicking the buttons from refreshing the form
         e.preventDefault();
 
         let { mid } = this.state;
         
-        // console.log(`Playing ${filename} now!\n`);
-        // console.log(mid);
-
-        // this.setState( {disabled: true} );
+        // Reset the play button text approximately after the song finishes
         var timeout = setTimeout(() => { 
             this.setState( 
                 {buttonText: "Play"}
-                );
+            );
         }, 
             mid.duration * 1200
         );
@@ -108,6 +115,7 @@ export default class Player extends Component {
             'mono': Tone.MonoSynth, 
         }
 
+        // If synths are in the state (if playback has started), load them
         let synths = [...this.state.synthz];
 
         if (!playing && mid) {
@@ -126,16 +134,21 @@ export default class Player extends Component {
                     },
                 }).toDestination();
 
+                // These are really loud by default
                 if(this.state.synth === 'duo' 
                 || this.state.synth === 'mem'
-                || this.state.synth === 'synth') { // these are REALLY LOUD
+                || this.state.synth === 'synth') {
                     synth.volume.value = -12;
                 }
 
+                // And this one is really quiet by default
                 if(this.state.synth === 'am') {
                     synth.volume.value = 2;
                 }
 
+                // Due to the structure of the function, both piano and strings have to
+                // use the same structure except for the two varying fields.
+                // Both load sound samples from external resources, and modulate accordingly.
                 var option = this.state.synth;
                 if(this.state.synth === 'piano' || this.state.synth === 'strings') {
                     if(option === 'piano') {
@@ -212,6 +225,7 @@ export default class Player extends Component {
             });
 
         } else {
+            // If the button is clicked when the song is playing, clear timer and synths
             this.setState({playing: false, buttonText: "Play"});
             clearTimeout(timeout);
 

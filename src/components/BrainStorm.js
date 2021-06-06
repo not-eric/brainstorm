@@ -7,6 +7,7 @@ import Form from "./Form.js";
 function hide(e) {
   var infobox = document.getElementsByClassName("how-to")[0];
 
+  // Append the close class in order to trigger animation
   infobox.classList.add("close");
 }
 

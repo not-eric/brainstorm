@@ -28,14 +28,19 @@ export default class Form extends Component {
         
         var { name } = this.state;     //pull from state
 
-        axios.get('https://thingproxy.freeboard.io/fetch/http://api.astrolin.org/now')
+        // To avoid CORS errors, route request through custom router
+        // in order to receive live planetary data
+        axios.get('https://brain-cors.herokuapp.com/http://api.astrolin.org/now')
             .then((result) => {
                 
+                // The chosen planetary body's longitude is used for the input
                 this.setState({
                     planet_lon: result.data.points[this.state.planet].lon
                 })
 
                 name += this.state.planet_lon;
+
+                // POST request in here so that the longitude is received before POSTing
                 axios.post('http://localhost:5000/api', { name })
                     .then((result) => {
                         let json = result.data;
@@ -49,6 +54,7 @@ export default class Form extends Component {
                         );
                     });
             }).catch(err => {
+                // If there's an error, POST just the name field
                 axios.post('http://localhost:5000/api', { name })
                     .then((result) => {
                         let json = result.data;
@@ -62,9 +68,6 @@ export default class Form extends Component {
                         );
                     });
             });
-
-        
-        
     }
 
     render() {
@@ -96,7 +99,7 @@ export default class Form extends Component {
                     type="submit">
                         Submit
                 </button>
-                {/* Warning label here for potentially offensive titles? */}
+
                 {dataReceived &&
                     <Player key={this.state.key} filename={res} sheetmusic={abc}/>
                 }

@@ -4,7 +4,11 @@ A tool for generating random music based off of a variety of inputs -- throw in 
 
 Brainstorm is built with a responsive React frontend, with a Flask instance handling the backend operations.
 
+[Live demo is available here](https://brainstorm-it.herokuapp.com/)
+
 ## Installation instructions
+
+This package requires `python` (3.6+) and `npm` in order to run and install all dependencies.
 
 For the frontend, simply run `npm install` in the main directory, and finally
 
