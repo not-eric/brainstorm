@@ -1,6 +1,6 @@
 # Flask backend start
 
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, jsonify
 # from flask_cors import CORS
 import sys
 
