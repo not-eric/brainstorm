@@ -236,7 +236,7 @@ export default class Player extends Component {
                         {this.state.buttonText}
                 </button>
 
-                <a href={`http://localhost:5000/midi/${this.state.filename}`} download>
+                <a href={`https://brainstorm-it.herokuapp.com/midi/${this.state.filename}`} download>
                     Download
                 </a>
 

@@ -37,7 +37,7 @@ class midiStuff():
         '''
         try:
             # Get word list
-            url = "http://localhost:5000/wordlist.txt"
+            url = "https://brainstorm-it.herokuapp.com/wordlist.txt"
             # response = requests.get(url)
             response = urllib.request.urlopen(url)
             # words = response.content.splitlines()

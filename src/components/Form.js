@@ -36,7 +36,7 @@ export default class Form extends Component {
                 })
 
                 name += this.state.planet_lon;
-                axios.post('http://localhost:5000/api', { name })
+                axios.post('https://brainstorm-it.herokuapp.com/api', { name })
                     .then((result) => {
                         let json = result.data;
                         this.setState( 
@@ -49,7 +49,7 @@ export default class Form extends Component {
                         );
                     });
             }).catch(err => {
-                axios.post('http://localhost:5000/api', { name })
+                axios.post('https://brainstorm-it.herokuapp.com/api', { name })
                     .then((result) => {
                         let json = result.data;
                         this.setState( 
