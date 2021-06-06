@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Midi } from '@tonejs/midi';
 import * as Tone from 'tone';
 import "./Player.css";
+import abcjs from 'abcjs';
 
 export default class Player extends Component {
     constructor(props) {
@@ -68,6 +69,14 @@ export default class Player extends Component {
                 {
                     mid: response,
                 })
+
+                abcjs.renderAbc("paper", 
+                    this.props.sheetmusic, 
+                    { 
+                        staffwidth: 500,
+                        responsive: "resize" 
+                    }
+                );
             });
         
     } 
@@ -80,10 +89,14 @@ export default class Player extends Component {
         // console.log(`Playing ${filename} now!\n`);
         // console.log(mid);
 
-       /*  this.setState( {disabled: true} );
-        setTimeout(() => { 
-            this.setState( {disabled: false});
-        }, mid.duration * 1200); */
+        // this.setState( {disabled: true} );
+        var timeout = setTimeout(() => { 
+            this.setState( 
+                {buttonText: "Play"}
+                );
+        }, 
+            mid.duration * 1200
+        );
 
         let playing = this.state.playing;
         
@@ -93,17 +106,18 @@ export default class Player extends Component {
             'duo': Tone.DuoSynth, 
             'mem': Tone.MembraneSynth, 
             'mono': Tone.MonoSynth, 
-            'pluck': Tone.PluckSynth
         }
 
         let synths = [...this.state.synthz];
 
         if (!playing && mid) {
+
             this.setState({playing: true, buttonText: "Stop"});
             const now = Tone.now() + 0.5;
+
             mid.tracks.forEach((track) => {
                 // Create a synth for each MIDI track
-                const synth = new Tone.PolySynth(options[this.state.synth], {
+                var synth = new Tone.PolySynth(options[this.state.synth], {
                     envelope: {
                         attack: 0.02,
                         decay: 0.1,
@@ -112,28 +126,95 @@ export default class Player extends Component {
                     },
                 }).toDestination();
 
-                if(this.state.synth === 'duo') { // DuoSynth is REALLY LOUD
+                if(this.state.synth === 'duo' 
+                || this.state.synth === 'mem'
+                || this.state.synth === 'synth') { // these are REALLY LOUD
                     synth.volume.value = -12;
                 }
 
-                synths.push(synth);
+                if(this.state.synth === 'am') {
+                    synth.volume.value = 2;
+                }
 
-                // Schedule events for playback
-                track.notes.forEach((note) => {
-                    synth.triggerAttackRelease(
-                        note.name,
-                        note.duration,
-                        note.time + now,
-                        note.velocity
+                var option = this.state.synth;
+                if(this.state.synth === 'piano' || this.state.synth === 'strings') {
+                    if(option === 'piano') {
+                        synth= new Tone.Sampler({
+                            urls: {
+                                A1: "A1.mp3",
+                                A2: "A2.mp3",
+                                A3: "A3.mp3",
+                                A4: "A4.mp3",
+                                A5: "A5.mp3",
+                                A6: "A6.mp3"
+                            },
+                            baseUrl: "https://tonejs.github.io/audio/salamander/",
+                            onload: () => {
+                                synths.push(synth);
+                                track.notes.forEach((note) => {
+                                    synth.triggerAttackRelease(
+                                        note.name,
+                                        note.duration,
+                                        note.time + now,
+                                        note.velocity
+                                    );
+                                });
+                
+                                this.setState(
+                                    {synthz: [...synths]}
+                                );
+                            }
+                        }).toDestination();
+                    } else {
+                        synth= new Tone.Sampler({
+                            urls: {
+                                A3: "A3.mp3",
+                                A4: "A4.mp3",
+                                A5: "A5.mp3",
+                                A6: "A6.mp3"
+                            },
+                            baseUrl: "https://nbrosowsky.github.io/tonejs-instruments/samples/violin/",
+                            onload: () => {
+                                synths.push(synth);
+                                track.notes.forEach((note) => {
+                                    synth.triggerAttackRelease(
+                                        note.name,
+                                        note.duration,
+                                        note.time + now,
+                                        note.velocity
+                                    );
+                                });
+                
+                                this.setState(
+                                    {synthz: [...synths]}
+                                );
+                            }
+                        }).toDestination();
+                    }
+                }
+                else {
+                    synths.push(synth);
+
+                    // Schedule events for playback
+                    track.notes.forEach((note) => {
+                        synth.triggerAttackRelease(
+                            note.name,
+                            note.duration,
+                            note.time + now,
+                            note.velocity
+                        );
+                    });
+
+                    this.setState(
+                        {synthz: [...synths]}
                     );
-                });
-
-                this.setState({synthz: [...synths]});
+                }
             });
 
         } else {
             this.setState({playing: false, buttonText: "Play"});
-            
+            clearTimeout(timeout);
+
             // Delete synth, create new ones
             while (synths.length) {
                 const synth = synths.shift();
@@ -148,12 +229,17 @@ export default class Player extends Component {
         
         return (
             <div className="player">
-                <h1>{this.state.songTitle}</h1>
+                <h1>Title: {this.state.songTitle}</h1>
                 <button 
-                onClick={this.state.disabled ? null : this.play} 
-                disabled={this.state.disabled}>
-                    {this.state.buttonText}
+                    onClick={this.state.disabled ? null : this.play} 
+                    disabled={this.state.disabled}>
+                        {this.state.buttonText}
                 </button>
+
+                <a href={`http://localhost:5000/midi/${this.state.filename}`} download>
+                    Download
+                </a>
+
                 <div className="synthChoice">
                     <select name="synth" onChange={this.onChange}>
                         <option value="synth">Default Synth</option>
@@ -161,9 +247,11 @@ export default class Player extends Component {
                         <option value="duo">DuoSynth</option>
                         <option value="mem">MembraneSynth</option>
                         <option value="mono">MonoSynth</option>
-                        <option value="pluck">PluckSynth</option>
+                        <option value="piano">Piano</option>
+                        <option value="strings">Strings</option>
                     </select>
                 </div>
+                <div id="paper"></div>
             </div>
         );
     }

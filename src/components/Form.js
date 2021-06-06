@@ -10,8 +10,10 @@ export default class Form extends Component {
             name: '',
             res: '',
             planet: '',
+            abc: '',
             dataReceived: false,
             key: 0,
+            planet_lon: ''
         };
     }
 
@@ -24,21 +26,49 @@ export default class Form extends Component {
     onSubmit = (event) => {
         event.preventDefault();       //prevent page refresh
         
-        let { name } = this.state;     //pull from state
-        
-        name += this.state.planet;
+        var { name } = this.state;     //pull from state
 
-        axios.post('https://brainstorm-it.herokuapp.com/api', { name })
+        axios.get('https://thingproxy.freeboard.io/fetch/http://api.astrolin.org/now')
             .then((result) => {
-                this.setState( {res: result.data} );
-                this.setState( {dataReceived: true} );
-                this.setState({ key: Math.random() }); // re-render player
+                
+                this.setState({
+                    planet_lon: result.data.points[this.state.planet].lon
+                })
+
+                name += this.state.planet_lon;
+                axios.post('http://localhost:5000/api', { name })
+                    .then((result) => {
+                        let json = result.data;
+                        this.setState( 
+                            {
+                                res: json.midititle, 
+                                abc: json.sheetmusic,
+                                dataReceived: true, 
+                                key: Math.random()
+                            } 
+                        );
+                    });
+            }).catch(err => {
+                axios.post('http://localhost:5000/api', { name })
+                    .then((result) => {
+                        let json = result.data;
+                        this.setState( 
+                            {
+                                res: json.midititle, 
+                                abc: json.sheetmusic,
+                                dataReceived: true, 
+                                key: Math.random()
+                            } 
+                        );
+                    });
             });
+
+        
         
     }
 
     render() {
-        const { name, res, dataReceived } = this.state;
+        const { name, res, dataReceived, abc} = this.state;
 
         return (
             <form onSubmit={this.onSubmit}>
@@ -51,24 +81,24 @@ export default class Form extends Component {
                 />
                 <select name="planet" onChange={this.onChange}>
                     <option value=""></option>
-                    <option value="mercury">Mercury</option>
-                    <option value="venus">Venus</option>
-                    <option value="mars">Mars</option>
-                    <option value="jupiter">Jupiter</option>
-                    <option value="saturn">Saturn</option>
-                    <option value="uranus">Uranus</option>
-                    <option value="neptune">Neptune</option>
-                    <option value="pluto">Pluto</option> {/* "but it's not a planet!" see next two */}
-                    <option value="sun">Sun</option>
-                    <option value="moon">Moon</option>
+                    <option value="Mercury">Mercury</option>
+                    <option value="Venus">Venus</option>
+                    <option value="Mars">Mars</option>
+                    <option value="Jupiter">Jupiter</option>
+                    <option value="Saturn">Saturn</option>
+                    <option value="Uranus">Uranus</option>
+                    <option value="Neptune">Neptune</option>
+                    <option value="Pluto">Pluto</option> {/* "but it's not a planet!" see next two */}
+                    <option value="Sun">Sun</option>
+                    <option value="Moon">Moon</option>
                 </select>
                 <button 
                     type="submit">
                         Submit
                 </button>
-
+                {/* Warning label here for potentially offensive titles? */}
                 {dataReceived &&
-                    <Player key={this.state.key} filename={res}/>
+                    <Player key={this.state.key} filename={res} sheetmusic={abc}/>
                 }
                 
             </form>
