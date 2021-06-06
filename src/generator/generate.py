@@ -983,8 +983,8 @@ class generate():
         newchord = chord()
         # If we dont get any data...
         if(scale is None and tempo is None):
-            scale = self.newScale()
             tempo = self.newTempo()
+            scale = self.scales[randint(0, len(self.scales) - 1)]
         # How many notes in this chord? 2 to 9 (for now)
         total = randint(2, 9)
         while(len(newchord.notes) < total):
