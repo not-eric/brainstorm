@@ -3,6 +3,8 @@
 A tool for generating random music based off of a variety of inputs -- throw in some data and inspire your next big music project!
 
 Brainstorm is built with a responsive React frontend, with a Flask instance handling the backend operations.
+The music is generated and saved as a MIDI file, converted to ABC notation, and displayed using the
+*abcjs* library on the generator page.
 
 [Live demo is available here](https://brainstorm-it.herokuapp.com/)
 
