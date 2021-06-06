@@ -971,7 +971,7 @@ class generate():
         return newChord
 
     # Generates a single chord from a given scale
-    def newChordFromScale(self, scale=None, tempo=None):
+    def newChordFromScale(self, scale, tempo=None):
         '''
         Generates a single new chord from the notes in a given scale and
         rhythm returns a chord() object. Does not double/repeat notes!
@@ -982,9 +982,8 @@ class generate():
         # New chord() object
         newchord = chord()
         # If we dont get any data...
-        if(scale is None and tempo is None):
+        if(tempo is None):
             tempo = self.newTempo()
-            scale = self.scales[randint(0, len(self.scales) - 1)]
         # How many notes in this chord? 2 to 9 (for now)
         total = randint(2, 9)
         while(len(newchord.notes) < total):
