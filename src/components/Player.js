@@ -4,7 +4,8 @@ import * as Tone from 'tone';
 import "./Player.css";
 import abcjs from 'abcjs';
 
-const host = process.env.HOST || 'http://localhost:5000'
+const host = process.env.REACT_APP_HOST_URL || 'http://localhost:5000'
+
 /*
     Player component, renders underneath the form. Receives user data,
     and makes outbound requests depending on user choices.
