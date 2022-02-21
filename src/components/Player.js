@@ -68,7 +68,7 @@ export default class Player extends Component {
         let filename = this.props.filename;
         
         // Asynchronously fetch the generated MIDI from the server
-        await Midi.fromUrl(`http://localhost:5000/midi/${filename}`)
+        await Midi.fromUrl(`${host}/midi/${filename}`)
             .then((response) => 
             { 
                 console.log("Successfully received file.");
