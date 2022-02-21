@@ -37,12 +37,7 @@ class midiStuff():
         '''
         try:
             # Get word list
-            url = "http://localhost:5000/wordlist.txt"
-            # response = requests.get(url)
-            response = urllib.request.urlopen(url)
-            # words = response.content.splitlines()
-            text = response.read().decode()
-            words = text.splitlines()
+            words = open('./public/wordlist.txt').read().splitlines()
             # Pick two random words
             name = words[randint(0, len(words) - 1)] + \
                 '_' + words[randint(0, len(words) - 1)]
