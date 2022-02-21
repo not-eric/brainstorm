@@ -4,7 +4,8 @@ import Player from "./Player.js";
 import "./Form.css";
 import ephemeris from 'ephemeris';
 
-const host = process.env.HOST || 'http://localhost:5000'
+const host = process.env.REACT_APP_HOST_URL || 'http://localhost:5000'
+
 export default class Form extends Component {
     constructor() {
         super();
