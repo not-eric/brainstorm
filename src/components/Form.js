@@ -4,6 +4,7 @@ import Player from "./Player.js";
 import "./Form.css";
 import ephemeris from 'ephemeris';
 
+const host = process.env.HOST || 'http://localhost:5000'
 export default class Form extends Component {
     constructor() {
         super();
@@ -33,7 +34,7 @@ export default class Form extends Component {
         // The chosen planetary body's longitude is used for the input
         name += result.observed[this.state.planet].apparentLongitudeDd;
 
-        axios.post('http://localhost:5000/api', { name })
+        axios.post(`${host}/api`, { name })
                     .then((result) => {
                         let json = result.data;
                         this.setState( 

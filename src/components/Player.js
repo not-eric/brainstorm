@@ -4,6 +4,7 @@ import * as Tone from 'tone';
 import "./Player.css";
 import abcjs from 'abcjs';
 
+const host = process.env.HOST || 'http://localhost:5000'
 /*
     Player component, renders underneath the form. Receives user data,
     and makes outbound requests depending on user choices.
@@ -250,7 +251,7 @@ export default class Player extends Component {
                         {this.state.buttonText}
                 </button>
 
-                <a href={`http://localhost:5000/midi/${this.state.filename}`} download>
+                <a href={`${host}/midi/${this.state.filename}`} download>
                     Download
                 </a>
 
