@@ -1,3 +1,6 @@
+# Wrapper function for the Flask server, to easily pass data into
+# the generative function, or return simple errors.
+
 from generate import generate
 
 create = generate()
@@ -19,7 +22,3 @@ def gen(name):
     else:
         print("ERROR: composition not received in wrapper")
         return "ERROR.mid", ''
-
-
-def msg():
-    return "hello!"

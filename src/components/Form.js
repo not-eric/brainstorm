@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Player from "./Player.js";
 import "./Form.css";
+import ephemeris from 'ephemeris';
 
+const host = process.env.HOST || 'http://localhost:5000'
 export default class Form extends Component {
     constructor() {
         super();
         this.state = {
             name: '',
             res: '',
-            planet: '',
+            planet: 'mercury',
             abc: '',
             dataReceived: false,
             key: 0,
-            planet_lon: ''
         };
     }
 
@@ -28,15 +29,12 @@ export default class Form extends Component {
         
         var { name } = this.state;     //pull from state
 
-        axios.get('https://brain-cors.herokuapp.com/http://api.astrolin.org/now')
-            .then((result) => {
-                
-                this.setState({
-                    planet_lon: result.data.points[this.state.planet].lon
-                })
+        var result = ephemeris.getAllPlanets(new Date(), -122.6784, 45.5152, 0);
 
-                name += this.state.planet_lon;
-                axios.post('https://brainstorm-it.herokuapp.com/api', { name })
+        // The chosen planetary body's longitude is used for the input
+        name += result.observed[this.state.planet].apparentLongitudeDd;
+
+        axios.post(`${host}/api`, { name })
                     .then((result) => {
                         let json = result.data;
                         this.setState( 
@@ -48,23 +46,6 @@ export default class Form extends Component {
                             } 
                         );
                     });
-            }).catch(err => {
-                axios.post('https://brainstorm-it.herokuapp.com/api', { name })
-                    .then((result) => {
-                        let json = result.data;
-                        this.setState( 
-                            {
-                                res: json.midititle, 
-                                abc: json.sheetmusic,
-                                dataReceived: true, 
-                                key: Math.random()
-                            } 
-                        );
-                    });
-            });
-
-        
-        
     }
 
     render() {
@@ -80,23 +61,22 @@ export default class Form extends Component {
                     onChange={this.onChange}
                 />
                 <select name="planet" onChange={this.onChange}>
-                    <option value=""></option>
-                    <option value="Mercury">Mercury</option>
-                    <option value="Venus">Venus</option>
-                    <option value="Mars">Mars</option>
-                    <option value="Jupiter">Jupiter</option>
-                    <option value="Saturn">Saturn</option>
-                    <option value="Uranus">Uranus</option>
-                    <option value="Neptune">Neptune</option>
-                    <option value="Pluto">Pluto</option> {/* "but it's not a planet!" see next two */}
-                    <option value="Sun">Sun</option>
-                    <option value="Moon">Moon</option>
+                    <option value="mercury">Mercury</option>
+                    <option value="venus">Venus</option>
+                    <option value="mars">Mars</option>
+                    <option value="jupiter">Jupiter</option>
+                    <option value="saturn">Saturn</option>
+                    <option value="uranus">Uranus</option>
+                    <option value="neptune">Neptune</option>
+                    <option value="pluto">Pluto</option> {/* "but it's not a planet!" see next two */}
+                    <option value="sun">Sun</option>
+                    <option value="moon">Moon</option>
                 </select>
                 <button 
                     type="submit">
                         Submit
                 </button>
-                {/* Warning label here for potentially offensive titles? */}
+
                 {dataReceived &&
                     <Player key={this.state.key} filename={res} sheetmusic={abc}/>
                 }

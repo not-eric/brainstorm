@@ -199,13 +199,7 @@ class generate():
         '''
         try:
             # get word list
-            url = "https://brainstorm-it.herokuapp.com/wordlist.txt"
-            # response = requests.get(url)
-            response = urllib.request.urlopen(url)
-            # decode data to text string
-            text = response.read().decode()
-            # separate words into list
-            words = text.splitlines()
+            words = open('./public/wordlist.txt').read().splitlines()
             # pick 1 to 4 random words
             t = 0
             total = randint(1, 3)
