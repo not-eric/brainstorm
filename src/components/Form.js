@@ -10,7 +10,7 @@ export default class Form extends Component {
         this.state = {
             name: '',
             res: '',
-            planet: '',
+            planet: 'mercury',
             abc: '',
             dataReceived: false,
             key: 0,
